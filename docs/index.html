@@ -1,1340 +1,1269 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3AC Régional - Plateforme Éducative</title>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f0f2f5;
-      color: #1a1a2e;
-      line-height: 1.6;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3AC Régional - Plateforme Éducative N°1 au Maroc</title>
+<meta name="description" content="Plateforme éducative gratuite pour les élèves de 3ème Année Collège au Maroc. Cours, exercices, examens régionaux, et conseils pour réussir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root {
+  --primary: #0f0c29;
+  --secondary: #302b63;
+  --accent: #f5a623;
+  --accent2: #e94560;
+  --success: #2ecc71;
+  --text: #1a1a2e;
+  --text-light: #6b7280;
+  --bg: #f8f9fc;
+  --card: #ffffff;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
 
-    /* ========== LANGUAGE SCREEN ========== */
-    #langScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    #langScreen.hidden {
-      opacity: 0;
-      transform: scale(1.1);
-      pointer-events: none;
-    }
-    .lang-box {
-      text-align: center;
-      max-width: 550px;
-      width: 90%;
-      animation: floatIn 0.8s ease;
-    }
-    .lang-box .logo { font-size: 4rem; margin-bottom: 0.5rem; }
-    .lang-box h1 { color: #fff; font-size: 2.2rem; margin-bottom: 0.3rem; }
-    .lang-box h1 span { color: #f5a623; }
-    .lang-box p { color: rgba(255,255,255,0.5); font-size: 1rem; margin-bottom: 2rem; }
-    .lang-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .lang-btn {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      padding: 1.5rem 2.5rem;
-      color: #fff;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-      min-width: 160px;
-      text-align: center;
-    }
-    .lang-btn:hover {
-      transform: translateY(-6px);
-      background: rgba(245,166,35,0.15);
-      border-color: #f5a623;
-      box-shadow: 0 15px 40px rgba(245,166,35,0.15);
-    }
-    .lang-btn .sub {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 400;
-      opacity: 0.5;
-      margin-top: 0.3rem;
-    }
+/* ===== LOGIN SCREEN ===== */
+#loginOverlay{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+#loginOverlay.hidden{opacity:0;transform:scale(1.05);pointer-events:none}
+.login-screen{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.login-screen.hidden{opacity:0;transform:translateX(-40px);pointer-events:none}
+.login-screen.pin-right{opacity:0;transform:translateX(40px);pointer-events:none}
+.lang-grid{
+  display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center;
+}
+.lang-btn{
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;
+  padding:2rem 2.5rem;
+  cursor:pointer;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  text-align:center;
+  min-width:180px;
+  color:#fff;
+}
+.lang-btn:hover{
+  transform:translateY(-8px);
+  background:rgba(245,166,35,0.12);
+  border-color:var(--accent);
+  box-shadow:0 20px 60px rgba(245,166,35,0.15);
+}
+.lang-btn .flag{font-size:3rem;display:block;margin-bottom:0.6rem}
+.lang-btn .lname{font-size:1.2rem;font-weight:700}
+.lang-btn .lsub{font-size:0.8rem;opacity:0.5;margin-top:0.3rem;display:block}
+.login-bg{
+  position:fixed;inset:0;
+  background:linear-gradient(135deg,#0f0c29 0%,#302b63 40%,#24243e 70%,#1a1a3e 100%);
+  z-index:-1;
+}
+.login-bg::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 50%, rgba(245,166,35,0.06) 0%, transparent 50%),
+             radial-gradient(circle at 80% 50%, rgba(233,69,96,0.06) 0%, transparent 50%);
+}
+.login-box{
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:2.8rem 2.5rem;
+  max-width:420px;
+  width:90%;
+  text-align:center;
+  position:relative;
+}
+.login-box .back{
+  position:absolute;top:1rem;left:1rem;
+  background:rgba(255,255,255,0.06);border:none;
+  color:rgba(255,255,255,0.5);width:36px;height:36px;
+  border-radius:50%;cursor:pointer;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.login-box .back:hover{background:rgba(255,255,255,0.12);color:#fff}
+.login-box .lang-tag{
+  position:absolute;top:1rem;right:1rem;
+  background:rgba(245,166,35,0.15);color:var(--accent);
+  padding:0.3rem 0.9rem;border-radius:20px;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.5px;
+}
+.login-box .logo-big{font-size:3.5rem;margin-bottom:0.4rem;display:block}
+.login-box h2{color:#fff;font-size:1.6rem}
+.login-box h2 span{color:var(--accent)}
+.login-box .sub{color:rgba(255,255,255,0.45);font-size:0.9rem;margin-bottom:1.8rem;display:block}
+.login-box .field{margin-bottom:1.2rem;text-align:left}
+.login-box .field label{display:block;color:rgba(255,255,255,0.5);font-size:0.7rem;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:1px}
+.login-box .field input{
+  width:100%;padding:0.9rem 1.2rem;
+  border:2px solid rgba(255,255,255,0.08);
+  border-radius:12px;background:rgba(255,255,255,0.05);
+  color:#fff;font-size:1rem;outline:none;transition:border 0.3s;
+}
+.login-box .field input:focus{border-color:var(--accent)}
+.login-box .field input::placeholder{color:rgba(255,255,255,0.2)}
+.login-submit{
+  width:100%;padding:0.9rem;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-size:1.05rem;font-weight:600;cursor:pointer;
+  transition:all 0.3s;margin-top:0.3rem;
+}
+.login-submit:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(233,69,96,0.35)}
+.login-err{color:#ff6b6b;font-size:0.85rem;margin-top:1rem;display:none}
+.login-err.show{display:block}
+.login-box .hint{color:rgba(255,255,255,0.15);font-size:0.7rem;margin-top:1.2rem}
 
-    /* ========== LOGIN SCREEN ========== */
-    #loginScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    #loginScreen.active {
-      display: flex;
-    }
-    #loginScreen.hidden {
-      opacity: 0;
-      transform: scale(1.1);
-      pointer-events: none;
-    }
-    @keyframes floatIn {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .login-box {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      padding: 3rem 2.5rem;
-      max-width: 420px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-      animation: floatIn 0.8s ease;
-      position: relative;
-    }
-    .login-box .back-btn {
-      position: absolute;
-      top: 1rem; left: 1rem;
-      background: rgba(255,255,255,0.08);
-      border: none;
-      color: rgba(255,255,255,0.6);
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .login-box .back-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
-    .login-box .lang-indicator {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      background: rgba(245,166,35,0.15);
-      color: #f5a623;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .login-box .logo-icon { font-size: 3rem; margin-bottom: 0.5rem; display: block; }
-    .login-box h2 { color: #fff; font-size: 1.6rem; margin-bottom: 0.3rem; }
-    .login-box h2 span { color: #f5a623; }
-    .login-box .subtitle {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.88rem;
-      margin-bottom: 1.8rem;
-    }
-    .login-box .input-group {
-      margin-bottom: 1.2rem;
-      text-align: left;
-    }
-    .login-box .input-group label {
-      display: block;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.75rem;
-      margin-bottom: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .login-box .input-group input {
-      width: 100%;
-      padding: 0.9rem 1.2rem;
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      font-size: 1rem;
-      transition: border 0.3s;
-      outline: none;
-    }
-    .login-box .input-group input:focus { border-color: #f5a623; }
-    .login-box .input-group input::placeholder { color: rgba(255,255,255,0.25); }
-    .login-btn {
-      width: 100%;
-      padding: 0.9rem;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #f5a623, #e94560);
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 0.3rem;
-    }
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(233,69,96,0.4);
-    }
-    .login-error {
-      color: #ff6b6b;
-      font-size: 0.85rem;
-      margin-top: 1rem;
-      display: none;
-    }
-    .login-error.show { display: block; }
-    .login-box .hint {
-      color: rgba(255,255,255,0.2);
-      font-size: 0.7rem;
-      margin-top: 1.2rem;
-    }
+/* ===== MAIN SITE ===== */
+#mainSite{display:none}
+#mainSite.visible{display:block;animation:fadeIn 0.6s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-    /* ========== MAIN SITE ========== */
-    #mainSite { display: none; }
-    #mainSite.visible { display: block; }
+/* TOP BAR */
+.top-bar{
+  background:var(--primary);
+  padding:0.5rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  font-size:0.78rem;
+  color:rgba(255,255,255,0.4);
+}
+.top-bar .container{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem}
+.top-bar a{color:rgba(255,255,255,0.5);text-decoration:none;margin-left:1rem;transition:color 0.2s}
+.top-bar a:hover{color:var(--accent)}
+.top-bar .social a{margin-left:0.6rem;font-size:0.9rem}
 
-    header {
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      color: white;
-      padding: 2.5rem 1rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(245,166,35,0.08) 0%, transparent 50%);
-      animation: pulseGlow 8s ease infinite;
-    }
-    @keyframes pulseGlow {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(5%, 5%); }
-    }
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #f5a623, #e94560, #4ecca3, #f5a623);
-      background-size: 300% 100%;
-      animation: gradMove 4s ease infinite;
-    }
-    @keyframes gradMove {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-    header h1 { font-size: 2.8rem; position: relative; z-index: 1; }
-    header h1 span { color: #f5a623; }
-    header p { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0.5rem auto 0; position: relative; z-index: 1; }
-    .header-controls {
-      position: absolute;
-      top: 1.2rem; right: 1.5rem;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .header-controls .lang-switch {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.7);
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.75rem;
-      transition: all 0.2s;
-    }
-    .header-controls .lang-switch:hover { background: rgba(245,166,35,0.2); color: #f5a623; }
-    .header-controls .logout-btn {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.7);
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.75rem;
-      transition: all 0.2s;
-    }
-    .header-controls .logout-btn:hover { background: rgba(233,69,96,0.25); color: #e94560; }
+/* HEADER */
+.site-header{
+  background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+  position:relative;
+  overflow:hidden;
+}
+.site-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 50%, rgba(245,166,35,0.06) 0%, transparent 50%);
+}
+.header-main{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1200px;margin:0 auto;padding:0.8rem 1rem;
+  flex-wrap:wrap;gap:0.8rem;
+}
+.header-main .logo{display:flex;align-items:center;gap:0.8rem;text-decoration:none;color:#fff}
+.header-main .logo .logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900}
+.header-main .logo .logo-text{font-size:1.3rem;font-weight:800;letter-spacing:-0.5px}
+.header-main .logo .logo-text span{color:var(--accent)}
+.header-main .logo .logo-sub{display:block;font-size:0.6rem;font-weight:400;opacity:0.5;letter-spacing:1px;text-transform:uppercase}
+.header-controls{display:flex;align-items:center;gap:0.6rem}
+.header-controls .lang-btn-sm{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.6);padding:0.4rem 0.9rem;border-radius:8px;
+  cursor:pointer;font-size:0.75rem;transition:all 0.2s;
+}
+.header-controls .lang-btn-sm:hover{background:rgba(245,166,35,0.15);color:var(--accent)}
+.header-controls .logout-btn{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.5);padding:0.4rem 0.9rem;border-radius:8px;
+  cursor:pointer;font-size:0.75rem;transition:all 0.2s;
+}
+.header-controls .logout-btn:hover{background:rgba(233,69,96,0.2);color:var(--accent2)}
 
-    nav {
-      background: rgba(15,12,41,0.95);
-      backdrop-filter: blur(10px);
-      padding: 0.7rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    nav a {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: all 0.2s;
-      letter-spacing: 0.3px;
-    }
-    nav a:hover, nav a.active {
-      background: rgba(245,166,35,0.15);
-      color: #f5a623;
-    }
+/* NAV */
+.main-nav{
+  background:rgba(15,12,41,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  position:sticky;top:0;z-index:100;
+}
+.main-nav .nav-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;
+}
+.main-nav .nav-inner .nav-links{display:flex;gap:0.2rem;flex-wrap:wrap}
+.main-nav .nav-inner a{
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  padding:0.7rem 1rem;font-size:0.82rem;font-weight:500;
+  border-radius:8px;transition:all 0.2s;white-space:nowrap;
+}
+.main-nav .nav-inner a:hover,.main-nav .nav-inner a.active{
+  color:var(--accent);background:rgba(245,166,35,0.08);
+}
+.main-nav .search-btn{
+  background:none;border:none;color:rgba(255,255,255,0.4);
+  font-size:1.1rem;cursor:pointer;padding:0.5rem;transition:color 0.2s;
+}
+.main-nav .search-btn:hover{color:var(--accent)}
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-    .section-title {
-      font-size: 1.5rem;
-      color: #1a1a2e;
-      margin-bottom: 1.5rem;
-      padding-left: 1rem;
-      border-left: 4px solid #f5a623;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
+/* SEARCH OVERLAY */
+.search-overlay{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:rgba(15,12,41,0.98);
+  backdrop-filter:blur(20px);
+  padding:2rem 1rem;
+  display:none;
+  animation:slideDown 0.3s ease;
+}
+.search-overlay.active{display:block}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.search-overlay .search-close{
+  position:absolute;top:1rem;right:1.5rem;
+  background:none;border:none;color:rgba(255,255,255,0.4);
+  font-size:1.5rem;cursor:pointer;
+}
+.search-overlay .search-inner{max-width:600px;margin:1rem auto 0}
+.search-overlay input{
+  width:100%;padding:1rem 1.2rem;
+  background:rgba(255,255,255,0.05);
+  border:2px solid rgba(255,255,255,0.1);
+  border-radius:14px;color:#fff;font-size:1.1rem;outline:none;
+}
+.search-overlay input:focus{border-color:var(--accent)}
+.search-overlay .search-results{margin-top:1rem;max-height:300px;overflow-y:auto}
+.search-overlay .search-results a{
+  display:block;padding:0.7rem 1rem;
+  color:rgba(255,255,255,0.7);text-decoration:none;
+  border-radius:8px;transition:all 0.2s;
+}
+.search-overlay .search-results a:hover{background:rgba(245,166,35,0.08);color:var(--accent)}
 
-    .hero {
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-      background: linear-gradient(135deg, #fff, #f8f9ff);
-      border-radius: 20px;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.05);
-      margin-bottom: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.8);
-    }
-    .hero h2 {
-      background: linear-gradient(135deg, #0f0c29, #302b63);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 2rem;
-      margin-bottom: 0.8rem;
-    }
-    .hero p { color: #555; max-width: 700px; margin: 0 auto 1.5rem; font-size: 1.05rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
-    .hero-stats div {
-      background: #f0f2f5;
-      padding: 1rem 1.8rem;
-      border-radius: 12px;
-      min-width: 120px;
-    }
-    .hero-stats span:first-child {
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #f5a623, #e94560);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: block;
-    }
-    .hero-stats .label { font-size: 0.85rem; color: #666; display: block; }
+/* CONTAINER */
+.container{max-width:1200px;margin:0 auto;padding:2rem 1rem}
 
-    .subjects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 2.5rem;
-    }
-    .subject-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.04);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.04);
-    }
-    .subject-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      border-radius: 16px 16px 0 0;
-    }
-    .subject-card.c1::before { background: linear-gradient(90deg, #e94560, #ff6b6b); }
-    .subject-card.c2::before { background: linear-gradient(90deg, #0f3460, #3498db); }
-    .subject-card.c3::before { background: linear-gradient(90deg, #4ecca3, #2ecc71); }
-    .subject-card.c4::before { background: linear-gradient(90deg, #f5a623, #e07b1a); }
-    .subject-card.c5::before { background: linear-gradient(90deg, #9b59b6, #8e44ad); }
-    .subject-card.c6::before { background: linear-gradient(90deg, #2ecc71, #27ae60); }
-    .subject-card.c7::before { background: linear-gradient(90deg, #e74c3c, #c0392b); }
-    .subject-card.c8::before { background: linear-gradient(90deg, #3498db, #2980b9); }
-    .subject-card.c9::before { background: linear-gradient(90deg, #1abc9c, #16a085); }
-    .subject-card:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
-    .subject-card .icon { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
-    .subject-card h3 { font-size: 1.15rem; margin-bottom: 0.3rem; color: #1a1a2e; }
-    .subject-card .coeff {
-      display: inline-block;
-      padding: 0.2rem 0.7rem;
-      background: #f0f2f5;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #555;
-      margin-top: 0.3rem;
-    }
+/* HERO BANNER */
+.hero-banner{
+  background:linear-gradient(135deg,#fff 0%,#f0f2ff 100%);
+  border-radius:20px;
+  padding:3rem 2.5rem;
+  margin-bottom:2.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:2rem;flex-wrap:wrap;
+  border:1px solid rgba(255,255,255,0.8);
+  box-shadow:0 4px 30px rgba(0,0,0,0.04);
+  position:relative;overflow:hidden;
+}
+.hero-banner::before{
+  content:'';position:absolute;top:-50%;right:-20%;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(245,166,35,0.06) 0%,transparent 70%);
+  border-radius:50%;
+}
+.hero-banner .hero-text{flex:1;min-width:260px;position:relative;z-index:1}
+.hero-banner .hero-text .badge{
+  display:inline-block;padding:0.3rem 1rem;
+  background:rgba(245,166,35,0.1);color:var(--accent);
+  border-radius:20px;font-size:0.75rem;font-weight:600;
+  margin-bottom:0.8rem;
+}
+.hero-banner .hero-text h2{
+  font-size:2.2rem;font-weight:900;line-height:1.2;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:0.8rem;
+}
+.hero-banner .hero-text p{color:var(--text-light);font-size:1.05rem;max-width:500px;margin-bottom:1.5rem}
+.hero-banner .hero-text .cta-btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.8rem 1.8rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;border-radius:12px;
+  font-size:0.95rem;font-weight:600;cursor:pointer;text-decoration:none;
+  transition:all 0.3s;
+}
+.hero-banner .hero-text .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(233,69,96,0.3)}
+.hero-stats{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.2rem}
+.hero-stats div{background:#f0f2f5;padding:0.8rem 1.2rem;border-radius:10px;text-align:center}
+.hero-stats .num{font-size:1.5rem;font-weight:800;display:block;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stats .label{font-size:0.75rem;color:var(--text-light)}
+.hero-banner .hero-illustration{flex-shrink:0;font-size:8rem;line-height:1;position:relative;z-index:1;opacity:0.8}
 
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 200;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-      backdrop-filter: blur(8px);
-    }
-    .modal-overlay.active { display: flex; }
-    .modal {
-      background: white;
-      border-radius: 20px;
-      max-width: 650px;
-      width: 100%;
-      max-height: 88vh;
-      overflow-y: auto;
-      padding: 2rem;
-      position: relative;
-      animation: modalIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes modalIn {
-      from { transform: scale(0.9) translateY(20px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
-    }
-    .modal-close {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      background: #f0f2f5;
-      border: none;
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: #666;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
-    .modal-close:hover { background: #e94560; color: #fff; }
-    .modal .modal-icon { font-size: 3rem; margin-bottom: 0.5rem; display: block; }
-    .modal h2 { font-size: 1.6rem; margin-bottom: 0.2rem; }
-    .modal .modal-subtitle { color: #888; font-size: 0.9rem; margin-bottom: 1rem; }
-    .modal .info-row { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-    .modal .info-row span { background: #f0f2f5; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.82rem; }
-    .modal h3 { font-size: 1.05rem; margin: 1rem 0 0.6rem; color: #1a1a2e; display: flex; align-items: center; gap: 0.5rem; }
-    .modal ul { list-style: none; padding: 0; }
-    .modal ul li {
-      padding: 0.6rem 0.8rem;
-      margin-bottom: 0.4rem;
-      background: #f8f9ff;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      padding-left: 1.2rem;
-      position: relative;
-    }
-    .modal ul li::before { content: '▸'; position: absolute; left: 0.4rem; color: #f5a623; }
+/* SECTION TITLES */
+.section-title{
+  font-size:1.4rem;font-weight:800;
+  margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.section-title .bar{
+  width:4px;height:28px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
+  border-radius:4px;
+}
 
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-    }
-    .resource-card {
-      background: white;
-      border-radius: 14px;
-      padding: 1.2rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      transition: all 0.2s;
-      border: 1px solid rgba(0,0,0,0.04);
-    }
-    .resource-card:hover { transform: translateX(5px); box-shadow: 0 5px 20px rgba(0,0,0,0.06); }
-    .resource-card .r-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-    .resource-card .r-icon.pdf { background: #fde8e8; }
-    .resource-card .r-icon.video { background: #e8f0fe; }
-    .resource-card .r-icon.link { background: #e8faf0; }
-    .resource-card .r-icon.exam { background: #fef3e8; }
-    .resource-card .r-info h4 { font-size: 0.95rem; color: #1a1a2e; }
-    .resource-card .r-info p { font-size: 0.78rem; color: #999; }
+/* SUBJECT CARDS */
+.subjects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:1rem;
+  margin-bottom:2.5rem;
+}
+.subject-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  border:1px solid rgba(0,0,0,0.04);
+  position:relative;overflow:hidden;
+}
+.subject-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+}
+.subject-card.c1::after{background:linear-gradient(90deg,#e94560,#ff6b6b)}
+.subject-card.c2::after{background:linear-gradient(90deg,#0f3460,#3498db)}
+.subject-card.c3::after{background:linear-gradient(90deg,#4ecca3,#2ecc71)}
+.subject-card.c4::after{background:linear-gradient(90deg,#f5a623,#e07b1a)}
+.subject-card.c5::after{background:linear-gradient(90deg,#9b59b6,#8e44ad)}
+.subject-card.c6::after{background:linear-gradient(90deg,#2ecc71,#27ae60)}
+.subject-card.c7::after{background:linear-gradient(90deg,#e74c3c,#c0392b)}
+.subject-card.c8::after{background:linear-gradient(90deg,#3498db,#2980b9)}
+.subject-card.c9::after{background:linear-gradient(90deg,#1abc9c,#16a085)}
+.subject-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-lg);
+}
+.subject-card .icon{font-size:2rem;margin-bottom:0.5rem;display:block}
+.subject-card h3{font-size:1.05rem;font-weight:700;margin-bottom:0.2rem}
+.subject-card .coeff{
+  display:inline-block;padding:0.2rem 0.7rem;
+  background:#f0f2f5;border-radius:20px;
+  font-size:0.7rem;font-weight:600;color:var(--text-light);
+}
 
-    .planning-table {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.04);
-      margin-bottom: 2.5rem;
-      border: 1px solid rgba(0,0,0,0.04);
-    }
-    .planning-table table { width: 100%; border-collapse: collapse; }
-    .planning-table th {
-      background: #0f0c29;
-      color: #fff;
-      padding: 0.8rem 1rem;
-      text-align: left;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .planning-table td {
-      padding: 0.7rem 1rem;
-      border-bottom: 1px solid #f0f2f5;
-      font-size: 0.88rem;
-    }
-    .planning-table tr:hover td { background: #f8f9ff; }
-    .planning-table .day { font-weight: 600; color: #0f0c29; }
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.6);z-index:200;
+  justify-content:center;align-items:center;
+  padding:1rem;backdrop-filter:blur(8px);
+}
+.modal-overlay.active{display:flex}
+.modal{
+  background:var(--card);border-radius:20px;
+  max-width:650px;width:100%;max-height:88vh;overflow-y:auto;
+  padding:2rem;position:relative;
+  animation:modalIn 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;
+  background:#f0f2f5;border:none;font-size:1.3rem;
+  cursor:pointer;color:#666;width:36px;height:36px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.modal-close:hover{background:var(--accent2);color:#fff}
+.modal .micon{font-size:3rem;display:block;margin-bottom:0.5rem}
+.modal h2{font-size:1.5rem;font-weight:700}
+.modal .msub{color:var(--text-light);font-size:0.88rem;margin-bottom:1rem}
+.modal .minfo{display:flex;gap:0.8rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.modal .minfo span{background:#f0f2f5;padding:0.3rem 1rem;border-radius:20px;font-size:0.82rem}
+.modal h3{font-size:1rem;font-weight:700;margin:1rem 0 0.6rem;display:flex;align-items:center;gap:0.5rem}
+.modal ul{list-style:none;padding:0}
+.modal ul li{padding:0.6rem 0.8rem;margin-bottom:0.4rem;background:#f8f9ff;border-radius:8px;font-size:0.88rem;padding-left:1.2rem;position:relative}
+.modal ul li::before{content:'▸';position:absolute;left:0.4rem;color:var(--accent)}
 
-    .tips-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-    }
-    .tip-card {
-      background: white;
-      border-radius: 14px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,0,0,0.04);
-      transition: transform 0.2s;
-    }
-    .tip-card:hover { transform: translateY(-3px); }
-    .tip-card .tip-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
-    .tip-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: #1a1a2e; }
-    .tip-card p { font-size: 0.88rem; color: #666; line-height: 1.5; }
+/* RESOURCES */
+.resources-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:1rem;
+  margin-bottom:2.5rem;
+}
+.resource-card{
+  background:var(--card);
+  border-radius:14px;
+  padding:1.2rem;
+  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  display:flex;align-items:center;gap:1rem;
+  transition:all 0.2s;
+  border:1px solid rgba(0,0,0,0.04);
+}
+.resource-card:hover{transform:translateX(5px);box-shadow:0 5px 20px rgba(0,0,0,0.06)}
+.resource-card .rico{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.resource-card .rico.pdf{background:#fde8e8}
+.resource-card .rico.video{background:#e8f0fe}
+.resource-card .rico.link{background:#e8faf0}
+.resource-card .rico.exam{background:#fef3e8}
+.resource-card .rinfo h4{font-size:0.92rem;font-weight:600}
+.resource-card .rinfo p{font-size:0.78rem;color:var(--text-light)}
 
-    .quotes-section {
-      background: linear-gradient(135deg, #0f0c29, #302b63);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .quotes-section::before {
-      content: '"';
-      position: absolute;
-      top: -20px; left: 20px;
-      font-size: 10rem;
-      color: rgba(255,255,255,0.05);
-      font-family: Georgia, serif;
-    }
-    .quotes-section blockquote {
-      color: #fff;
-      font-size: 1.3rem;
-      font-style: italic;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-      position: relative;
-      z-index: 1;
-    }
-    .quotes-section cite {
-      display: block;
-      color: #f5a623;
-      font-style: normal;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-    .quote-nav { margin-top: 1.2rem; display: flex; justify-content: center; gap: 0.8rem; }
-    .quote-nav button {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #fff;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.2s;
-    }
-    .quote-nav button:hover { background: rgba(245,166,35,0.3); }
+/* PLANNING */
+.planning-wrap{
+  background:var(--card);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);
+  margin-bottom:2.5rem;border:1px solid rgba(0,0,0,0.04);
+  overflow-x:auto;
+}
+.planning-wrap table{width:100%;border-collapse:collapse;min-width:500px}
+.planning-wrap th{
+  background:var(--primary);color:#fff;
+  padding:0.8rem 1rem;text-align:left;
+  font-size:0.82rem;font-weight:600;
+}
+.planning-wrap td{
+  padding:0.7rem 1rem;border-bottom:1px solid #f0f2f5;
+  font-size:0.85rem;
+}
+.planning-wrap tr:hover td{background:#f8f9ff}
+.planning-wrap .day{font-weight:700;color:var(--primary)}
 
-    .countdown-section {
-      background: linear-gradient(135deg, #0f0c29, #24243e);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .countdown-section h3 { color: #fff; font-size: 1.4rem; margin-bottom: 0.4rem; }
-    .countdown-section p { color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; font-size: 0.9rem; }
-    .countdown { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
-    .countdown div {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 1rem 1.5rem;
-      border-radius: 14px;
-      min-width: 80px;
-    }
-    .countdown .num {
-      font-size: 2.5rem;
-      font-weight: 700;
-      display: block;
-      background: linear-gradient(135deg, #f5a623, #e94560);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .countdown .lbl { font-size: 0.7rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.2rem; display: block; }
+/* TIPS */
+.tips-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1rem;
+  margin-bottom:2.5rem;
+}
+.tip-card{
+  background:var(--card);
+  border-radius:14px;
+  padding:1.4rem;
+  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  border:1px solid rgba(0,0,0,0.04);
+  transition:transform 0.2s;
+}
+.tip-card:hover{transform:translateY(-3px)}
+.tip-card .tip-icon{font-size:1.8rem;margin-bottom:0.5rem;display:block}
+.tip-card h3{font-size:0.95rem;font-weight:700;margin-bottom:0.4rem}
+.tip-card p{font-size:0.85rem;color:var(--text-light);line-height:1.5}
 
-    footer {
-      background: #0f0c29;
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.85rem;
-    }
-    footer strong { color: #f5a623; }
+/* QUOTES */
+.quotes-wrap{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  border-radius:20px;padding:2.5rem 2rem;text-align:center;
+  margin-bottom:2.5rem;position:relative;overflow:hidden;
+}
+.quotes-wrap::before{
+  content:'"';position:absolute;top:-20px;left:20px;
+  font-size:10rem;color:rgba(255,255,255,0.05);font-family:Georgia,serif;
+}
+.quotes-wrap blockquote{
+  color:#fff;font-size:1.25rem;font-style:italic;
+  max-width:700px;margin:0 auto;line-height:1.6;position:relative;z-index:1;
+}
+.quotes-wrap cite{display:block;color:var(--accent);font-style:normal;margin-top:0.8rem;font-size:0.88rem}
+.quotes-nav{margin-top:1rem;display:flex;justify-content:center;gap:0.6rem}
+.quotes-nav button{
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);
+  color:#fff;width:34px;height:34px;border-radius:50%;
+  cursor:pointer;font-size:0.9rem;transition:all 0.2s;
+}
+.quotes-nav button:hover{background:rgba(245,166,35,0.2)}
 
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f0f2f5; }
-    ::-webkit-scrollbar-thumb { background: #c0c5d0; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #a0a5b0; }
+/* COUNTDOWN */
+.countdown-wrap{
+  background:linear-gradient(135deg,var(--primary),#24243e);
+  border-radius:20px;padding:2.5rem 2rem;text-align:center;
+  margin-bottom:2.5rem;border:1px solid rgba(255,255,255,0.05);
+}
+.countdown-wrap h3{color:#fff;font-size:1.3rem;font-weight:700;margin-bottom:0.3rem}
+.countdown-wrap .cd-sub{color:rgba(255,255,255,0.4);font-size:0.85rem;margin-bottom:1.5rem}
+.countdown{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap}
+.countdown div{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.06);
+  padding:1rem 1.5rem;border-radius:14px;min-width:75px;
+}
+.countdown .num{
+  font-size:2.2rem;font-weight:800;display:block;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.countdown .lbl{font-size:0.65rem;opacity:0.4;text-transform:uppercase;letter-spacing:1.5px;margin-top:0.2rem;display:block}
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.6rem; }
-      .hero h2 { font-size: 1.3rem; }
-      .subjects-grid { grid-template-columns: 1fr; }
-      .resources-grid { grid-template-columns: 1fr; }
-      .tips-grid { grid-template-columns: 1fr; }
-      nav a { font-size: 0.7rem; padding: 0.4rem 0.5rem; }
-      .login-box, .lang-box { padding: 2rem 1.5rem; }
-      .lang-btn { min-width: 130px; padding: 1.2rem 1.5rem; font-size: 1rem; }
-      .countdown div { min-width: 65px; padding: 0.8rem; }
-      .countdown .num { font-size: 1.8rem; }
-      .header-controls { position: static; justify-content: center; padding: 0.5rem 0 0; }
-    }
-  </style>
+/* FOOTER */
+.site-footer{
+  background:var(--primary);
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.footer-main{
+  max-width:1200px;margin:0 auto;padding:3rem 1rem;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:2rem;
+}
+.footer-main h4{color:#fff;font-size:0.9rem;font-weight:700;margin-bottom:1rem}
+.footer-main p,.footer-main a{color:rgba(255,255,255,0.4);font-size:0.82rem;line-height:1.8;text-decoration:none;display:block;transition:color 0.2s}
+.footer-main a:hover{color:var(--accent)}
+.footer-main .logo-sm{display:flex;align-items:center;gap:0.5rem;color:#fff;font-weight:700;font-size:1rem;margin-bottom:0.8rem}
+.footer-main .logo-sm span{color:var(--accent)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding:1.2rem 1rem;text-align:center;
+  color:rgba(255,255,255,0.3);font-size:0.78rem;
+}
+.footer-bottom strong{color:var(--accent)}
+
+/* WHATSAPP FLOAT */
+.whatsapp-float{
+  position:fixed;bottom:24px;right:24px;z-index:99;
+  width:56px;height:56px;border-radius:50%;
+  background:#25d366;color:#fff;border:none;
+  font-size:1.6rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,0.35);
+  transition:all 0.3s;text-decoration:none;
+}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(37,211,102,0.4)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#d0d5dd;border-radius:10px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero-banner{padding:2rem 1.5rem}
+  .hero-banner .hero-text h2{font-size:1.5rem}
+  .hero-banner .hero-illustration{font-size:4rem}
+  .subjects-grid{grid-template-columns:1fr}
+  .resources-grid{grid-template-columns:1fr}
+  .tips-grid{grid-template-columns:1fr}
+  .main-nav .nav-inner .nav-links{gap:0}
+  .main-nav .nav-inner a{font-size:0.72rem;padding:0.6rem 0.6rem}
+  .lang-btn{min-width:140px;padding:1.5rem 1.8rem}
+  .footer-main{grid-template-columns:1fr}
+  .countdown div{min-width:60px;padding:0.8rem}
+  .countdown .num{font-size:1.5rem}
+}
+</style>
 </head>
 <body>
 
-<!-- ========== LANGUAGE SELECTION ========== -->
-<div id="langScreen">
-  <div class="lang-box">
-    <div class="logo">📘</div>
-    <h1>3AC <span>Régional</span></h1>
-    <p>Choisis ta langue de révision / اختر لغة المراجعة / Choose your revision language</p>
-    <div class="lang-buttons">
-      <button class="lang-btn" onclick="chooseLang('fr')">
-        🇫🇷 Français
-        <span class="sub">Langue française</span>
-      </button>
-      <button class="lang-btn" onclick="chooseLang('ar')">
-        🇲🇦 العربية
-        <span class="sub">اللغة العربية</span>
-      </button>
-      <button class="lang-btn" onclick="chooseLang('en')">
-        🇬🇧 English
-        <span class="sub">English language</span>
-      </button>
+<!-- ===== LOGIN OVERLAY ===== -->
+<div id="loginOverlay">
+  <div class="login-bg"></div>
+
+  <!-- LANG SELECT -->
+  <div class="login-screen" id="langScreen">
+    <div class="lang-box" style="text-align:center;max-width:600px;width:90%">
+      <div style="font-size:4rem;margin-bottom:0.5rem">📘</div>
+      <h1 style="color:#fff;font-size:2rem;font-weight:900">3AC <span style="color:var(--accent)">Régional</span></h1>
+      <p style="color:rgba(255,255,255,0.4);margin-bottom:2rem;font-size:0.95rem" id="langPickTitle">Choisis ta langue de révision</p>
+      <div class="lang-grid">
+        <button class="lang-btn" onclick="chooseLang('fr')"><span class="flag">🇫🇷</span><span class="lname">Français</span><span class="lsub">Langue française</span></button>
+        <button class="lang-btn" onclick="chooseLang('ar')"><span class="flag">🇲🇦</span><span class="lname">العربية</span><span class="lsub">اللغة العربية</span></button>
+        <button class="lang-btn" onclick="chooseLang('en')"><span class="flag">🇬🇧</span><span class="lname">English</span><span class="lsub">English language</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="login-screen pin-right" id="loginScreen">
+    <div class="login-box">
+      <button class="back" id="backBtn">←</button>
+      <span class="lang-tag" id="langTag">FR</span>
+      <span class="logo-big">📘</span>
+      <h2>3AC <span>Régional</span></h2>
+      <span class="sub" id="loginSub">Entre le code pour accéder à la plateforme</span>
+      <div class="field">
+        <label id="loginLabel">Code d'accès</label>
+        <input type="password" id="codeInput" placeholder="••••••••" autocomplete="off" autofocus>
+      </div>
+      <button class="login-submit" id="loginBtn">Accéder</button>
+      <div class="login-err" id="loginErr">❌ <span id="errMsg">Code incorrect</span></div>
+      <div class="hint" id="loginHint">Réservé aux élèves de 3ème Année Collège</div>
     </div>
   </div>
 </div>
 
-<!-- ========== LOGIN ========== -->
-<div id="loginScreen">
-  <div class="login-box">
-    <button class="back-btn" id="backToLang">←</button>
-    <span class="lang-indicator" id="langIndicator">FR</span>
-    <span class="logo-icon">📘</span>
-    <h2>3AC <span>Régional</span></h2>
-    <p class="subtitle" id="loginSubtitle">Entre le code pour accéder à la plateforme</p>
-    <div class="input-group">
-      <label id="loginLabel">Code d'accès</label>
-      <input type="password" id="codeInput" placeholder="••••••••" autocomplete="off" autofocus>
-    </div>
-    <button class="login-btn" id="loginBtn">Accéder</button>
-    <div class="login-error" id="loginError">❌ <span id="errorMsg">Code incorrect. Veuillez réessayer.</span></div>
-    <p class="hint" id="loginHint">Réservé aux élèves de 3ème Année Collège</p>
-  </div>
-</div>
-
-<!-- ========== MAIN SITE ========== -->
+<!-- ===== MAIN SITE ===== -->
 <div id="mainSite">
 
-<header>
-  <div class="header-controls">
-    <button class="lang-switch" id="langSwitch">🇫🇷 Français</button>
-    <button class="logout-btn" id="logoutBtn">Quitter</button>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container" style="max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem">
+    <span id="topBarLeft">📚 3AC Régional - Plateforme Éducative</span>
+    <span id="topBarRight">
+      <a href="#">À propos</a>
+      <a href="#">Contact</a>
+      <span class="social">
+        <a href="#">📘</a>
+        <a href="#">🐦</a>
+        <a href="#">📺</a>
+      </span>
+    </span>
   </div>
-  <h1>3AC <span>Régional</span></h1>
-  <p id="headerDesc">Plateforme complète pour réussir ton examen régional au Maroc</p>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-main">
+    <a href="#" class="logo">
+      <div class="logo-icon">3AC</div>
+      <div>
+        <span class="logo-text">3AC <span>Régional</span></span>
+        <span class="logo-sub" id="headerSub">Excellence pour tous</span>
+      </div>
+    </a>
+    <div class="header-controls">
+      <button class="lang-btn-sm" id="langSwitchBtn">🇫🇷 Français</button>
+      <button class="logout-btn" id="logoutBtn">🚪 Quitter</button>
+    </div>
+  </div>
 </header>
 
-<nav id="navbar">
-  <a href="#accueil" class="active" id="navHome">Accueil</a>
-  <a href="#matieres" id="navSubjects">Matières</a>
-  <a href="#ressources" id="navResources">Ressources</a>
-  <a href="#planning" id="navPlanning">Planning</a>
-  <a href="#conseils" id="navTips">Conseils</a>
-  <a href="#compteur" id="navCountdown">Compteur</a>
+<!-- NAV -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="#accueil" class="active" id="navHome">Accueil</a>
+      <a href="#matieres" id="navSubjects">Matières</a>
+      <a href="#ressources" id="navResources">Ressources</a>
+      <a href="#planning" id="navPlanning">Planning</a>
+      <a href="#conseils" id="navTips">Conseils</a>
+      <a href="#compteur" id="navCountdown">Compteur</a>
+    </div>
+    <button class="search-btn" id="searchToggle">🔍</button>
+  </div>
 </nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" id="searchClose">✕</button>
+  <div class="search-inner">
+    <input type="text" id="searchInput" placeholder="Rechercher une matière, un chapitre..." autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
 
 <div class="container">
 
-  <section id="accueil" class="hero">
-    <h2 id="heroTitle">Bienvenue sur 3AC Régional</h2>
-    <p id="heroDesc">Prépare-toi efficacement pour l'examen régional avec des cours, des résumés, des exercices et des conseils adaptés au programme marocain.</p>
+<!-- HERO BANNER -->
+<section id="accueil" class="hero-banner">
+  <div class="hero-text">
+    <span class="badge" id="heroBadge">🎯 Examen Régional 2026</span>
+    <h2 id="heroTitle">Réussis ton examen régional</h2>
+    <p id="heroDesc">La plateforme éducative n°1 pour les élèves de 3ème Année Collège au Maroc. Cours, exercices, examens et conseils.</p>
+    <a href="#matieres" class="cta-btn" id="heroCta">📚 Commencer maintenant →</a>
     <div class="hero-stats">
-      <div><span>9</span><span class="label" id="statSubjects">Matières</span></div>
-      <div><span>50+</span><span class="label" id="statResources">Ressources</span></div>
-      <div><span>100%</span><span class="label" id="statFree">Gratuit</span></div>
-    </div>
-  </section>
-
-  <section id="matieres">
-    <h2 class="section-title" id="sectionSubjects">📚 Matières de l'examen régional</h2>
-    <div class="subjects-grid" id="subjectsGrid"></div>
-  </section>
-
-  <div class="modal-overlay" id="subjectModal">
-    <div class="modal">
-      <button class="modal-close" id="modalClose">&times;</button>
-      <span class="modal-icon" id="modalIcon"></span>
-      <h2 id="modalTitle"></h2>
-      <p class="modal-subtitle" id="modalSubtitle"></p>
-      <div class="info-row" id="modalInfo"></div>
-      <h3 id="modalChaptersTitle">📖 Chapitres clés</h3>
-      <ul id="modalChapters"></ul>
-      <h3 id="modalTipsTitle">💡 Conseils de révision</h3>
-      <ul id="modalTips"></ul>
+      <div><span class="num">9</span><span class="label" id="statSubjects">Matières</span></div>
+      <div><span class="num">50+</span><span class="label" id="statResources">Ressources</span></div>
+      <div><span class="num">100%</span><span class="label" id="statFree">Gratuit</span></div>
     </div>
   </div>
+  <div class="hero-illustration">📖</div>
+</section>
 
-  <section id="ressources">
-    <h2 class="section-title" id="sectionResources">📺 Ressources utiles</h2>
-    <div class="resources-grid" id="resourcesGrid"></div>
-  </section>
+<!-- SUBJECTS -->
+<section id="matieres">
+  <h2 class="section-title"><span class="bar"></span><span id="secSubjects">📚 Matières de l'examen régional</span></h2>
+  <div class="subjects-grid" id="subjectsGrid"></div>
+</section>
 
-  <section id="planning">
-    <h2 class="section-title" id="sectionPlanning">📅 Planning de révision</h2>
-    <div class="planning-table">
-      <table>
-        <thead>
-          <tr><th id="planDay">Jour</th><th id="planMorning">Matin (9h-12h)</th><th id="planAfternoon">Après-midi (14h-17h)</th><th id="planEvening">Soir (18h-20h)</th></tr>
-        </thead>
-        <tbody id="planBody"></tbody>
-      </table>
+<!-- MODAL -->
+<div class="modal-overlay" id="subjectModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <span class="micon" id="mIcon"></span>
+    <h2 id="mTitle"></h2>
+    <p class="msub" id="mSub"></p>
+    <div class="minfo" id="mInfo"></div>
+    <h3 id="mChapTitle">📖 Chapitres clés</h3>
+    <ul id="mChaps"></ul>
+    <h3 id="mTipTitle">💡 Conseils de révision</h3>
+    <ul id="mTips"></ul>
+  </div>
+</div>
+
+<!-- RESOURCES -->
+<section id="ressources">
+  <h2 class="section-title"><span class="bar"></span><span id="secResources">📺 Ressources utiles</span></h2>
+  <div class="resources-grid" id="resourcesGrid"></div>
+</section>
+
+<!-- PLANNING -->
+<section id="planning">
+  <h2 class="section-title"><span class="bar"></span><span id="secPlanning">📅 Planning de révision</span></h2>
+  <div class="planning-wrap">
+    <table>
+      <thead><tr>
+        <th id="planDay">Jour</th>
+        <th id="planAM">Matin (9h-12h)</th>
+        <th id="planPM">Après-midi (14h-17h)</th>
+        <th id="planEve">Soir (18h-20h)</th>
+      </tr></thead>
+      <tbody id="planBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="conseils">
+  <h2 class="section-title"><span class="bar"></span><span id="secTips">🎯 Conseils pour réussir</span></h2>
+  <div class="tips-grid" id="tipsGrid"></div>
+</section>
+
+<!-- QUOTES -->
+<section class="quotes-wrap" id="quotesSection">
+  <blockquote id="qText">Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès.</blockquote>
+  <cite id="qAuthor">— Albert Schweitzer</cite>
+  <div class="quotes-nav">
+    <button id="prevQ">◀</button>
+    <button id="nextQ">▶</button>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="compteur">
+  <div class="countdown-wrap">
+    <h3 id="cdTitle">⏳ Compte à rebours</h3>
+    <p class="cd-sub" id="cdDesc">La date approximative de l'examen régional est juin 2026</p>
+    <div class="countdown">
+      <div><span class="num" id="cdDays">0</span><span class="lbl" id="cdDaysLbl">Jours</span></div>
+      <div><span class="num" id="cdHours">0</span><span class="lbl" id="cdHoursLbl">Heures</span></div>
+      <div><span class="num" id="cdMins">0</span><span class="lbl" id="cdMinsLbl">Minutes</span></div>
+      <div><span class="num" id="cdSecs">0</span><span class="lbl" id="cdSecsLbl">Secondes</span></div>
     </div>
-  </section>
-
-  <section id="conseils">
-    <h2 class="section-title" id="sectionTips">🎯 Conseils pour réussir</h2>
-    <div class="tips-grid" id="tipsGrid"></div>
-  </section>
-
-  <section class="quotes-section" id="quoteSection">
-    <blockquote id="quoteText">Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès.</blockquote>
-    <cite id="quoteAuthor">— Albert Schweitzer</cite>
-    <div class="quote-nav">
-      <button id="prevQuote">◀</button>
-      <button id="nextQuote">▶</button>
-    </div>
-  </section>
-
-  <section id="compteur">
-    <div class="countdown-section">
-      <h3 id="cdTitle">⏳ Compte à rebours vers l'examen régional</h3>
-      <p id="cdDesc">La date approximative de l'examen régional est juin 2026. Chaque seconde compte !</p>
-      <div class="countdown">
-        <div><span class="num" id="days">0</span><span class="lbl" id="cdDays">Jours</span></div>
-        <div><span class="num" id="hours">0</span><span class="lbl" id="cdHours">Heures</span></div>
-        <div><span class="num" id="minutes">0</span><span class="lbl" id="cdMins">Minutes</span></div>
-        <div><span class="num" id="seconds">0</span><span class="lbl" id="cdSecs">Secondes</span></div>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
 </div>
 
-<footer>
-  &copy; 2026 <strong>3AC Régional</strong> — <span id="footerText">Site éducatif gratuit pour les élèves de 3ème Année Collège au Maroc</span>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="logo-sm">📘 3AC <span>Régional</span></div>
+      <p id="footerDesc">Plateforme éducative gratuite pour les élèves de 3ème Année Collège au Maroc. Cours, exercices et examens régionaux.</p>
+    </div>
+    <div>
+      <h4 id="footerQuick">Liens rapides</h4>
+      <a href="#matieres" id="footerSubjects">Matières</a>
+      <a href="#ressources" id="footerResources">Ressources</a>
+      <a href="#planning" id="footerPlanning">Planning</a>
+      <a href="#conseils" id="footerTips">Conseils</a>
+    </div>
+    <div>
+      <h4 id="footerContact">Contact</h4>
+      <p>📧 contact@3ac-regional.ma</p>
+      <p>📱 +212 6XX-XXXXXX</p>
+      <p>🌍 Maroc</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 <strong>3AC Régional</strong> — <span id="footerBottom">Tous droits réservés</span>
+  </div>
 </footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/212600000000" class="whatsapp-float" target="_blank" rel="noopener" title="WhatsApp">💬</a>
 
 </div>
 
 <script>
-  // ========== LANG DATA ==========
-  const LANG = {
-    fr: {
-      code: 'fr', label: '🇫🇷 Français', indicator: 'FR',
-      loginSubtitle: 'Entre le code pour accéder à la plateforme',
-      loginLabel: 'Code d\'accès',
-      loginPlaceholder: 'Entrez votre code',
-      loginError: 'Code incorrect. Veuillez réessayer.',
-      loginHint: 'Réservé aux élèves de 3ème Année Collège',
-      loginBtn: 'Accéder',
-      headerDesc: 'Plateforme complète pour réussir ton examen régional au Maroc',
-      navHome: 'Accueil', navSubjects: 'Matières', navResources: 'Ressources',
-      navPlanning: 'Planning', navTips: 'Conseils', navCountdown: 'Compteur',
-      heroTitle: 'Bienvenue sur 3AC Régional',
-      heroDesc: 'Prépare-toi efficacement pour l\'examen régional avec des cours, des résumés, des exercices et des conseils adaptés au programme marocain.',
-      statSubjects: 'Matières', statResources: 'Ressources', statFree: 'Gratuit',
-      sectionSubjects: '📚 Matières de l\'examen régional',
-      sectionResources: '📺 Ressources utiles',
-      sectionPlanning: '📅 Planning de révision',
-      sectionTips: '🎯 Conseils pour réussir',
-      modalChaptersTitle: '📖 Chapitres clés',
-      modalTipsTitle: '💡 Conseils de révision',
-      planDay: 'Jour', planMorning: 'Matin (9h-12h)', planAfternoon: 'Après-midi (14h-17h)', planEvening: 'Soir (18h-20h)',
-      cdTitle: '⏳ Compte à rebours vers l\'examen régional',
-      cdDesc: 'La date approximative de l\'examen régional est juin 2026. Chaque seconde compte !',
-      cdDays: 'Jours', cdHours: 'Heures', cdMins: 'Minutes', cdSecs: 'Secondes',
-      footerText: 'Site éducatif gratuit pour les élèves de 3ème Année Collège au Maroc',
-      subjects: [
-        { id: 1, name: 'Français', icon: '📚', coeff: 3, desc: 'Langue française, grammaire, conjugaison, orthographe, rédaction et étude de texte.', color: 'c1',
-          chapitres: ['Les expansions du nom', 'Les modes et temps verbaux', 'La phrase simple et complexe', 'Les figures de style', 'Le texte argumentatif', 'Lecture et analyse de texte', 'La rédaction: plan, introduction, développement, conclusion'],
-          astuces: ['Lis le texte avant de répondre', 'Révise les conjugaisons', 'Fais un plan pour la rédaction', 'Soigne l\'orthographe', 'Apprends les connecteurs logiques'] },
-        { id: 2, name: 'Arabe', icon: '📖', coeff: 3, desc: 'اللغة العربية: النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.', color: 'c2',
-          chapitres: ['النصوص: الشعر والنثر', 'الجملة الاسمية والفعلية', 'الفعل الصحيح والمعتل', 'التشبيه والاستعارة والكناية', 'التعبير والإنشاء', 'المذكر والمؤنث'],
-          astuces: ['اقرأ النص جيداً', 'احفظ القواعد', 'تدرب على الإنشاء', 'راجع الأفعال', 'استخدم قاموسًا'] },
-        { id: 3, name: 'Anglais', icon: '🇬🇧', coeff: 2, desc: 'English: reading comprehension, grammar, vocabulary, writing.', color: 'c3',
-          chapitres: ['Present, Past, Future tenses', 'Passive voice', 'Conditional sentences', 'Relative clauses', 'Reading comprehension', 'Writing: paragraph, email'],
-          astuces: ['Learn 10 words daily', 'Practice writing', 'Read questions first', 'Review irregular verbs', 'Watch videos with subtitles'] },
-        { id: 4, name: 'Histoire-Géographie', icon: '🌍', coeff: 2, desc: 'Histoire du Maroc, géographie du monde, développement et société.', color: 'c4',
-          chapitres: ['La colonisation et la décolonisation', 'Les deux guerres mondiales', 'Le Maroc sous le protectorat', 'La mondialisation', 'Les ressources naturelles', 'La population et le développement durable'],
-          astuces: ['Fais des fiches chronologiques', 'Utilise des cartes mentales', 'Apprends les dates clés', 'Relie causes/conséquences', 'Dessine des croquis'] },
-        { id: 5, name: 'Éducation Islamique', icon: '🕌', coeff: 2, desc: 'التربية الإسلامية: القرآن، الحديث، العقيدة، الفقه والسيرة.', color: 'c5',
-          chapitres: ['القرآن الكريم (حفظ وتفسير)', 'الأحاديث النبوية', 'أركان الإسلام والإيمان', 'العبادات: الصلاة، الزكاة، الصوم', 'السيرة النبوية', 'القيم الإسلامية'],
-          astuces: ['احفظ مع المعنى', 'افهم أحكام العبادات', 'اربط بالحياة اليومية', 'ركز على القيم', 'استخدم تطبيقات القرآن'] },
-        { id: 6, name: 'Mathématiques', icon: '📐', coeff: 3, desc: 'Algèbre, géométrie, arithmétique, statistiques et probabilités.', color: 'c6',
-          chapitres: ['Équations et inéquations', 'Systèmes d\'équations', 'Fonctions linéaires et affines', 'Théorème de Thalès', 'Théorème de Pythagore', 'Trigonométrie', 'Statistiques et probabilités'],
-          astuces: ['Apprends les formules', 'Refais tous les exercices', 'Chronomètre-toi', 'Vérifie tes calculs', 'Dessine les figures'] },
-        { id: 7, name: 'SVT', icon: '🧬', coeff: 2, desc: 'Biologie humaine, génétique, écologie, géologie.', color: 'c7',
-          chapitres: ['Nutrition chez l\'Homme', 'Respiration et circulation', 'Reproduction humaine', 'Génétique (ADN)', 'Écologie et écosystèmes', 'Ressources naturelles'],
-          astuces: ['Fais des schémas légendés', 'Comprends les processus', 'Utilise des couleurs', 'Relie les chapitres', 'Entraîne-toi aux QCM'] },
-        { id: 8, name: 'Physique-Chimie', icon: '⚗️', coeff: 2, desc: 'Électricité, mécanique, chimie, atomes et molécules.', color: 'c8',
-          chapitres: ['Atome et molécule', 'Solutions acides/basiques (pH)', 'Mouvement et vitesse', 'Forces et poids', 'Loi d\'Ohm, loi des mailles', 'Puissance électrique'],
-          astuces: ['Maîtrise les formules', 'Entraîne-toi aux calculs', 'Comprends les schémas', 'Révise les définitions', 'Fais des fiches'] },
-        { id: 9, name: 'Informatique', icon: '💻', coeff: 1, desc: 'Algorithmique, programmation, bureautique et internet.', color: 'c9',
-          chapitres: ['Algorithmique', 'Structures de contrôle', 'Boucles', 'Tableaux', 'Fonctions', 'Bureautique (Word, Excel)', 'Internet et sécurité'],
-          astuces: ['Pratique sur PC', 'Comprends la logique', 'Fais des petits programmes', 'Révise les définitions', 'Dessine les organigrammes'] }
-      ],
-      resources: [
-        { title: '📋 Sujets d\'examens régionaux', desc: 'Sujets des années précédentes PDF', type: 'exam' },
-        { title: '📄 Cours de Français', desc: 'Résumés et exercices corrigés', type: 'pdf' },
-        { title: '📄 Cours de Maths', desc: 'Fiches de révision et exercices', type: 'pdf' },
-        { title: '🎬 Chaîne YouTube Révision 3AC', desc: 'Playlists par matière', type: 'video' },
-        { title: '🎬 SVT en vidéo', desc: 'Cours animés expliqués', type: 'video' },
-        { title: '🎬 Maths en vidéo', desc: 'Théorèmes pas à pas', type: 'video' },
-        { title: '🔗 Moutamadris', desc: 'Plateforme officielle du ministère', type: 'link' },
-        { title: '🔗 Taalim.ma', desc: 'Cours et exercices gratuits', type: 'link' },
-        { title: '🔗 Exercices interactifs', desc: 'QCM et quiz en ligne', type: 'link' },
-        { title: '🔗 Groupes d\'entraide', desc: 'WhatsApp / Télégram', type: 'link' }
-      ],
-      tips: [
-        { icon: '⏰', title: 'Organise ton temps', desc: 'Travaille 50min, repose-toi 10min. Technique Pomodoro.' },
-        { icon: '📝', title: 'Révise par fiches', desc: 'Résume chaque chapitre sur une fiche avec les idées clés.' },
-        { icon: '📋', title: 'Anciens sujets', desc: 'Les sujets des années précédentes sont la meilleure préparation.' },
-        { icon: '👥', title: 'Groupe d\'étude', desc: 'Expliquer à quelqu\'un est la meilleure façon d\'apprendre.' },
-        { icon: '😴', title: 'Dors bien', desc: 'Un bon sommeil est essentiel pour la concentration.' },
-        { icon: '👀', title: 'Lis les consignes', desc: 'Repère les mots-clés. Ne laisse aucune question sans réponse.' },
-        { icon: '🎒', title: 'Prépare ton matériel', desc: 'Stylo, crayon, règle, compas, calculatrice : prépare tout la veille.' },
-        { icon: '💪', title: 'Gère ton stress', desc: 'Respire profondément. Tu as travaillé, tu es prêt.' }
-      ],
-      plan: [
-        { day: 'Lundi', morning: 'Français', afternoon: 'Maths', evening: 'Révision libre' },
-        { day: 'Mardi', morning: 'Arabe', afternoon: 'SVT', evening: 'Exercices' },
-        { day: 'Mercredi', morning: 'Anglais', afternoon: 'Physique-Chimie', evening: 'Résumés' },
-        { day: 'Jeudi', morning: 'Histoire-Géo', afternoon: 'Éducation Islamique', evening: 'Informatique' },
-        { day: 'Vendredi', morning: 'Maths', afternoon: 'Français', evening: 'Annales' },
-        { day: 'Samedi', morning: 'Bilan de la semaine', afternoon: 'Sujets d\'examen', evening: 'Repos' },
-        { day: 'Dimanche', morning: '🕊️ Repos — Sport', afternoon: 'Loisirs', evening: 'Détente' }
-      ],
-      quotes: [
-        { text: 'Le succès n\'est pas la clé du bonheur. Le bonheur est la clé du succès.', author: 'Albert Schweitzer' },
-        { text: 'L\'éducation est l\'arme la plus puissante pour changer le monde.', author: 'Nelson Mandela' },
-        { text: 'Le travail acharné bat le talent quand le talent ne travaille pas dur.', author: 'Tim Notke' },
-        { text: 'Ne rêve pas de réussir, travaille pour réussir.', author: 'Proverbe marocain' },
-        { text: 'Savoir, ce n\'est pas connaître ; mais connaître, c\'est savoir.', author: 'Ibn Sina (Avicenne)' },
-        { text: 'Celui qui ouvre une porte d\'école, ferme une prison.', author: 'Victor Hugo' },
-        { text: 'La chute n\'est pas un échec, l\'échec c\'est de rester là où on est tombé.', author: 'Socrate' }
-      ]
-    },
+const CORRECT = 'hassan1993';
+let lang = 'fr';
+let qIdx = 0;
 
-    ar: {
-      code: 'ar', label: '🇲🇦 العربية', indicator: 'AR',
-      loginSubtitle: 'أدخل الرمز للوصول إلى المنصة',
-      loginLabel: 'رمز الدخول',
-      loginPlaceholder: 'أدخل رمزك',
-      loginError: 'رمز غير صحيح. حاول مرة أخرى.',
-      loginHint: 'مخصص لتلاميذ السنة الثالثة إعدادي',
-      loginBtn: 'دخول',
-      headerDesc: 'منصة متكاملة لاجتياز الامتحان الجهوي في المغرب',
-      navHome: 'الرئيسية', navSubjects: 'المواد', navResources: 'الموارد',
-      navPlanning: 'التخطيط', navTips: 'نصائح', navCountdown: 'العد التنازلي',
-      heroTitle: 'مرحباً بك في 3AC الجهوي',
-      heroDesc: 'استعد بفعالية للامتحان الجهوي مع دروس، ملخصات، تمارين ونصائح وفق البرنامج المغربي.',
-      statSubjects: 'مواد', statResources: 'مورد', statFree: 'مجاني',
-      sectionSubjects: '📚 مواد الامتحان الجهوي',
-      sectionResources: '📺 موارد مفيدة',
-      sectionPlanning: '📅 جدول المراجعة',
-      sectionTips: '🎯 نصائح للنجاح',
-      modalChaptersTitle: '📖 الدروس الرئيسية',
-      modalTipsTitle: '💡 نصائح المراجعة',
-      planDay: 'اليوم', planMorning: 'الصباح (9-12)', planAfternoon: 'بعد الظهر (14-17)', planEvening: 'المساء (18-20)',
-      cdTitle: '⏳ العد التنازلي للامتحان الجهوي',
-      cdDesc: 'التاريخ التقريبي للامتحان الجهوي هو يونيو 2026. كل ثانية مهمة!',
-      cdDays: 'أيام', cdHours: 'ساعات', cdMins: 'دقائق', cdSecs: 'ثوان',
-      footerText: 'موقع تعليمي مجاني لتلاميذ السنة الثالثة إعدادي في المغرب',
-      subjects: [
-        { id: 1, name: 'الفرنسية', icon: '📚', coeff: 3, desc: 'اللغة الفرنسية: القواعد، الصرف، الإملاء، التعبير ودراسة النص.', color: 'c1',
-          chapitres: ['متممات الاسم', 'الأزمنة والأفعال', 'الجملة البسيطة والمركبة', 'المجاز والصور البيانية', 'النص الحجاجي', 'القراءة وتحليل النص', 'التعبير الكتابي'],
-          astuces: ['اقرأ النص جيداً', 'راجع تصريف الأفعال', 'خطط للتعبير', 'حسن الإملاء', 'تعلم الروابط المنطقية'] },
-        { id: 2, name: 'العربية', icon: '📖', coeff: 3, desc: 'النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.', color: 'c2',
-          chapitres: ['النصوص: الشعر والنثر', 'الجملة الاسمية والفعلية', 'الفعل الصحيح والمعتل', 'التشبيه والاستعارة والكناية', 'التعبير والإنشاء', 'المذكر والمؤنث'],
-          astuces: ['اقرأ النص جيداً', 'احفظ القواعد', 'تدرب على الإنشاء', 'راجع الأفعال', 'استخدم قاموسًا'] },
-        { id: 3, name: 'الإنجليزية', icon: '🇬🇧', coeff: 2, desc: 'الفهم والقراءة، القواعد، المفردات، التعبير الكتابي.', color: 'c3',
-          chapitres: ['الأزمنة: مضارع، ماض، مستقبل', 'المبني للمجهول', 'الجمل الشرطية', 'الجمل الموصولة', 'فهم النص', 'التعبير: فقرة، رسالة'],
-          astuces: ['تعلم 10 كلمات يومياً', 'تدرب على الكتابة', 'اقرأ الأسئلة أولاً', 'راجع الأفعال الشاذة', 'شاهد فيديوهات'] },
-        { id: 4, name: 'التاريخ والجغرافيا', icon: '🌍', coeff: 2, desc: 'تاريخ المغرب، الجغرافيا، التنمية والمجتمع.', color: 'c4',
-          chapitres: ['الاستعمار والاستقلال', 'الحربان العالميتان', 'المغرب تحت الحماية', 'العولمة', 'الموارد الطبيعية', 'السكان والتنمية'],
-          astuces: ['اصنع بطاقات زمنية', 'استخدم الخرائط الذهنية', 'احفظ التواريخ', 'اربط الأحداث', 'ارسم خرائط'] },
-        { id: 5, name: 'التربية الإسلامية', icon: '🕌', coeff: 2, desc: 'القرآن، الحديث، العقيدة، الفقه والسيرة.', color: 'c5',
-          chapitres: ['القرآن الكريم', 'الأحاديث النبوية', 'أركان الإسلام والإيمان', 'العبادات', 'السيرة النبوية', 'القيم الإسلامية'],
-          astuces: ['احفظ مع المعنى', 'افهم الأحكام', 'اربط بالحياة', 'ركز على القيم', 'استخدم التطبيقات'] },
-        { id: 6, name: 'الرياضيات', icon: '📐', coeff: 3, desc: 'الجبر، الهندسة، الحساب، الإحصاء والاحتمالات.', color: 'c6',
-          chapitres: ['المعادلات والمتراجحات', 'نظم المعادلات', 'الدوال الخطية', 'نظرية طاليس', 'نظرية فيثاغورس', 'حساب المثلثات', 'الإحصاء والاحتمالات'],
-          astuces: ['احفظ القوانين', 'أعد حل التمارين', 'تحدى نفسك بالوقت', 'تحقق من حساباتك', 'ارسم الأشكال'] },
-        { id: 7, name: 'علوم الحياة والأرض', icon: '🧬', coeff: 2, desc: 'البيولوجيا، علم الوراثة، البيئة والجيولوجيا.', color: 'c7',
-          chapitres: ['التغذية عند الإنسان', 'التنفس والدوران', 'التكاثر', 'علم الوراثة', 'البيئة', 'الموارد الطبيعية'],
-          astuces: ['ارسم رسومات تخطيطية', 'افهم العمليات', 'استخدم الألوان', 'اربط الدروس', 'تدرب على MCQ'] },
-        { id: 8, name: 'الفيزياء والكيمياء', icon: '⚗️', coeff: 2, desc: 'الكهرباء، الميكانيكا، الكيمياء، الذرات والجزيئات.', color: 'c8',
-          chapitres: ['الذرة والجزيء', 'المحاليل الحمضية', 'الحركة والسرعة', 'القوى والوزن', 'قانون أوم', 'القدرة الكهربائية'],
-          astuces: ['اتقن القوانين', 'تدرب على الحساب', 'افهم المخططات', 'راجع التعريفات', 'اصنع بطاقات'] },
-        { id: 9, name: 'الإعلاميات', icon: '💻', coeff: 1, desc: 'الخوارزميات، البرمجة، المكتبية والإنترنت.', color: 'c9',
-          chapitres: ['الخوارزميات', 'هياكل التحكم', 'الحلقات', 'المصفوفات', 'الدوال', 'المكتبية', 'الإنترنت والأمن'],
-          astuces: ['تدرب على الحاسوب', 'افهم المنطق', 'برمج برامج صغيرة', 'راجع المفاهيم', 'ارسم المخططات'] }
-      ],
-      resources: [
-        { title: '📋 مواضيع الامتحانات الجهوية', desc: 'مواضيع السنوات السابقة PDF', type: 'exam' },
-        { title: '📄 دروس الفرنسية', desc: 'ملخصات وتمارين مع التصحيح', type: 'pdf' },
-        { title: '📄 دروس الرياضيات', desc: 'بطاقات مراجعة وتمارين', type: 'pdf' },
-        { title: '🎬 قناة يوتيوب مراجعة 3AC', desc: 'قوائم تشغيل حسب المواد', type: 'video' },
-        { title: '🎬 علوم الحياة بالفيديو', desc: 'دروس مصورة ومفسرة', type: 'video' },
-        { title: '🎬 الرياضيات بالفيديو', desc: 'النظريات خطوة بخطوة', type: 'video' },
-        { title: '🔗 Moutamadris', desc: 'المنصة الرسمية للوزارة', type: 'link' },
-        { title: '🔗 Taalim.ma', desc: 'دروس وتمارين مجانية', type: 'link' },
-        { title: '🔗 تمارين تفاعلية', desc: 'اختبارات MCQ أونلاين', type: 'link' },
-        { title: '🔗 مجموعات الدعم', desc: 'واتساب / تيليغرام', type: 'link' }
-      ],
-      tips: [
-        { icon: '⏰', title: 'نظم وقتك', desc: 'اعمل 50 دقيقة، استرح 10. استخدم تقنية بومودورو.' },
-        { icon: '📝', title: 'راجع ببطاقات', desc: 'لخص كل درس في بطاقة بالأفكار الرئيسية.' },
-        { icon: '📋', title: 'الامتحانات السابقة', desc: 'حل مواضيع السنوات السابقة هو أفضل تحضير.' },
-        { icon: '👥', title: 'مجموعة دراسة', desc: 'الشرح لشخص آخر أفضل طريقة للتعلم.' },
-        { icon: '😴', title: 'نم جيداً', desc: 'النوم الجيد ضروري للتركيز.' },
-        { icon: '👀', title: 'اقرأ التعليمات', desc: 'لا تترك أي سؤال دون إجابة.' },
-        { icon: '🎒', title: 'جهز أدواتك', desc: 'جهز القلم، المسطرة، الآلة الحاسبة مسبقاً.' },
-        { icon: '💪', title: 'تحكم في التوتر', desc: 'تنفس بعمق. لقد عملت بجد، أنت مستعد.' }
-      ],
-      plan: [
-        { day: 'الإثنين', morning: 'الفرنسية', afternoon: 'الرياضيات', evening: 'مراجعة حرة' },
-        { day: 'الثلاثاء', morning: 'العربية', afternoon: 'علوم الحياة', evening: 'تمارين' },
-        { day: 'الأربعاء', morning: 'الإنجليزية', afternoon: 'الفيزياء', evening: 'ملخصات' },
-        { day: 'الخميس', morning: 'التاريخ-الجغرافيا', afternoon: 'التربية الإسلامية', evening: 'الإعلاميات' },
-        { day: 'الجمعة', morning: 'الرياضيات', afternoon: 'الفرنسية', evening: 'امتحانات سابقة' },
-        { day: 'السبت', morning: 'حصيلة الأسبوع', afternoon: 'مواضيع الامتحان', evening: 'راحة' },
-        { day: 'الأحد', morning: '🕊️ راحة - رياضة', afternoon: 'ترفيه', evening: 'استرخاء' }
-      ],
-      quotes: [
-        { text: 'العلم نور والجهل ظلام', author: 'مثل عربي' },
-        { text: 'التعليم هو أقوى سلاح يمكنك استخدامه لتغيير العالم.', author: 'نيلسون مانديلا' },
-        { text: 'من جد وجد ومن زرع حصد.', author: 'مثل عربي' },
-        { text: 'لا تحلم بالنجاح، اعمل من أجله.', author: 'مثل مغربي' },
-        { text: 'إنما العلم بالتعلم.', author: 'الحديث النبوي' },
-        { text: 'العلم في الصغر كالنقش على الحجر.', author: 'مثل عربي' },
-        { text: 'رحلة الألف ميل تبدأ بخطوة.', author: 'كونفوشيوس' }
-      ]
-    },
+const L = {
+  fr: {
+    id:'fr',tag:'FR',label:'🇫🇷 Français',
+    langPick:'Choisis ta langue de révision',
+    loginSub:'Entre le code pour accéder à la plateforme',
+    loginLabel:"Code d'accès",
+    loginErr:'Code incorrect. Veuillez réessayer.',
+    loginHint:'Réservé aux élèves de 3ème Année Collège',
+    loginBtn:'Accéder',
+    topLeft:'📚 3AC Régional - Plateforme Éducative',
+    about:'À propos',
+    contact:'Contact',
+    headerSub:'Excellence pour tous',
+    navHome:'Accueil',navSubjects:'Matières',navResources:'Ressources',navPlanning:'Planning',navTips:'Conseils',navCountdown:'Compteur',
+    searchPlaceholder:'Rechercher une matière, un chapitre...',
+    heroBadge:'🎯 Examen Régional 2026',
+    heroTitle:"Réussis ton examen régional",
+    heroDesc:"La plateforme éducative n°1 pour les élèves de 3ème Année Collège au Maroc. Cours, exercices, examens et conseils.",
+    heroCta:'📚 Commencer maintenant →',
+    statSubjects:'Matières',statResources:'Ressources',statFree:'Gratuit',
+    secSubjects:'📚 Matières de l\'examen régional',
+    secResources:'📺 Ressources utiles',
+    secPlanning:'📅 Planning de révision',
+    secTips:'🎯 Conseils pour réussir',
+    mChap:'📖 Chapitres clés',
+    mTip:'💡 Conseils de révision',
+    planDay:'Jour',planAM:'Matin (9h-12h)',planPM:'Après-midi (14h-17h)',planEve:'Soir (18h-20h)',
+    cdTitle:'⏳ Compte à rebours',
+    cdDesc:'La date approximative de l\'examen régional est juin 2026',
+    cdDays:'Jours',cdHours:'Heures',cdMins:'Minutes',cdSecs:'Secondes',
+    footerDesc:'Plateforme éducative gratuite pour les élèves de 3ème Année Collège au Maroc. Cours, exercices et examens régionaux.',
+    footerQuick:'Liens rapides',footerSubjects:'Matières',footerResources:'Ressources',footerPlanning:'Planning',footerTips:'Conseils',
+    footerContact:'Contact',footerBottom:'Tous droits réservés',
+    subj:[
+      {id:1,name:'Français',icon:'📚',coeff:3,color:'c1',desc:'Langue française: grammaire, conjugaison, orthographe, rédaction et étude de texte.',
+        ch:['Les expansions du nom','Les modes et temps verbaux','La phrase simple et complexe','Les figures de style','Le texte argumentatif','Lecture et analyse','La rédaction'],
+        ti:['Lis le texte avant de répondre','Révise les conjugaisons','Fais un plan pour la rédaction','Soigne l\'orthographe','Apprends les connecteurs logiques']},
+      {id:2,name:'Arabe',icon:'📖',coeff:3,color:'c2',desc:'اللغة العربية: النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.',
+        ch:['النصوص: الشعر والنثر','الجملة الاسمية والفعلية','الفعل الصحيح والمعتل','التشبيه والاستعارة والكناية','التعبير والإنشاء','المذكر والمؤنث'],
+        ti:['اقرأ النص جيداً','احفظ القواعد','تدرب على الإنشاء','راجع الأفعال','استخدم قاموسًا']},
+      {id:3,name:'Anglais',icon:'🇬🇧',coeff:2,color:'c3',desc:'English: reading comprehension, grammar, vocabulary and writing.',
+        ch:['Present, Past, Future tenses','Passive voice','Conditional sentences','Relative clauses','Reading comprehension','Writing: paragraph, email'],
+        ti:['Learn 10 words daily','Practice writing','Read questions first','Review irregular verbs','Watch videos with subtitles']},
+      {id:4,name:'Histoire-Géographie',icon:'🌍',coeff:2,color:'c4',desc:'Histoire du Maroc, géographie du monde, développement et société.',
+        ch:['La colonisation et la décolonisation','Les deux guerres mondiales','Le Maroc sous le protectorat','La mondialisation','Les ressources naturelles','La population'],
+        ti:['Fais des fiches chronologiques','Utilise des cartes mentales','Apprends les dates clés','Relie causes/conséquences','Dessine des croquis']},
+      {id:5,name:'Éducation Islamique',icon:'🕌',coeff:2,color:'c5',desc:'التربية الإسلامية: القرآن، الحديث، العقيدة، الفقه والسيرة.',
+        ch:['القرآن الكريم (حفظ وتفسير)','الأحاديث النبوية','أركان الإسلام والإيمان','العبادات: الصلاة، الزكاة، الصوم','السيرة النبوية','القيم الإسلامية'],
+        ti:['احفظ مع المعنى','افهم أحكام العبادات','اربط بالحياة اليومية','ركز على القيم','استخدم تطبيقات القرآن']},
+      {id:6,name:'Mathématiques',icon:'📐',coeff:3,color:'c6',desc:'Algèbre, géométrie, arithmétique, statistiques et probabilités.',
+        ch:['Équations et inéquations','Systèmes d\'équations','Fonctions linéaires et affines','Théorème de Thalès','Théorème de Pythagore','Trigonométrie','Statistiques'],
+        ti:['Apprends les formules','Refais tous les exercices','Chronomètre-toi','Vérifie tes calculs','Dessine les figures']},
+      {id:7,name:'SVT',icon:'🧬',coeff:2,color:'c7',desc:'Biologie humaine, génétique, écologie et géologie.',
+        ch:['Nutrition chez l\'Homme','Respiration et circulation','Reproduction humaine','Génétique (ADN)','Écologie','Ressources naturelles'],
+        ti:['Fais des schémas légendés','Comprends les processus','Utilise des couleurs','Relie les chapitres','Entraîne-toi aux QCM']},
+      {id:8,name:'Physique-Chimie',icon:'⚗️',coeff:2,color:'c8',desc:'Électricité, mécanique, chimie des solutions, atomes et molécules.',
+        ch:['Atome et molécule','Solutions acides/basiques','Mouvement et vitesse','Forces et poids','Loi d\'Ohm','Puissance électrique'],
+        ti:['Maîtrise les formules','Entraîne-toi aux calculs','Comprends les schémas','Révise les définitions','Fais des fiches']},
+      {id:9,name:'Informatique',icon:'💻',coeff:1,color:'c9',desc:'Algorithmique, programmation, bureautique et internet.',
+        ch:['Algorithmique','Structures de contrôle','Boucles','Tableaux','Fonctions','Bureautique','Internet et sécurité'],
+        ti:['Pratique sur PC','Comprends la logique','Fais des petits programmes','Révise les définitions','Dessine les organigrammes']}
+    ],
+    res:[
+      {t:'📋 Sujets d\'examens régionaux',d:'Sujets des années précédentes PDF',c:'exam'},
+      {t:'📄 Cours de Français',d:'Résumés et exercices corrigés',c:'pdf'},
+      {t:'📄 Cours de Maths',d:'Fiches de révision et exercices',c:'pdf'},
+      {t:'🎬 Chaîne YouTube Révision 3AC',d:'Playlists par matière',c:'video'},
+      {t:'🎬 SVT en vidéo',d:'Cours animés expliqués',c:'video'},
+      {t:'🎬 Maths en vidéo',d:'Théorèmes pas à pas',c:'video'},
+      {t:'🔗 Moutamadris',d:'Plateforme officielle du ministère',c:'link'},
+      {t:'🔗 Taalim.ma',d:'Cours et exercices gratuits',c:'link'},
+      {t:'🔗 Exercices interactifs',d:'QCM et quiz en ligne',c:'link'},
+      {t:'🔗 Groupes d\'entraide',d:'WhatsApp / Télégram',c:'link'}
+    ],
+    tips:[
+      {ic:'⏰',t:'Organise ton temps',d:'Travaille 50min, repose-toi 10min. Technique Pomodoro.'},
+      {ic:'📝',t:'Révise par fiches',d:'Résume chaque chapitre sur une fiche avec les idées clés.'},
+      {ic:'📋',t:'Anciens sujets',d:'Les sujets des années précédentes sont la meilleure préparation.'},
+      {ic:'👥',t:'Groupe d\'étude',d:'Expliquer à quelqu\'un est la meilleure façon d\'apprendre.'},
+      {ic:'😴',t:'Dors bien',d:'Un bon sommeil est essentiel pour la concentration.'},
+      {ic:'👀',t:'Lis les consignes',d:'Repère les mots-clés. Ne laisse aucune question sans réponse.'},
+      {ic:'🎒',t:'Prépare ton matériel',d:'Stylo, crayon, règle, compas, calculatrice : prépare tout la veille.'},
+      {ic:'💪',t:'Gère ton stress',d:'Respire profondément. Tu as travaillé, tu es prêt.'}
+    ],
+    plan:[
+      {d:'Lundi',am:'Français',pm:'Maths',ev:'Révision libre'},
+      {d:'Mardi',am:'Arabe',pm:'SVT',ev:'Exercices'},
+      {d:'Mercredi',am:'Anglais',pm:'Physique-Chimie',ev:'Résumés'},
+      {d:'Jeudi',am:'Histoire-Géo',pm:'Éducation Islamique',ev:'Informatique'},
+      {d:'Vendredi',am:'Maths',pm:'Français',ev:'Annales'},
+      {d:'Samedi',am:'Bilan de la semaine',pm:'Sujets d\'examen',ev:'Repos'},
+      {d:'Dimanche',am:'🕊️ Repos — Sport',pm:'Loisirs',ev:'Détente'}
+    ],
+    quotes:[
+      {q:'Le succès n\'est pas la clé du bonheur. Le bonheur est la clé du succès.',a:'Albert Schweitzer'},
+      {q:'L\'éducation est l\'arme la plus puissante pour changer le monde.',a:'Nelson Mandela'},
+      {q:'Le travail acharné bat le talent quand le talent ne travaille pas dur.',a:'Tim Notke'},
+      {q:'Ne rêve pas de réussir, travaille pour réussir.',a:'Proverbe marocain'},
+      {q:'Savoir, ce n\'est pas connaître ; mais connaître, c\'est savoir.',a:'Ibn Sina'},
+      {q:'Celui qui ouvre une porte d\'école, ferme une prison.',a:'Victor Hugo'},
+      {q:'La chute n\'est pas un échec, l\'échec c\'est de rester là où on est tombé.',a:'Socrate'}
+    ]
+  },
+  ar: {
+    id:'ar',tag:'AR',label:'🇲🇦 العربية',
+    langPick:'اختر لغة المراجعة',
+    loginSub:'أدخل الرمز للوصول إلى المنصة',
+    loginLabel:'رمز الدخول',
+    loginErr:'رمز غير صحيح. حاول مرة أخرى.',
+    loginHint:'مخصص لتلاميذ السنة الثالثة إعدادي',
+    loginBtn:'دخول',
+    topLeft:'📚 3AC الجهوي - منصة تعليمية',
+    about:'حول',
+    contact:'اتصل بنا',
+    headerSub:'التميز للجميع',
+    navHome:'الرئيسية',navSubjects:'المواد',navResources:'الموارد',navPlanning:'التخطيط',navTips:'نصائح',navCountdown:'العد التنازلي',
+    searchPlaceholder:'ابحث عن مادة أو درس...',
+    heroBadge:'🎯 الامتحان الجهوي 2026',
+    heroTitle:'اجتز امتحانك الجهوي بنجاح',
+    heroDesc:'المنصة التعليمية الأولى لتلاميذ السنة الثالثة إعدادي في المغرب. دروس، تمارين، امتحانات ونصائح.',
+    heroCta:'📚 ابدأ الآن ←',
+    statSubjects:'مواد',statResources:'مورد',statFree:'مجاني',
+    secSubjects:'📚 مواد الامتحان الجهوي',
+    secResources:'📺 موارد مفيدة',
+    secPlanning:'📅 جدول المراجعة',
+    secTips:'🎯 نصائح للنجاح',
+    mChap:'📖 الدروس الرئيسية',
+    mTip:'💡 نصائح المراجعة',
+    planDay:'اليوم',planAM:'الصباح (9-12)',planPM:'بعد الظهر (14-17)',planEve:'المساء (18-20)',
+    cdTitle:'⏳ العد التنازلي',
+    cdDesc:'التاريخ التقريبي للامتحان الجهوي هو يونيو 2026',
+    cdDays:'أيام',cdHours:'ساعات',cdMins:'دقائق',cdSecs:'ثوان',
+    footerDesc:'منصة تعليمية مجانية لتلاميذ السنة الثالثة إعدادي في المغرب. دروس، تمارين وامتحانات جهوية.',
+    footerQuick:'روابط سريعة',footerSubjects:'المواد',footerResources:'الموارد',footerPlanning:'التخطيط',footerTips:'النصائح',
+    footerContact:'اتصل بنا',footerBottom:'جميع الحقوق محفوظة',
+    subj:[
+      {id:1,name:'الفرنسية',icon:'📚',coeff:3,color:'c1',desc:'اللغة الفرنسية: القواعد، الصرف، الإملاء، التعبير ودراسة النص.',
+        ch:['متممات الاسم','الأزمنة والأفعال','الجملة البسيطة والمركبة','المجاز والصور البيانية','النص الحجاجي','القراءة وتحليل النص','التعبير الكتابي'],
+        ti:['اقرأ النص جيداً','راجع تصريف الأفعال','خطط للتعبير','حسن الإملاء','تعلم الروابط المنطقية']},
+      {id:2,name:'العربية',icon:'📖',coeff:3,color:'c2',desc:'النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.',
+        ch:['النصوص: الشعر والنثر','الجملة الاسمية والفعلية','الفعل الصحيح والمعتل','التشبيه والاستعارة والكناية','التعبير والإنشاء','المذكر والمؤنث'],
+        ti:['اقرأ النص جيداً','احفظ القواعد','تدرب على الإنشاء','راجع الأفعال','استخدم قاموسًا']},
+      {id:3,name:'الإنجليزية',icon:'🇬🇧',coeff:2,color:'c3',desc:'الفهم والقراءة، القواعد، المفردات، التعبير الكتابي.',
+        ch:['الأزمنة: مضارع، ماض، مستقبل','المبني للمجهول','الجمل الشرطية','الجمل الموصولة','فهم النص','التعبير: فقرة، رسالة'],
+        ti:['تعلم 10 كلمات يومياً','تدرب على الكتابة','اقرأ الأسئلة أولاً','راجع الأفعال الشاذة','شاهد فيديوهات']},
+      {id:4,name:'التاريخ والجغرافيا',icon:'🌍',coeff:2,color:'c4',desc:'تاريخ المغرب، الجغرافيا، التنمية والمجتمع.',
+        ch:['الاستعمار والاستقلال','الحربان العالميتان','المغرب تحت الحماية','العولمة','الموارد الطبيعية','السكان والتنمية'],
+        ti:['اصنع بطاقات زمنية','استخدم الخرائط الذهنية','احفظ التواريخ','اربط الأحداث','ارسم خرائط']},
+      {id:5,name:'التربية الإسلامية',icon:'🕌',coeff:2,color:'c5',desc:'القرآن، الحديث، العقيدة، الفقه والسيرة.',
+        ch:['القرآن الكريم','الأحاديث النبوية','أركان الإسلام والإيمان','العبادات','السيرة النبوية','القيم الإسلامية'],
+        ti:['احفظ مع المعنى','افهم الأحكام','اربط بالحياة','ركز على القيم','استخدم التطبيقات']},
+      {id:6,name:'الرياضيات',icon:'📐',coeff:3,color:'c6',desc:'الجبر، الهندسة، الحساب، الإحصاء والاحتمالات.',
+        ch:['المعادلات والمتراجحات','نظم المعادلات','الدوال الخطية','نظرية طاليس','نظرية فيثاغورس','حساب المثلثات','الإحصاء'],
+        ti:['احفظ القوانين','أعد حل التمارين','تحدى نفسك بالوقت','تحقق من حساباتك','ارسم الأشكال']},
+      {id:7,name:'علوم الحياة والأرض',icon:'🧬',coeff:2,color:'c7',desc:'البيولوجيا، علم الوراثة، البيئة والجيولوجيا.',
+        ch:['التغذية عند الإنسان','التنفس والدوران','التكاثر','علم الوراثة','البيئة','الموارد الطبيعية'],
+        ti:['ارسم رسومات تخطيطية','افهم العمليات','استخدم الألوان','اربط الدروس','تدرب على MCQ']},
+      {id:8,name:'الفيزياء والكيمياء',icon:'⚗️',coeff:2,color:'c8',desc:'الكهرباء، الميكانيكا، الكيمياء، الذرات والجزيئات.',
+        ch:['الذرة والجزيء','المحاليل الحمضية','الحركة والسرعة','القوى والوزن','قانون أوم','القدرة الكهربائية'],
+        ti:['اتقن القوانين','تدرب على الحساب','افهم المخططات','راجع التعريفات','اصنع بطاقات']},
+      {id:9,name:'الإعلاميات',icon:'💻',coeff:1,color:'c9',desc:'الخوارزميات، البرمجة، المكتبية والإنترنت.',
+        ch:['الخوارزميات','هياكل التحكم','الحلقات','المصفوفات','الدوال','المكتبية','الإنترنت والأمن'],
+        ti:['تدرب على الحاسوب','افهم المنطق','برمج برامج صغيرة','راجع المفاهيم','ارسم المخططات']}
+    ],
+    res:[
+      {t:'📋 مواضيع الامتحانات الجهوية',d:'مواضيع السنوات السابقة PDF',c:'exam'},
+      {t:'📄 دروس الفرنسية',d:'ملخصات وتمارين مع التصحيح',c:'pdf'},
+      {t:'📄 دروس الرياضيات',d:'بطاقات مراجعة وتمارين',c:'pdf'},
+      {t:'🎬 قناة يوتيوب مراجعة 3AC',d:'قوائم تشغيل حسب المواد',c:'video'},
+      {t:'🎬 علوم الحياة بالفيديو',d:'دروس مصورة ومفسرة',c:'video'},
+      {t:'🎬 الرياضيات بالفيديو',d:'النظريات خطوة بخطوة',c:'video'},
+      {t:'🔗 Moutamadris',d:'المنصة الرسمية للوزارة',c:'link'},
+      {t:'🔗 Taalim.ma',d:'دروس وتمارين مجانية',c:'link'},
+      {t:'🔗 تمارين تفاعلية',d:'اختبارات MCQ أونلاين',c:'link'},
+      {t:'🔗 مجموعات الدعم',d:'واتساب / تيليغرام',c:'link'}
+    ],
+    tips:[
+      {ic:'⏰',t:'نظم وقتك',d:'اعمل 50 دقيقة، استرح 10. تقنية بومودورو.'},
+      {ic:'📝',t:'راجع ببطاقات',d:'لخص كل درس في بطاقة.'},
+      {ic:'📋',t:'الامتحانات السابقة',d:'حل مواضيع السنوات السابقة أفضل تحضير.'},
+      {ic:'👥',t:'مجموعة دراسة',d:'الشرح لشخص آخر أفضل طريقة للتعلم.'},
+      {ic:'😴',t:'نم جيداً',d:'النوم الجيد ضروري للتركيز.'},
+      {ic:'👀',t:'اقرأ التعليمات',d:'لا تترك أي سؤال دون إجابة.'},
+      {ic:'🎒',t:'جهز أدواتك',d:'جهز القلم، المسطرة، الآلة الحاسبة مسبقاً.'},
+      {ic:'💪',t:'تحكم في التوتر',d:'تنفس بعمق. أنت مستعد.'}
+    ],
+    plan:[
+      {d:'الإثنين',am:'الفرنسية',pm:'الرياضيات',ev:'مراجعة حرة'},
+      {d:'الثلاثاء',am:'العربية',pm:'علوم الحياة',ev:'تمارين'},
+      {d:'الأربعاء',am:'الإنجليزية',pm:'الفيزياء',ev:'ملخصات'},
+      {d:'الخميس',am:'التاريخ-الجغرافيا',pm:'التربية الإسلامية',ev:'الإعلاميات'},
+      {d:'الجمعة',am:'الرياضيات',pm:'الفرنسية',ev:'امتحانات سابقة'},
+      {d:'السبت',am:'حصيلة الأسبوع',pm:'مواضيع الامتحان',ev:'راحة'},
+      {d:'الأحد',am:'🕊️ راحة - رياضة',pm:'ترفيه',ev:'استرخاء'}
+    ],
+    quotes:[
+      {q:'العلم نور والجهل ظلام',a:'مثل عربي'},
+      {q:'التعليم هو أقوى سلاح لتغيير العالم.',a:'نيلسون مانديلا'},
+      {q:'من جد وجد ومن زرع حصد.',a:'مثل عربي'},
+      {q:'لا تحلم بالنجاح، اعمل من أجله.',a:'مثل مغربي'},
+      {q:'إنما العلم بالتعلم.',a:'الحديث النبوي'},
+      {q:'العلم في الصغر كالنقش على الحجر.',a:'مثل عربي'},
+      {q:'رحلة الألف ميل تبدأ بخطوة.',a:'كونفوشيوس'}
+    ]
+  },
+  en: {
+    id:'en',tag:'EN',label:'🇬🇧 English',
+    langPick:'Choose your revision language',
+    loginSub:'Enter the code to access the platform',
+    loginLabel:'Access Code',
+    loginErr:'Incorrect code. Please try again.',
+    loginHint:'For 3rd Year Middle School students in Morocco',
+    loginBtn:'Access',
+    topLeft:'📚 3AC Regional - Educational Platform',
+    about:'About',
+    contact:'Contact',
+    headerSub:'Excellence for all',
+    navHome:'Home',navSubjects:'Subjects',navResources:'Resources',navPlanning:'Planning',navTips:'Tips',navCountdown:'Countdown',
+    searchPlaceholder:'Search a subject, chapter...',
+    heroBadge:'🎯 Regional Exam 2026',
+    heroTitle:'Succeed in your Regional Exam',
+    heroDesc:'The #1 educational platform for 3rd Year Middle School students in Morocco. Courses, exercises, exams and tips.',
+    heroCta:'📚 Start now →',
+    statSubjects:'Subjects',statResources:'Resources',statFree:'Free',
+    secSubjects:'📚 Regional Exam Subjects',
+    secResources:'📺 Useful Resources',
+    secPlanning:'📅 Revision Schedule',
+    secTips:'🎯 Success Tips',
+    mChap:'📖 Key Chapters',
+    mTip:'💡 Revision Tips',
+    planDay:'Day',planAM:'Morning (9am-12pm)',planPM:'Afternoon (2pm-5pm)',planEve:'Evening (6pm-8pm)',
+    cdTitle:'⏳ Countdown',
+    cdDesc:'The regional exam is approximately June 2026',
+    cdDays:'Days',cdHours:'Hours',cdMins:'Minutes',cdSecs:'Seconds',
+    footerDesc:'Free educational platform for 3rd Year Middle School students in Morocco. Courses, exercises and regional exams.',
+    footerQuick:'Quick Links',footerSubjects:'Subjects',footerResources:'Resources',footerPlanning:'Planning',footerTips:'Tips',
+    footerContact:'Contact',footerBottom:'All rights reserved',
+    subj:[
+      {id:1,name:'French',icon:'📚',coeff:3,color:'c1',desc:'French language: grammar, conjugation, spelling, writing and text analysis.',
+        ch:['Noun expansions','Verb tenses and moods','Simple and complex sentences','Figures of speech','Argumentative text','Reading analysis','Essay writing'],
+        ti:['Read the text before answering','Review verb conjugations','Plan your essay','Check your spelling','Learn transition words']},
+      {id:2,name:'Arabic',icon:'📖',coeff:3,color:'c2',desc:'Arabic language: texts, grammar, morphology, rhetoric, expression.',
+        ch:['Poetry and prose texts','Nominal and verbal sentences','Regular and irregular verbs','Simile, metaphor, metonymy','Expression and writing','Masculine/feminine'],
+        ti:['Read the text carefully','Memorize grammar rules','Practice writing','Review verb patterns','Use a dictionary']},
+      {id:3,name:'English',icon:'🇬🇧',coeff:2,color:'c3',desc:'Reading comprehension, grammar, vocabulary, and writing skills.',
+        ch:['Present, Past, Future tenses','Passive voice','Conditional sentences','Relative clauses','Reading comprehension','Writing: paragraph, email'],
+        ti:['Learn 10 words daily','Practice writing','Read questions first','Review irregular verbs','Watch videos with subtitles']},
+      {id:4,name:'History & Geography',icon:'🌍',coeff:2,color:'c4',desc:'Moroccan history, world geography, development and society.',
+        ch:['Colonization and decolonization','World War I & II','Morocco under protectorate','Globalization','Natural resources','Population'],
+        ti:['Make timeline cards','Use mind maps','Learn key dates','Connect causes/effects','Draw sketch maps']},
+      {id:5,name:'Islamic Education',icon:'🕌',coeff:2,color:'c5',desc:'Quran, Hadith, faith, jurisprudence and biography of the Prophet.',
+        ch:['Holy Quran (memorization)','Prophetic Hadith','Pillars of Islam and Faith','Worship: prayer, zakat, fasting','Prophetic biography','Islamic values'],
+        ti:['Memorize with meaning','Understand religious rulings','Connect to daily life','Focus on values','Use Quran apps']},
+      {id:6,name:'Mathematics',icon:'📐',coeff:3,color:'c6',desc:'Algebra, geometry, arithmetic, statistics and probability.',
+        ch:['Equations and inequalities','Systems of equations','Linear and affine functions','Thales theorem','Pythagorean theorem','Trigonometry','Statistics'],
+        ti:['Learn all formulas','Redo every exercise','Time yourself','Double-check calculations','Draw geometric figures']},
+      {id:7,name:'Biology & Geology',icon:'🧬',coeff:2,color:'c7',desc:'Human biology, genetics, ecology, geology.',
+        ch:['Human nutrition','Respiration and circulation','Human reproduction','Genetics (DNA)','Ecology and ecosystems','Natural resources'],
+        ti:['Draw labeled diagrams','Understand processes','Use colors for notes','Connect chapters','Practice MCQs']},
+      {id:8,name:'Physics & Chemistry',icon:'⚗️',coeff:2,color:'c8',desc:'Electricity, mechanics, chemistry, atoms and molecules.',
+        ch:['Atoms and molecules','Acidic and basic solutions','Motion and speed','Forces and weight','Ohm\'s law','Electric power'],
+        ti:['Master formulas and units','Practice calculations','Understand circuits','Review definitions','Make formula cards']},
+      {id:9,name:'Computer Science',icon:'💻',coeff:1,color:'c9',desc:'Algorithms, programming, office tools and internet.',
+        ch:['Algorithms','Control structures','Loops','Arrays','Functions','Office tools','Internet and security'],
+        ti:['Practice on a computer','Understand the logic','Write small programs','Review concepts','Draw flowcharts']}
+    ],
+    res:[
+      {t:'📋 Regional Exam Papers',d:'Previous years exam PDFs',c:'exam'},
+      {t:'📄 French Course',d:'Summaries and corrected exercises',c:'pdf'},
+      {t:'📄 Math Course',d:'Revision cards and exercises',c:'pdf'},
+      {t:'🎬 YouTube Revision 3AC',d:'Subject playlists',c:'video'},
+      {t:'🎬 Biology videos',d:'Animated course explanations',c:'video'},
+      {t:'🎬 Math videos',d:'Step-by-step theorem explanation',c:'video'},
+      {t:'🔗 Moutamadris',d:'Official ministry platform',c:'link'},
+      {t:'🔗 Taalim.ma',d:'Free courses and exercises',c:'link'},
+      {t:'🔗 Interactive Exercises',d:'Online MCQ tests',c:'link'},
+      {t:'🔗 Study Groups',d:'WhatsApp / Telegram groups',c:'link'}
+    ],
+    tips:[
+      {ic:'⏰',t:'Organize your time',d:'Work 50min, rest 10min. Pomodoro technique.'},
+      {ic:'📝',t:'Use revision cards',d:'Summarize each chapter on a card.'},
+      {ic:'📋',t:'Past exam papers',d:'Previous years exams are the best preparation.'},
+      {ic:'👥',t:'Study group',d:'Explaining to someone is the best way to learn.'},
+      {ic:'😴',t:'Sleep well',d:'Good sleep is essential for concentration.'},
+      {ic:'👀',t:'Read instructions',d:'Leave no question unanswered.'},
+      {ic:'🎒',t:'Prepare your materials',d:'Pen, pencil, ruler, compass, calculator.'},
+      {ic:'💪',t:'Manage stress',d:'Breathe deeply. You are ready.'}
+    ],
+    plan:[
+      {d:'Monday',am:'French',pm:'Math',ev:'Free revision'},
+      {d:'Tuesday',am:'Arabic',pm:'Biology',ev:'Exercises'},
+      {d:'Wednesday',am:'English',pm:'Physics-Chemistry',ev:'Summaries'},
+      {d:'Thursday',am:'History-Geo',pm:'Islamic Education',ev:'Computer Science'},
+      {d:'Friday',am:'Math',pm:'French',ev:'Past papers'},
+      {d:'Saturday',am:'Weekly review',pm:'Exam subjects',ev:'Rest'},
+      {d:'Sunday',am:'🕊️ Rest — Sports',pm:'Leisure',ev:'Relaxation'}
+    ],
+    quotes:[
+      {q:'Success is not the key to happiness. Happiness is the key to success.',a:'Albert Schweitzer'},
+      {q:'Education is the most powerful weapon to change the world.',a:'Nelson Mandela'},
+      {q:'Hard work beats talent when talent doesn\'t work hard.',a:'Tim Notke'},
+      {q:'Don\'t dream of success, work for it.',a:'Moroccan proverb'},
+      {q:'Knowledge is power.',a:'Francis Bacon'},
+      {q:'The only way to do great work is to love what you do.',a:'Steve Jobs'},
+      {q:'The journey of a thousand miles begins with one step.',a:'Lao Tzu'}
+    ]
+  }
+};
 
-    en: {
-      code: 'en', label: '🇬🇧 English', indicator: 'EN',
-      loginSubtitle: 'Enter the code to access the platform',
-      loginLabel: 'Access Code',
-      loginPlaceholder: 'Enter your code',
-      loginError: 'Incorrect code. Please try again.',
-      loginHint: 'For 3rd Year Middle School students in Morocco',
-      loginBtn: 'Access',
-      headerDesc: 'Complete platform to succeed in your regional exam in Morocco',
-      navHome: 'Home', navSubjects: 'Subjects', navResources: 'Resources',
-      navPlanning: 'Planning', navTips: 'Tips', navCountdown: 'Countdown',
-      heroTitle: 'Welcome to 3AC Regional',
-      heroDesc: 'Prepare effectively for the regional exam with courses, summaries, exercises and tips adapted to the Moroccan curriculum.',
-      statSubjects: 'Subjects', statResources: 'Resources', statFree: 'Free',
-      sectionSubjects: '📚 Regional Exam Subjects',
-      sectionResources: '📺 Useful Resources',
-      sectionPlanning: '📅 Revision Schedule',
-      sectionTips: '🎯 Success Tips',
-      modalChaptersTitle: '📖 Key Chapters',
-      modalTipsTitle: '💡 Revision Tips',
-      planDay: 'Day', planMorning: 'Morning (9am-12pm)', planAfternoon: 'Afternoon (2pm-5pm)', planEvening: 'Evening (6pm-8pm)',
-      cdTitle: '⏳ Countdown to the Regional Exam',
-      cdDesc: 'The approximate date of the regional exam is June 2026. Every second counts!',
-      cdDays: 'Days', cdHours: 'Hours', cdMins: 'Minutes', cdSecs: 'Seconds',
-      footerText: 'Free educational website for 3rd Year Middle School students in Morocco',
-      subjects: [
-        { id: 1, name: 'French', icon: '📚', coeff: 3, desc: 'French language: grammar, conjugation, spelling, writing and text analysis.', color: 'c1',
-          chapitres: ['Noun expansions', 'Verb tenses and moods', 'Simple and complex sentences', 'Figures of speech', 'Argumentative text', 'Reading analysis', 'Essay writing'],
-          astuces: ['Read the text before answering', 'Review verb conjugations', 'Plan your essay', 'Check your spelling', 'Learn transition words'] },
-        { id: 2, name: 'Arabic', icon: '📖', coeff: 3, desc: 'Arabic language: texts, grammar, morphology, rhetoric, expression.', color: 'c2',
-          chapitres: ['Poetry and prose texts', 'Nominal and verbal sentences', 'Regular and irregular verbs', 'Simile, metaphor, metonymy', 'Expression and writing', 'Masculine/feminine'],
-          astuces: ['Read the text carefully', 'Memorize grammar rules', 'Practice writing', 'Review verb patterns', 'Use a dictionary'] },
-        { id: 3, name: 'English', icon: '🇬🇧', coeff: 2, desc: 'Reading comprehension, grammar, vocabulary, and writing skills.', color: 'c3',
-          chapitres: ['Present, Past, Future tenses', 'Passive voice', 'Conditional sentences', 'Relative clauses', 'Reading comprehension', 'Writing: paragraph, email'],
-          astuces: ['Learn 10 words daily', 'Practice writing', 'Read questions first', 'Review irregular verbs', 'Watch videos with subtitles'] },
-        { id: 4, name: 'History & Geography', icon: '🌍', coeff: 2, desc: 'Moroccan history, world geography, development and society.', color: 'c4',
-          chapitres: ['Colonization and decolonization', 'World War I & II', 'Morocco under protectorate', 'Globalization', 'Natural resources', 'Population and sustainable development'],
-          astuces: ['Make timeline cards', 'Use mind maps', 'Learn key dates', 'Connect causes/effects', 'Draw sketch maps'] },
-        { id: 5, name: 'Islamic Education', icon: '🕌', coeff: 2, desc: 'Quran, Hadith, faith, jurisprudence and biography of the Prophet.', color: 'c5',
-          chapitres: ['Holy Quran (memorization)', 'Prophetic Hadith', 'Pillars of Islam and Faith', 'Worship: prayer, zakat, fasting', 'Prophetic biography', 'Islamic values'],
-          astuces: ['Memorize with meaning', 'Understand religious rulings', 'Connect to daily life', 'Focus on values', 'Use Quran apps'] },
-        { id: 6, name: 'Mathematics', icon: '📐', coeff: 3, desc: 'Algebra, geometry, arithmetic, statistics and probability.', color: 'c6',
-          chapitres: ['Equations and inequalities', 'Systems of equations', 'Linear and affine functions', 'Thales theorem', 'Pythagorean theorem', 'Trigonometry', 'Statistics and probability'],
-          astuces: ['Learn all formulas', 'Redo every exercise', 'Time yourself', 'Double-check calculations', 'Draw geometric figures'] },
-        { id: 7, name: 'Biology & Geology', icon: '🧬', coeff: 2, desc: 'Human biology, genetics, ecology, geology.', color: 'c7',
-          chapitres: ['Human nutrition', 'Respiration and circulation', 'Human reproduction', 'Genetics (DNA)', 'Ecology and ecosystems', 'Natural resources'],
-          astuces: ['Draw labeled diagrams', 'Understand processes', 'Use colors for notes', 'Connect chapters', 'Practice MCQs'] },
-        { id: 8, name: 'Physics & Chemistry', icon: '⚗️', coeff: 2, desc: 'Electricity, mechanics, chemistry, atoms and molecules.', color: 'c8',
-          chapitres: ['Atoms and molecules', 'Acidic and basic solutions', 'Motion and speed', 'Forces and weight', 'Ohm\'s law', 'Electric power'],
-          astuces: ['Master formulas and units', 'Practice calculations', 'Understand circuits', 'Review definitions', 'Make formula cards'] },
-        { id: 9, name: 'Computer Science', icon: '💻', coeff: 1, desc: 'Algorithms, programming, office tools and internet.', color: 'c9',
-          chapitres: ['Algorithms', 'Control structures', 'Loops', 'Arrays', 'Functions', 'Office tools (Word, Excel)', 'Internet and security'],
-          astuces: ['Practice on a computer', 'Understand the logic', 'Write small programs', 'Review concepts', 'Draw flowcharts'] }
-      ],
-      resources: [
-        { title: '📋 Regional Exam Papers', desc: 'Previous years exam PDFs', type: 'exam' },
-        { title: '📄 French Course', desc: 'Summaries and corrected exercises', type: 'pdf' },
-        { title: '📄 Math Course', desc: 'Revision cards and exercises', type: 'pdf' },
-        { title: '🎬 YouTube Revision 3AC', desc: 'Subject playlists', type: 'video' },
-        { title: '🎬 Biology videos', desc: 'Animated course explanations', type: 'video' },
-        { title: '🎬 Math videos', desc: 'Step-by-step theorem explanation', type: 'video' },
-        { title: '🔗 Moutamadris', desc: 'Official ministry platform', type: 'link' },
-        { title: '🔗 Taalim.ma', desc: 'Free courses and exercises', type: 'link' },
-        { title: '🔗 Interactive Exercises', desc: 'Online MCQ tests', type: 'link' },
-        { title: '🔗 Study Groups', desc: 'WhatsApp / Telegram groups', type: 'link' }
-      ],
-      tips: [
-        { icon: '⏰', title: 'Organize your time', desc: 'Work 50min, rest 10min. Use the Pomodoro technique.' },
-        { icon: '📝', title: 'Use revision cards', desc: 'Summarize each chapter on a card with key ideas.' },
-        { icon: '📋', title: 'Past exam papers', desc: 'Previous years exams are the best preparation.' },
-        { icon: '👥', title: 'Study group', desc: 'Explaining to someone is the best way to learn.' },
-        { icon: '😴', title: 'Sleep well', desc: 'Good sleep is essential for concentration.' },
-        { icon: '👀', title: 'Read instructions', desc: 'Leave no question unanswered.' },
-        { icon: '🎒', title: 'Prepare your materials', desc: 'Pen, pencil, ruler, compass, calculator: prepare everything.' },
-        { icon: '💪', title: 'Manage stress', desc: 'Breathe deeply. You have worked hard, you are ready.' }
-      ],
-      plan: [
-        { day: 'Monday', morning: 'French', afternoon: 'Math', evening: 'Free revision' },
-        { day: 'Tuesday', morning: 'Arabic', afternoon: 'Biology', evening: 'Exercises' },
-        { day: 'Wednesday', morning: 'English', afternoon: 'Physics-Chemistry', evening: 'Summaries' },
-        { day: 'Thursday', morning: 'History-Geo', afternoon: 'Islamic Education', evening: 'Computer Science' },
-        { day: 'Friday', morning: 'Math', afternoon: 'French', evening: 'Past papers' },
-        { day: 'Saturday', morning: 'Weekly review', afternoon: 'Exam subjects', evening: 'Rest' },
-        { day: 'Sunday', morning: '🕊️ Rest — Sports', afternoon: 'Leisure', evening: 'Relaxation' }
-      ],
-      quotes: [
-        { text: 'Success is not the key to happiness. Happiness is the key to success.', author: 'Albert Schweitzer' },
-        { text: 'Education is the most powerful weapon to change the world.', author: 'Nelson Mandela' },
-        { text: 'Hard work beats talent when talent doesn\'t work hard.', author: 'Tim Notke' },
-        { text: 'Don\'t dream of success, work for it.', author: 'Moroccan proverb' },
-        { text: 'Knowledge is power.', author: 'Francis Bacon' },
-        { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
-        { text: 'The journey of a thousand miles begins with one step.', author: 'Lao Tzu' }
-      ]
-    }
-  };
-
-  // ========== STATE ==========
-  const CORRECT_CODE = 'hassan1993';
-  let currentLang = 'fr';
-
-  // ========== SCREENS ==========
-  const langScreen = document.getElementById('langScreen');
-  const loginScreen = document.getElementById('loginScreen');
-  const mainSite = document.getElementById('mainSite');
-  const codeInput = document.getElementById('codeInput');
-  const loginBtn = document.getElementById('loginBtn');
-  const loginError = document.getElementById('loginError');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const langSwitch = document.getElementById('langSwitch');
-
-  // ========== CHOOSE LANGUAGE ==========
-  function chooseLang(lang) {
-    currentLang = lang;
-    langScreen.classList.add('hidden');
-    loginScreen.classList.add('active');
-    document.getElementById('langIndicator').textContent = LANG[lang].indicator;
-    updateLoginLang(lang);
+// ===== LOGIN =====
+function chooseLang(l){
+  lang=l;
+  document.getElementById('langScreen').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('pin-right');
+  document.getElementById('loginScreen').classList.add('active');
+  document.getElementById('langTag').textContent=L[l].tag;
+  const d=L[l];
+  document.getElementById('loginSub').textContent=d.loginSub;
+  document.getElementById('loginLabel').textContent=d.loginLabel;
+  document.getElementById('loginBtn').textContent=d.loginBtn;
+  document.getElementById('errMsg').textContent=d.loginErr;
+  document.getElementById('loginHint').textContent=d.loginHint;
+  codeInput.placeholder='••••••••';
+  codeInput.focus();
+}
+document.getElementById('backBtn').addEventListener('click',()=>{
+  document.getElementById('loginScreen').classList.add('pin-right');
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('langScreen').classList.remove('hidden');
+});
+const codeInput=document.getElementById('codeInput');
+function doLogin(){
+  if(codeInput.value.trim()===CORRECT){
+    localStorage.setItem('3ac_logged_in','true');
+    localStorage.setItem('3ac_lang',lang);
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('mainSite').classList.add('visible');
+    document.getElementById('loginErr').classList.remove('show');
+    render();
+  }else{
+    document.getElementById('loginErr').classList.add('show');
+    codeInput.value='';
     codeInput.focus();
   }
+}
+document.getElementById('loginBtn').addEventListener('click',doLogin);
+codeInput.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  localStorage.removeItem('3ac_logged_in');
+  localStorage.removeItem('3ac_lang');
+  document.getElementById('mainSite').classList.remove('visible');
+  document.getElementById('loginOverlay').classList.remove('hidden');
+  document.getElementById('loginScreen').classList.add('pin-right');
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('langScreen').classList.remove('hidden');
+  codeInput.value='';
+  document.getElementById('loginErr').classList.remove('show');
+});
+// Lang switch
+document.getElementById('langSwitchBtn').addEventListener('click',()=>{
+  const ls=['fr','ar','en'];
+  lang=ls[(ls.indexOf(lang)+1)%3];
+  localStorage.setItem('3ac_lang',lang);
+  render();
+});
+// Saved session
+(function(){
+  const s=localStorage.getItem('3ac_logged_in');
+  const l=localStorage.getItem('3ac_lang');
+  if(s==='true'&&l){lang=l;document.getElementById('loginOverlay').classList.add('hidden');document.getElementById('mainSite').classList.add('visible');render()}
+})();
 
-  document.getElementById('backToLang').addEventListener('click', () => {
-    loginScreen.classList.remove('active');
-    langScreen.classList.remove('hidden');
-  });
+// ===== SEARCH =====
+document.getElementById('searchToggle').addEventListener('click',()=>{document.getElementById('searchOverlay').classList.toggle('active');document.getElementById('searchInput').focus()});
+document.getElementById('searchClose').addEventListener('click',()=>{document.getElementById('searchOverlay').classList.remove('active')});
+document.getElementById('searchInput').addEventListener('input',function(){
+  const q=this.value.toLowerCase().trim();
+  const d=L[lang];
+  const r=document.getElementById('searchResults');
+  if(!q){r.innerHTML='';return}
+  const m=d.subj.filter(s=>s.name.toLowerCase().includes(q)||s.ch.some(c=>c.toLowerCase().includes(q)));
+  r.innerHTML=m.length?m.map(s=>`<a href="#" onclick="openSubject(${s.id});document.getElementById('searchOverlay').classList.remove('active');this.blur();return false">${s.icon} ${s.name}</a>`).join('')+'<a href="#" style="opacity:0.4">...</a>':'<span style="color:rgba(255,255,255,0.3);padding:0.7rem 1rem;display:block">Aucun résultat</span>';
+});
 
-  function updateLoginLang(lang) {
-    const d = LANG[lang];
-    document.getElementById('loginSubtitle').textContent = d.loginSubtitle;
-    document.getElementById('loginLabel').textContent = d.loginLabel;
-    codeInput.placeholder = d.loginPlaceholder;
-    document.getElementById('loginBtn').textContent = d.loginBtn;
-    document.getElementById('errorMsg').textContent = d.loginError;
-    document.getElementById('loginHint').textContent = d.loginHint;
-  }
+// ===== RENDER =====
+function render(){
+  const d=L[lang];
+  document.getElementById('langSwitchBtn').textContent=d.label;
+  document.getElementById('headerSub').textContent=d.headerSub;
+  document.getElementById('topBarLeft').textContent=d.topLeft;
+  document.getElementById('navHome').textContent=d.navHome;
+  document.getElementById('navSubjects').textContent=d.navSubjects;
+  document.getElementById('navResources').textContent=d.navResources;
+  document.getElementById('navPlanning').textContent=d.navPlanning;
+  document.getElementById('navTips').textContent=d.navTips;
+  document.getElementById('navCountdown').textContent=d.navCountdown;
+  document.getElementById('searchInput').placeholder=d.searchPlaceholder;
+  document.getElementById('heroBadge').textContent=d.heroBadge;
+  document.getElementById('heroTitle').textContent=d.heroTitle;
+  document.getElementById('heroDesc').textContent=d.heroDesc;
+  document.getElementById('heroCta').textContent=d.heroCta;
+  document.getElementById('statSubjects').textContent=d.statSubjects;
+  document.getElementById('statResources').textContent=d.statResources;
+  document.getElementById('statFree').textContent=d.statFree;
+  document.getElementById('secSubjects').textContent=d.secSubjects;
+  document.getElementById('secResources').textContent=d.secResources;
+  document.getElementById('secPlanning').textContent=d.secPlanning;
+  document.getElementById('secTips').textContent=d.secTips;
+  document.getElementById('mChapTitle').textContent=d.mChap;
+  document.getElementById('mTipTitle').textContent=d.mTip;
+  document.getElementById('planDay').textContent=d.planDay;
+  document.getElementById('planAM').textContent=d.planAM;
+  document.getElementById('planPM').textContent=d.planPM;
+  document.getElementById('planEve').textContent=d.planEve;
+  document.getElementById('cdTitle').textContent=d.cdTitle;
+  document.getElementById('cdDesc').textContent=d.cdDesc;
+  document.getElementById('cdDaysLbl').textContent=d.cdDays;
+  document.getElementById('cdHoursLbl').textContent=d.cdHours;
+  document.getElementById('cdMinsLbl').textContent=d.cdMins;
+  document.getElementById('cdSecsLbl').textContent=d.cdSecs;
+  document.getElementById('footerDesc').textContent=d.footerDesc;
+  document.getElementById('footerQuick').textContent=d.footerQuick;
+  document.getElementById('footerSubjects').textContent=d.footerSubjects;
+  document.getElementById('footerResources').textContent=d.footerResources;
+  document.getElementById('footerPlanning').textContent=d.footerPlanning;
+  document.getElementById('footerTips').textContent=d.footerTips;
+  document.getElementById('footerContact').textContent=d.footerContact;
+  document.getElementById('footerBottom').textContent=d.footerBottom;
+  // Subjects
+  const sg=document.getElementById('subjectsGrid');
+  sg.innerHTML=d.subj.map(s=>`<div class="subject-card ${s.color}" data-id="${s.id}"><span class="icon">${s.icon}</span><h3>${s.name}</h3><span class="coeff">${d.id==='ar'?'المعامل':'Coefficient'} ${s.coeff}</span></div>`).join('');
+  sg.querySelectorAll('.subject-card').forEach(c=>c.addEventListener('click',()=>openSubject(parseInt(c.dataset.id))));
+  // Resources
+  const rg=document.getElementById('resourcesGrid');
+  const im={pdf:'📄',video:'🎬',exam:'📋',link:'🔗'},cm={pdf:'pdf',video:'video',exam:'exam',link:'link'};
+  rg.innerHTML=d.res.map(r=>`<div class="resource-card"><div class="rico ${cm[r.c]}">${im[r.c]}</div><div class="rinfo"><h4>${r.t}</h4><p>${r.d}</p></div></div>`).join('');
+  // Tips
+  const tg=document.getElementById('tipsGrid');
+  tg.innerHTML=d.tips.map(t=>`<div class="tip-card"><span class="tip-icon">${t.ic}</span><h3>${t.t}</h3><p>${t.d}</p></div>`).join('');
+  // Plan
+  document.getElementById('planBody').innerHTML=d.plan.map(p=>`<tr><td class="day">${p.d}</td><td>${p.am}</td><td>${p.pm}</td><td>${p.ev}</td></tr>`).join('');
+  // Quote
+  const qs=d.quotes;
+  qIdx=Math.min(qIdx,qs.length-1);
+  const q=qs[qIdx];
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qAuthor').textContent='— '+q.a;
+}
+function openSubject(id){
+  const d=L[lang];
+  const s=d.subj.find(x=>x.id===id);
+  if(!s)return;
+  document.getElementById('mIcon').textContent=s.icon;
+  document.getElementById('mTitle').textContent=s.name;
+  document.getElementById('mSub').textContent=s.desc;
+  document.getElementById('mInfo').innerHTML=`<span>${d.id==='ar'?'📊 المعامل':'📊 Coefficient'}: ${s.coeff}</span>`;
+  document.getElementById('mChaps').innerHTML=s.ch.map(c=>`<li>${c}</li>`).join('');
+  document.getElementById('mTips').innerHTML=s.ti.map(a=>`<li>${a}</li>`).join('');
+  document.getElementById('subjectModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+document.getElementById('modalClose').addEventListener('click',()=>{document.getElementById('subjectModal').classList.remove('active');document.body.style.overflow=''});
+document.getElementById('subjectModal').addEventListener('click',e=>{if(e.target===e.currentTarget){document.getElementById('subjectModal').classList.remove('active');document.body.style.overflow=''}});
 
-  // ========== LOGIN ==========
-  function checkLogin() {
-    const saved = localStorage.getItem('3ac_logged_in');
-    const savedLang = localStorage.getItem('3ac_lang');
-    if (saved === 'true' && savedLang) {
-      currentLang = savedLang;
-      langScreen.classList.add('hidden');
-      loginScreen.classList.remove('active');
-      mainSite.classList.add('visible');
-      renderAll();
-    }
-  }
+// ===== NAV =====
+const secs=document.querySelectorAll('section[id]');
+const nls=document.querySelectorAll('.main-nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+  nls.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
 
-  function doLogin() {
-    const code = codeInput.value.trim();
-    if (code === CORRECT_CODE) {
-      localStorage.setItem('3ac_logged_in', 'true');
-      localStorage.setItem('3ac_lang', currentLang);
-      loginScreen.classList.add('hidden');
-      mainSite.classList.add('visible');
-      loginError.classList.remove('show');
-      renderAll();
-    } else {
-      loginError.classList.add('show');
-      codeInput.value = '';
-      codeInput.focus();
-    }
-  }
+// ===== QUOTES =====
+document.getElementById('prevQ').addEventListener('click',()=>{const qs=L[lang].quotes;qIdx=(qIdx-1+qs.length)%qs.length;render()});
+document.getElementById('nextQ').addEventListener('click',()=>{const qs=L[lang].quotes;qIdx=(qIdx+1)%qs.length;render()});
 
-  loginBtn.addEventListener('click', doLogin);
-  codeInput.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('3ac_logged_in');
-    localStorage.removeItem('3ac_lang');
-    mainSite.classList.remove('visible');
-    loginScreen.classList.remove('active');
-    langScreen.classList.remove('hidden');
-    codeInput.value = '';
-    loginError.classList.remove('show');
-  });
-
-  // ========== SWITCH LANG AFTER LOGIN ==========
-  langSwitch.addEventListener('click', () => {
-    const langs = ['fr', 'ar', 'en'];
-    const idx = langs.indexOf(currentLang);
-    currentLang = langs[(idx + 1) % 3];
-    localStorage.setItem('3ac_lang', currentLang);
-    renderAll();
-  });
-
-  // ========== RENDER ==========
-  function renderAll() {
-    const d = LANG[currentLang];
-
-    // Header
-    langSwitch.textContent = d.label;
-    document.getElementById('headerDesc').textContent = d.headerDesc;
-
-    // Nav
-    document.getElementById('navHome').textContent = d.navHome;
-    document.getElementById('navSubjects').textContent = d.navSubjects;
-    document.getElementById('navResources').textContent = d.navResources;
-    document.getElementById('navPlanning').textContent = d.navPlanning;
-    document.getElementById('navTips').textContent = d.navTips;
-    document.getElementById('navCountdown').textContent = d.navCountdown;
-
-    // Hero
-    document.getElementById('heroTitle').textContent = d.heroTitle;
-    document.getElementById('heroDesc').textContent = d.heroDesc;
-    document.getElementById('statSubjects').textContent = d.statSubjects;
-    document.getElementById('statResources').textContent = d.statResources;
-    document.getElementById('statFree').textContent = d.statFree;
-
-    // Sections
-    document.getElementById('sectionSubjects').textContent = d.sectionSubjects;
-    document.getElementById('sectionResources').textContent = d.sectionResources;
-    document.getElementById('sectionPlanning').textContent = d.sectionPlanning;
-    document.getElementById('sectionTips').textContent = d.sectionTips;
-    document.getElementById('modalChaptersTitle').textContent = d.modalChaptersTitle;
-    document.getElementById('modalTipsTitle').textContent = d.modalTipsTitle;
-
-    // Planning table
-    document.getElementById('planDay').textContent = d.planDay;
-    document.getElementById('planMorning').textContent = d.planMorning;
-    document.getElementById('planAfternoon').textContent = d.planAfternoon;
-    document.getElementById('planEvening').textContent = d.planEvening;
-
-    const planBody = document.getElementById('planBody');
-    planBody.innerHTML = d.plan.map(p => `
-      <tr><td class="day">${p.day}</td><td>${p.morning}</td><td>${p.afternoon}</td><td>${p.evening}</td></tr>
-    `).join('');
-
-    // Countdown
-    document.getElementById('cdTitle').textContent = d.cdTitle;
-    document.getElementById('cdDesc').textContent = d.cdDesc;
-    document.getElementById('cdDays').textContent = d.cdDays;
-    document.getElementById('cdHours').textContent = d.cdHours;
-    document.getElementById('cdMins').textContent = d.cdMins;
-    document.getElementById('cdSecs').textContent = d.cdSecs;
-
-    // Footer
-    document.getElementById('footerText').textContent = d.footerText;
-
-    // Subjects
-    renderSubjects(d);
-    renderResources(d);
-    renderTips(d);
-    renderQuote(d);
-  }
-
-  function renderSubjects(d) {
-    const grid = document.getElementById('subjectsGrid');
-    grid.innerHTML = d.subjects.map(s => `
-      <div class="subject-card ${s.color}" data-id="${s.id}">
-        <span class="icon">${s.icon}</span>
-        <h3>${s.name}</h3>
-        <span class="coeff">${currentLang === 'ar' ? 'المعامل' : 'Coefficient'} ${s.coeff}</span>
-      </div>
-    `).join('');
-    grid.querySelectorAll('.subject-card').forEach(card => {
-      card.addEventListener('click', () => openSubject(parseInt(card.dataset.id)));
-    });
-  }
-
-  function openSubject(id) {
-    const d = LANG[currentLang];
-    const s = d.subjects.find(x => x.id === id);
-    if (!s) return;
-    document.getElementById('modalIcon').textContent = s.icon;
-    document.getElementById('modalTitle').textContent = s.name;
-    document.getElementById('modalSubtitle').textContent = s.desc;
-    document.getElementById('modalInfo').innerHTML = `<span>${currentLang === 'ar' ? '📊 المعامل' : '📊 Coefficient'}: ${s.coeff}</span>`;
-    document.getElementById('modalChapters').innerHTML = s.chapitres.map(c => `<li>${c}</li>`).join('');
-    document.getElementById('modalTips').innerHTML = s.astuces.map(a => `<li>${a}</li>`).join('');
-    document.getElementById('subjectModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function renderResources(d) {
-    const grid = document.getElementById('resourcesGrid');
-    const iconMap = { pdf: '📄', video: '🎬', exam: '📋', link: '🔗' };
-    const clsMap = { pdf: 'pdf', video: 'video', exam: 'exam', link: 'link' };
-    grid.innerHTML = d.resources.map(r => `
-      <div class="resource-card">
-        <div class="r-icon ${clsMap[r.type]}">${iconMap[r.type]}</div>
-        <div class="r-info"><h4>${r.title}</h4><p>${r.desc}</p></div>
-      </div>
-    `).join('');
-  }
-
-  function renderTips(d) {
-    const grid = document.getElementById('tipsGrid');
-    grid.innerHTML = d.tips.map(t => `
-      <div class="tip-card">
-        <span class="tip-icon">${t.icon}</span>
-        <h3>${t.title}</h3>
-        <p>${t.desc}</p>
-      </div>
-    `).join('');
-  }
-
-  function renderQuote(d) {
-    const q = d.quotes[quoteIdx % d.quotes.length];
-    document.getElementById('quoteText').textContent = q.text;
-    document.getElementById('quoteAuthor').textContent = '— ' + q.author;
-  }
-
-  // ========== MODAL ==========
-  document.getElementById('modalClose').addEventListener('click', () => {
-    document.getElementById('subjectModal').classList.remove('active');
-    document.body.style.overflow = '';
-  });
-  document.getElementById('subjectModal').addEventListener('click', e => {
-    if (e.target === e.currentTarget) {
-      document.getElementById('subjectModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // ========== NAV ==========
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a');
-  function updateActiveLink() {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
-  }
-  window.addEventListener('scroll', updateActiveLink);
-
-  // ========== QUOTES ==========
-  let quoteIdx = 0;
-  document.getElementById('prevQuote').addEventListener('click', () => {
-    const d = LANG[currentLang];
-    quoteIdx = (quoteIdx - 1 + d.quotes.length) % d.quotes.length;
-    renderQuote(d);
-  });
-  document.getElementById('nextQuote').addEventListener('click', () => {
-    const d = LANG[currentLang];
-    quoteIdx = (quoteIdx + 1) % d.quotes.length;
-    renderQuote(d);
-  });
-
-  // ========== COUNTDOWN ==========
-  function updateCountdown() {
-    const now = new Date();
-    const target = new Date('2026-06-10T08:00:00');
-    const diff = target - now;
-    if (diff <= 0) {
-      ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '0');
-      return;
-    }
-    document.getElementById('days').textContent = Math.floor(diff / (1000*60*60*24));
-    document.getElementById('hours').textContent = String(Math.floor((diff%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
-    document.getElementById('minutes').textContent = String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0');
-    document.getElementById('seconds').textContent = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
-  }
-
-  // ========== INIT ==========
-  checkLogin();
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+// ===== COUNTDOWN =====
+function cd(){
+  const d=new Date('2026-06-10T08:00:00')-new Date();
+  if(d<=0){['cdDays','cdHours','cdMins','cdSecs'].forEach(i=>document.getElementById(i).textContent='0');return}
+  document.getElementById('cdDays').textContent=Math.floor(d/864e5);
+  document.getElementById('cdHours').textContent=String(Math.floor((d%864e5)/36e5)).padStart(2,'0');
+  document.getElementById('cdMins').textContent=String(Math.floor((d%36e5)/6e4)).padStart(2,'0');
+  document.getElementById('cdSecs').textContent=String(Math.floor((d%6e4)/1e3)).padStart(2,'0');
+}
+cd();setInterval(cd,1e3);
 </script>
-
 </body>
 </html>
