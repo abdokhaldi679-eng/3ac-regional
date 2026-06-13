@@ -634,6 +634,7 @@ body{
       <a href="#planning" id="navPlanning">Planning</a>
       <a href="#conseils" id="navTips">Conseils</a>
       <a href="#compteur" id="navCountdown">Compteur</a>
+      <a href="game.html" id="navGame">🎮 Jeu</a>
     </div>
     <button class="search-btn" id="searchToggle">🔍</button>
   </div>
@@ -790,7 +791,7 @@ const L = {
     about:'À propos',
     contact:'Contact',
     headerSub:'Excellence pour tous',
-    navHome:'Accueil',navSubjects:'Matières',navResources:'Ressources',navPlanning:'Planning',navTips:'Conseils',navCountdown:'Compteur',
+    navHome:'Accueil',navSubjects:'Matières',navResources:'Ressources',navPlanning:'Planning',navTips:'Conseils',navCountdown:'Compteur',navGame:'🎮 Jeu',
     searchPlaceholder:'Rechercher une matière, un chapitre...',
     heroBadge:'🎯 Examen Régional 2026',
     heroTitle:"Réussis ton examen régional",
@@ -892,7 +893,7 @@ const L = {
     about:'حول',
     contact:'اتصل بنا',
     headerSub:'التميز للجميع',
-    navHome:'الرئيسية',navSubjects:'المواد',navResources:'الموارد',navPlanning:'التخطيط',navTips:'نصائح',navCountdown:'العد التنازلي',
+    navHome:'الرئيسية',navSubjects:'المواد',navResources:'الموارد',navPlanning:'التخطيط',navTips:'نصائح',navCountdown:'العد التنازلي',navGame:'🎮 لعبة',
     searchPlaceholder:'ابحث عن مادة أو درس...',
     heroBadge:'🎯 الامتحان الجهوي 2026',
     heroTitle:'اجتز امتحانك الجهوي بنجاح',
@@ -994,7 +995,7 @@ const L = {
     about:'About',
     contact:'Contact',
     headerSub:'Excellence for all',
-    navHome:'Home',navSubjects:'Subjects',navResources:'Resources',navPlanning:'Planning',navTips:'Tips',navCountdown:'Countdown',
+    navHome:'Home',navSubjects:'Subjects',navResources:'Resources',navPlanning:'Planning',navTips:'Tips',navCountdown:'Countdown',navGame:'🎮 Game',
     searchPlaceholder:'Search a subject, chapter...',
     heroBadge:'🎯 Regional Exam 2026',
     heroTitle:'Succeed in your Regional Exam',
@@ -1173,6 +1174,7 @@ function render(){
   document.getElementById('navPlanning').textContent=d.navPlanning;
   document.getElementById('navTips').textContent=d.navTips;
   document.getElementById('navCountdown').textContent=d.navCountdown;
+  document.getElementById('navGame').textContent=d.navGame;
   document.getElementById('searchInput').placeholder=d.searchPlaceholder;
   document.getElementById('heroBadge').textContent=d.heroBadge;
   document.getElementById('heroTitle').textContent=d.heroTitle;
