@@ -14,21 +14,88 @@
       line-height: 1.6;
     }
 
+    /* ========== LANGUAGE SCREEN ========== */
+    #langScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #langScreen.hidden {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+    .lang-box {
+      text-align: center;
+      max-width: 550px;
+      width: 90%;
+      animation: floatIn 0.8s ease;
+    }
+    .lang-box .logo { font-size: 4rem; margin-bottom: 0.5rem; }
+    .lang-box h1 { color: #fff; font-size: 2.2rem; margin-bottom: 0.3rem; }
+    .lang-box h1 span { color: #f5a623; }
+    .lang-box p { color: rgba(255,255,255,0.5); font-size: 1rem; margin-bottom: 2rem; }
+    .lang-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .lang-btn {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 1.5rem 2.5rem;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      min-width: 160px;
+      text-align: center;
+    }
+    .lang-btn:hover {
+      transform: translateY(-6px);
+      background: rgba(245,166,35,0.15);
+      border-color: #f5a623;
+      box-shadow: 0 15px 40px rgba(245,166,35,0.15);
+    }
+    .lang-btn .sub {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      opacity: 0.5;
+      margin-top: 0.3rem;
+    }
+
     /* ========== LOGIN SCREEN ========== */
     #loginScreen {
       position: fixed;
       inset: 0;
       z-index: 9999;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      display: flex;
+      display: none;
       justify-content: center;
       align-items: center;
-      transition: opacity 1s ease, transform 1s ease;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #loginScreen.active {
+      display: flex;
     }
     #loginScreen.hidden {
       opacity: 0;
       transform: scale(1.1);
       pointer-events: none;
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .login-box {
       background: rgba(255,255,255,0.05);
@@ -41,24 +108,40 @@
       text-align: center;
       box-shadow: 0 25px 60px rgba(0,0,0,0.5);
       animation: floatIn 0.8s ease;
+      position: relative;
     }
-    @keyframes floatIn {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .login-box .logo {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-    .login-box h1 {
-      color: #fff;
-      font-size: 1.8rem;
-      margin-bottom: 0.3rem;
-    }
-    .login-box h1 span { color: #f5a623; }
-    .login-box p {
+    .login-box .back-btn {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      background: rgba(255,255,255,0.08);
+      border: none;
       color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-box .back-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+    .login-box .lang-indicator {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(245,166,35,0.15);
+      color: #f5a623;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .login-box .logo-icon { font-size: 3rem; margin-bottom: 0.5rem; display: block; }
+    .login-box h2 { color: #fff; font-size: 1.6rem; margin-bottom: 0.3rem; }
+    .login-box h2 span { color: #f5a623; }
+    .login-box .subtitle {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.88rem;
       margin-bottom: 1.8rem;
     }
     .login-box .input-group {
@@ -67,8 +150,8 @@
     }
     .login-box .input-group label {
       display: block;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.75rem;
       margin-bottom: 0.4rem;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -84,12 +167,8 @@
       transition: border 0.3s;
       outline: none;
     }
-    .login-box .input-group input:focus {
-      border-color: #f5a623;
-    }
-    .login-box .input-group input::placeholder {
-      color: rgba(255,255,255,0.3);
-    }
+    .login-box .input-group input:focus { border-color: #f5a623; }
+    .login-box .input-group input::placeholder { color: rgba(255,255,255,0.25); }
     .login-btn {
       width: 100%;
       padding: 0.9rem;
@@ -100,8 +179,8 @@
       font-size: 1.05rem;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      margin-top: 0.5rem;
+      transition: all 0.2s;
+      margin-top: 0.3rem;
     }
     .login-btn:hover {
       transform: translateY(-2px);
@@ -115,16 +194,15 @@
     }
     .login-error.show { display: block; }
     .login-box .hint {
-      color: rgba(255,255,255,0.25);
-      font-size: 0.75rem;
-      margin-top: 1.5rem;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.7rem;
+      margin-top: 1.2rem;
     }
 
     /* ========== MAIN SITE ========== */
     #mainSite { display: none; }
     #mainSite.visible { display: block; }
 
-    /* Header */
     header {
       background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
       color: white;
@@ -161,29 +239,37 @@
     header h1 { font-size: 2.8rem; position: relative; z-index: 1; }
     header h1 span { color: #f5a623; }
     header p { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0.5rem auto 0; position: relative; z-index: 1; }
-    .user-badge {
+    .header-controls {
       position: absolute;
       top: 1.2rem; right: 1.5rem;
       z-index: 2;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.85rem;
     }
-    .user-badge .logout-btn {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #fff;
-      padding: 0.4rem 1rem;
+    .header-controls .lang-switch {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      padding: 0.4rem 0.8rem;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 0.8rem;
-      transition: background 0.2s;
+      font-size: 0.75rem;
+      transition: all 0.2s;
     }
-    .user-badge .logout-btn:hover { background: rgba(233,69,96,0.3); }
+    .header-controls .lang-switch:hover { background: rgba(245,166,35,0.2); color: #f5a623; }
+    .header-controls .logout-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    .header-controls .logout-btn:hover { background: rgba(233,69,96,0.25); color: #e94560; }
 
-    /* Nav */
     nav {
       background: rgba(15,12,41,0.95);
       backdrop-filter: blur(10px);
@@ -212,10 +298,7 @@
       color: #f5a623;
     }
 
-    /* Container */
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-
-    /* Section titles */
     .section-title {
       font-size: 1.5rem;
       color: #1a1a2e;
@@ -227,7 +310,6 @@
       gap: 0.6rem;
     }
 
-    /* Hero */
     .hero {
       text-align: center;
       padding: 2.5rem 1.5rem;
@@ -262,7 +344,6 @@
     }
     .hero-stats .label { font-size: 0.85rem; color: #666; display: block; }
 
-    /* Subjects Grid */
     .subjects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -296,11 +377,7 @@
     .subject-card.c7::before { background: linear-gradient(90deg, #e74c3c, #c0392b); }
     .subject-card.c8::before { background: linear-gradient(90deg, #3498db, #2980b9); }
     .subject-card.c9::before { background: linear-gradient(90deg, #1abc9c, #16a085); }
-
-    .subject-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    }
+    .subject-card:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
     .subject-card .icon { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
     .subject-card h3 { font-size: 1.15rem; margin-bottom: 0.3rem; color: #1a1a2e; }
     .subject-card .coeff {
@@ -313,17 +390,7 @@
       color: #555;
       margin-top: 0.3rem;
     }
-    .subject-card .chapters-preview {
-      font-size: 0.85rem;
-      color: #888;
-      margin-top: 0.6rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
 
-    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -369,20 +436,8 @@
     .modal h2 { font-size: 1.6rem; margin-bottom: 0.2rem; }
     .modal .modal-subtitle { color: #888; font-size: 0.9rem; margin-bottom: 1rem; }
     .modal .info-row { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-    .modal .info-row span {
-      background: #f0f2f5;
-      padding: 0.3rem 1rem;
-      border-radius: 20px;
-      font-size: 0.82rem;
-    }
-    .modal h3 {
-      font-size: 1.05rem;
-      margin: 1rem 0 0.6rem;
-      color: #1a1a2e;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    .modal .info-row span { background: #f0f2f5; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.82rem; }
+    .modal h3 { font-size: 1.05rem; margin: 1rem 0 0.6rem; color: #1a1a2e; display: flex; align-items: center; gap: 0.5rem; }
     .modal ul { list-style: none; padding: 0; }
     .modal ul li {
       padding: 0.6rem 0.8rem;
@@ -393,14 +448,8 @@
       padding-left: 1.2rem;
       position: relative;
     }
-    .modal ul li::before {
-      content: '▸';
-      position: absolute;
-      left: 0.4rem;
-      color: #f5a623;
-    }
+    .modal ul li::before { content: '▸'; position: absolute; left: 0.4rem; color: #f5a623; }
 
-    /* Resources */
     .resources-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -433,7 +482,6 @@
     .resource-card .r-info h4 { font-size: 0.95rem; color: #1a1a2e; }
     .resource-card .r-info p { font-size: 0.78rem; color: #999; }
 
-    /* Planning Table */
     .planning-table {
       background: white;
       border-radius: 16px;
@@ -442,10 +490,7 @@
       margin-bottom: 2.5rem;
       border: 1px solid rgba(0,0,0,0.04);
     }
-    .planning-table table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    .planning-table table { width: 100%; border-collapse: collapse; }
     .planning-table th {
       background: #0f0c29;
       color: #fff;
@@ -462,7 +507,6 @@
     .planning-table tr:hover td { background: #f8f9ff; }
     .planning-table .day { font-weight: 600; color: #0f0c29; }
 
-    /* Tips */
     .tips-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -482,7 +526,6 @@
     .tip-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: #1a1a2e; }
     .tip-card p { font-size: 0.88rem; color: #666; line-height: 1.5; }
 
-    /* Quotes */
     .quotes-section {
       background: linear-gradient(135deg, #0f0c29, #302b63);
       border-radius: 20px;
@@ -517,12 +560,7 @@
       margin-top: 1rem;
       font-size: 0.9rem;
     }
-    .quote-nav {
-      margin-top: 1.2rem;
-      display: flex;
-      justify-content: center;
-      gap: 0.8rem;
-    }
+    .quote-nav { margin-top: 1.2rem; display: flex; justify-content: center; gap: 0.8rem; }
     .quote-nav button {
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.15);
@@ -535,7 +573,6 @@
     }
     .quote-nav button:hover { background: rgba(245,166,35,0.3); }
 
-    /* Countdown */
     .countdown-section {
       background: linear-gradient(135deg, #0f0c29, #24243e);
       border-radius: 20px;
@@ -564,7 +601,6 @@
     }
     .countdown .lbl { font-size: 0.7rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.2rem; display: block; }
 
-    /* Footer */
     footer {
       background: #0f0c29;
       color: rgba(255,255,255,0.4);
@@ -574,13 +610,11 @@
     }
     footer strong { color: #f5a623; }
 
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #f0f2f5; }
     ::-webkit-scrollbar-thumb { background: #c0c5d0; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #a0a5b0; }
 
-    /* Responsive */
     @media (max-width: 600px) {
       header h1 { font-size: 1.6rem; }
       .hero h2 { font-size: 1.3rem; }
@@ -588,30 +622,54 @@
       .resources-grid { grid-template-columns: 1fr; }
       .tips-grid { grid-template-columns: 1fr; }
       nav a { font-size: 0.7rem; padding: 0.4rem 0.5rem; }
-      .login-box { padding: 2rem 1.5rem; }
+      .login-box, .lang-box { padding: 2rem 1.5rem; }
+      .lang-btn { min-width: 130px; padding: 1.2rem 1.5rem; font-size: 1rem; }
       .countdown div { min-width: 65px; padding: 0.8rem; }
       .countdown .num { font-size: 1.8rem; }
-      .planning-table { font-size: 0.75rem; }
-      .planning-table th, .planning-table td { padding: 0.5rem; }
-      .user-badge { position: static; justify-content: center; padding: 0.5rem 0 0; }
+      .header-controls { position: static; justify-content: center; padding: 0.5rem 0 0; }
     }
   </style>
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN ========== -->
-<div id="loginScreen">
-  <div class="login-box">
+<!-- ========== LANGUAGE SELECTION ========== -->
+<div id="langScreen">
+  <div class="lang-box">
     <div class="logo">📘</div>
     <h1>3AC <span>Régional</span></h1>
-    <p>Plateforme éducative pour l'examen régional</p>
-    <div class="input-group">
-      <label>Code d'accès</label>
-      <input type="password" id="codeInput" placeholder="Entrez votre code" autocomplete="off" autofocus>
+    <p>Choisis ta langue de révision / اختر لغة المراجعة / Choose your revision language</p>
+    <div class="lang-buttons">
+      <button class="lang-btn" onclick="chooseLang('fr')">
+        🇫🇷 Français
+        <span class="sub">Langue française</span>
+      </button>
+      <button class="lang-btn" onclick="chooseLang('ar')">
+        🇲🇦 العربية
+        <span class="sub">اللغة العربية</span>
+      </button>
+      <button class="lang-btn" onclick="chooseLang('en')">
+        🇬🇧 English
+        <span class="sub">English language</span>
+      </button>
     </div>
-    <button class="login-btn" id="loginBtn">Accéder à la plateforme</button>
-    <div class="login-error" id="loginError">❌ Code incorrect. Veuillez réessayer.</div>
-    <p class="hint">Réservé aux élèves de 3ème Année Collège</p>
+  </div>
+</div>
+
+<!-- ========== LOGIN ========== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <button class="back-btn" id="backToLang">←</button>
+    <span class="lang-indicator" id="langIndicator">FR</span>
+    <span class="logo-icon">📘</span>
+    <h2>3AC <span>Régional</span></h2>
+    <p class="subtitle" id="loginSubtitle">Entre le code pour accéder à la plateforme</p>
+    <div class="input-group">
+      <label id="loginLabel">Code d'accès</label>
+      <input type="password" id="codeInput" placeholder="••••••••" autocomplete="off" autofocus>
+    </div>
+    <button class="login-btn" id="loginBtn">Accéder</button>
+    <div class="login-error" id="loginError">❌ <span id="errorMsg">Code incorrect. Veuillez réessayer.</span></div>
+    <p class="hint" id="loginHint">Réservé aux élèves de 3ème Année Collège</p>
   </div>
 </div>
 
@@ -619,43 +677,40 @@
 <div id="mainSite">
 
 <header>
-  <div class="user-badge">
-    <span>👤 Élève 3AC</span>
+  <div class="header-controls">
+    <button class="lang-switch" id="langSwitch">🇫🇷 Français</button>
     <button class="logout-btn" id="logoutBtn">Quitter</button>
   </div>
   <h1>3AC <span>Régional</span></h1>
-  <p>Plateforme complète pour réussir ton examen régional au Maroc</p>
+  <p id="headerDesc">Plateforme complète pour réussir ton examen régional au Maroc</p>
 </header>
 
 <nav id="navbar">
-  <a href="#accueil" class="active">Accueil</a>
-  <a href="#matieres">Matières</a>
-  <a href="#ressources">Ressources</a>
-  <a href="#planning">Planning</a>
-  <a href="#conseils">Conseils</a>
-  <a href="#compteur">Compteur</a>
+  <a href="#accueil" class="active" id="navHome">Accueil</a>
+  <a href="#matieres" id="navSubjects">Matières</a>
+  <a href="#ressources" id="navResources">Ressources</a>
+  <a href="#planning" id="navPlanning">Planning</a>
+  <a href="#conseils" id="navTips">Conseils</a>
+  <a href="#compteur" id="navCountdown">Compteur</a>
 </nav>
 
 <div class="container">
 
-  <!-- Hero -->
   <section id="accueil" class="hero">
-    <h2>Bienvenue sur 3AC Régional</h2>
-    <p>Prépare-toi efficacement pour l'examen régional avec des cours, des résumés, des exercices et des conseils adaptés au programme marocain. Tout ce dont tu as besoin en un seul endroit.</p>
+    <h2 id="heroTitle">Bienvenue sur 3AC Régional</h2>
+    <p id="heroDesc">Prépare-toi efficacement pour l'examen régional avec des cours, des résumés, des exercices et des conseils adaptés au programme marocain.</p>
     <div class="hero-stats">
-      <div><span>9</span><span class="label">Matières</span></div>
-      <div><span>50+</span><span class="label">Ressources</span></div>
-      <div><span>100%</span><span class="label">Gratuit</span></div>
+      <div><span>9</span><span class="label" id="statSubjects">Matières</span></div>
+      <div><span>50+</span><span class="label" id="statResources">Ressources</span></div>
+      <div><span>100%</span><span class="label" id="statFree">Gratuit</span></div>
     </div>
   </section>
 
-  <!-- Subjects -->
   <section id="matieres">
-    <h2 class="section-title">📚 Matières de l'examen régional</h2>
+    <h2 class="section-title" id="sectionSubjects">📚 Matières de l'examen régional</h2>
     <div class="subjects-grid" id="subjectsGrid"></div>
   </section>
 
-  <!-- Subject Modal -->
   <div class="modal-overlay" id="subjectModal">
     <div class="modal">
       <button class="modal-close" id="modalClose">&times;</button>
@@ -663,47 +718,35 @@
       <h2 id="modalTitle"></h2>
       <p class="modal-subtitle" id="modalSubtitle"></p>
       <div class="info-row" id="modalInfo"></div>
-      <h3>📖 Chapitres clés</h3>
+      <h3 id="modalChaptersTitle">📖 Chapitres clés</h3>
       <ul id="modalChapters"></ul>
-      <h3>💡 Conseils de révision</h3>
+      <h3 id="modalTipsTitle">💡 Conseils de révision</h3>
       <ul id="modalTips"></ul>
     </div>
   </div>
 
-  <!-- Resources -->
   <section id="ressources">
-    <h2 class="section-title">📺 Ressources utiles</h2>
+    <h2 class="section-title" id="sectionResources">📺 Ressources utiles</h2>
     <div class="resources-grid" id="resourcesGrid"></div>
   </section>
 
-  <!-- Planning -->
   <section id="planning">
-    <h2 class="section-title">📅 Planning de révision (exemple)</h2>
+    <h2 class="section-title" id="sectionPlanning">📅 Planning de révision</h2>
     <div class="planning-table">
       <table>
         <thead>
-          <tr><th>Jour</th><th>Matin (9h-12h)</th><th>Après-midi (14h-17h)</th><th>Soir (18h-20h)</th></tr>
+          <tr><th id="planDay">Jour</th><th id="planMorning">Matin (9h-12h)</th><th id="planAfternoon">Après-midi (14h-17h)</th><th id="planEvening">Soir (18h-20h)</th></tr>
         </thead>
-        <tbody>
-          <tr><td class="day">Lundi</td><td>Français</td><td>Maths</td><td>Révision libre</td></tr>
-          <tr><td class="day">Mardi</td><td>Arabe</td><td>SVT</td><td>Exercices</td></tr>
-          <tr><td class="day">Mercredi</td><td>Anglais</td><td>Physique-Chimie</td><td>Résumés</td></tr>
-          <tr><td class="day">Jeudi</td><td>Histoire-Géo</td><td>Éducation Islamique</td><td>Informatique</td></tr>
-          <tr><td class="day">Vendredi</td><td>Maths</td><td>Français</td><td>Annales</td></tr>
-          <tr><td class="day">Samedi</td><td>Bilan de la semaine</td><td>Sujets d'examen</td><td>Repos</td></tr>
-          <tr><td class="day">Dimanche</td><td colspan="3" style="text-align:center; color:#999;">🕊️ Repos — Sport — Loisirs</td></tr>
-        </tbody>
+        <tbody id="planBody"></tbody>
       </table>
     </div>
   </section>
 
-  <!-- Tips -->
   <section id="conseils">
-    <h2 class="section-title">🎯 Conseils pour réussir</h2>
+    <h2 class="section-title" id="sectionTips">🎯 Conseils pour réussir</h2>
     <div class="tips-grid" id="tipsGrid"></div>
   </section>
 
-  <!-- Quotes -->
   <section class="quotes-section" id="quoteSection">
     <blockquote id="quoteText">Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès.</blockquote>
     <cite id="quoteAuthor">— Albert Schweitzer</cite>
@@ -713,16 +756,15 @@
     </div>
   </section>
 
-  <!-- Countdown -->
   <section id="compteur">
     <div class="countdown-section">
-      <h3>⏳ Compte à rebours vers l'examen régional</h3>
-      <p>La date approximative de l'examen régional est juin 2026. Chaque seconde compte !</p>
+      <h3 id="cdTitle">⏳ Compte à rebours vers l'examen régional</h3>
+      <p id="cdDesc">La date approximative de l'examen régional est juin 2026. Chaque seconde compte !</p>
       <div class="countdown">
-        <div><span class="num" id="days">0</span><span class="lbl">Jours</span></div>
-        <div><span class="num" id="hours">0</span><span class="lbl">Heures</span></div>
-        <div><span class="num" id="minutes">0</span><span class="lbl">Minutes</span></div>
-        <div><span class="num" id="seconds">0</span><span class="lbl">Secondes</span></div>
+        <div><span class="num" id="days">0</span><span class="lbl" id="cdDays">Jours</span></div>
+        <div><span class="num" id="hours">0</span><span class="lbl" id="cdHours">Heures</span></div>
+        <div><span class="num" id="minutes">0</span><span class="lbl" id="cdMins">Minutes</span></div>
+        <div><span class="num" id="seconds">0</span><span class="lbl" id="cdSecs">Secondes</span></div>
       </div>
     </div>
   </section>
@@ -730,26 +772,352 @@
 </div>
 
 <footer>
-  &copy; 2026 <strong>3AC Régional</strong> — Site éducatif gratuit pour les élèves de 3<sup>ème</sup> Année Collège au Maroc
+  &copy; 2026 <strong>3AC Régional</strong> — <span id="footerText">Site éducatif gratuit pour les élèves de 3ème Année Collège au Maroc</span>
 </footer>
 
 </div>
 
 <script>
-  // ========== LOGIN ==========
+  // ========== LANG DATA ==========
+  const LANG = {
+    fr: {
+      code: 'fr', label: '🇫🇷 Français', indicator: 'FR',
+      loginSubtitle: 'Entre le code pour accéder à la plateforme',
+      loginLabel: 'Code d\'accès',
+      loginPlaceholder: 'Entrez votre code',
+      loginError: 'Code incorrect. Veuillez réessayer.',
+      loginHint: 'Réservé aux élèves de 3ème Année Collège',
+      loginBtn: 'Accéder',
+      headerDesc: 'Plateforme complète pour réussir ton examen régional au Maroc',
+      navHome: 'Accueil', navSubjects: 'Matières', navResources: 'Ressources',
+      navPlanning: 'Planning', navTips: 'Conseils', navCountdown: 'Compteur',
+      heroTitle: 'Bienvenue sur 3AC Régional',
+      heroDesc: 'Prépare-toi efficacement pour l\'examen régional avec des cours, des résumés, des exercices et des conseils adaptés au programme marocain.',
+      statSubjects: 'Matières', statResources: 'Ressources', statFree: 'Gratuit',
+      sectionSubjects: '📚 Matières de l\'examen régional',
+      sectionResources: '📺 Ressources utiles',
+      sectionPlanning: '📅 Planning de révision',
+      sectionTips: '🎯 Conseils pour réussir',
+      modalChaptersTitle: '📖 Chapitres clés',
+      modalTipsTitle: '💡 Conseils de révision',
+      planDay: 'Jour', planMorning: 'Matin (9h-12h)', planAfternoon: 'Après-midi (14h-17h)', planEvening: 'Soir (18h-20h)',
+      cdTitle: '⏳ Compte à rebours vers l\'examen régional',
+      cdDesc: 'La date approximative de l\'examen régional est juin 2026. Chaque seconde compte !',
+      cdDays: 'Jours', cdHours: 'Heures', cdMins: 'Minutes', cdSecs: 'Secondes',
+      footerText: 'Site éducatif gratuit pour les élèves de 3ème Année Collège au Maroc',
+      subjects: [
+        { id: 1, name: 'Français', icon: '📚', coeff: 3, desc: 'Langue française, grammaire, conjugaison, orthographe, rédaction et étude de texte.', color: 'c1',
+          chapitres: ['Les expansions du nom', 'Les modes et temps verbaux', 'La phrase simple et complexe', 'Les figures de style', 'Le texte argumentatif', 'Lecture et analyse de texte', 'La rédaction: plan, introduction, développement, conclusion'],
+          astuces: ['Lis le texte avant de répondre', 'Révise les conjugaisons', 'Fais un plan pour la rédaction', 'Soigne l\'orthographe', 'Apprends les connecteurs logiques'] },
+        { id: 2, name: 'Arabe', icon: '📖', coeff: 3, desc: 'اللغة العربية: النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.', color: 'c2',
+          chapitres: ['النصوص: الشعر والنثر', 'الجملة الاسمية والفعلية', 'الفعل الصحيح والمعتل', 'التشبيه والاستعارة والكناية', 'التعبير والإنشاء', 'المذكر والمؤنث'],
+          astuces: ['اقرأ النص جيداً', 'احفظ القواعد', 'تدرب على الإنشاء', 'راجع الأفعال', 'استخدم قاموسًا'] },
+        { id: 3, name: 'Anglais', icon: '🇬🇧', coeff: 2, desc: 'English: reading comprehension, grammar, vocabulary, writing.', color: 'c3',
+          chapitres: ['Present, Past, Future tenses', 'Passive voice', 'Conditional sentences', 'Relative clauses', 'Reading comprehension', 'Writing: paragraph, email'],
+          astuces: ['Learn 10 words daily', 'Practice writing', 'Read questions first', 'Review irregular verbs', 'Watch videos with subtitles'] },
+        { id: 4, name: 'Histoire-Géographie', icon: '🌍', coeff: 2, desc: 'Histoire du Maroc, géographie du monde, développement et société.', color: 'c4',
+          chapitres: ['La colonisation et la décolonisation', 'Les deux guerres mondiales', 'Le Maroc sous le protectorat', 'La mondialisation', 'Les ressources naturelles', 'La population et le développement durable'],
+          astuces: ['Fais des fiches chronologiques', 'Utilise des cartes mentales', 'Apprends les dates clés', 'Relie causes/conséquences', 'Dessine des croquis'] },
+        { id: 5, name: 'Éducation Islamique', icon: '🕌', coeff: 2, desc: 'التربية الإسلامية: القرآن، الحديث، العقيدة، الفقه والسيرة.', color: 'c5',
+          chapitres: ['القرآن الكريم (حفظ وتفسير)', 'الأحاديث النبوية', 'أركان الإسلام والإيمان', 'العبادات: الصلاة، الزكاة، الصوم', 'السيرة النبوية', 'القيم الإسلامية'],
+          astuces: ['احفظ مع المعنى', 'افهم أحكام العبادات', 'اربط بالحياة اليومية', 'ركز على القيم', 'استخدم تطبيقات القرآن'] },
+        { id: 6, name: 'Mathématiques', icon: '📐', coeff: 3, desc: 'Algèbre, géométrie, arithmétique, statistiques et probabilités.', color: 'c6',
+          chapitres: ['Équations et inéquations', 'Systèmes d\'équations', 'Fonctions linéaires et affines', 'Théorème de Thalès', 'Théorème de Pythagore', 'Trigonométrie', 'Statistiques et probabilités'],
+          astuces: ['Apprends les formules', 'Refais tous les exercices', 'Chronomètre-toi', 'Vérifie tes calculs', 'Dessine les figures'] },
+        { id: 7, name: 'SVT', icon: '🧬', coeff: 2, desc: 'Biologie humaine, génétique, écologie, géologie.', color: 'c7',
+          chapitres: ['Nutrition chez l\'Homme', 'Respiration et circulation', 'Reproduction humaine', 'Génétique (ADN)', 'Écologie et écosystèmes', 'Ressources naturelles'],
+          astuces: ['Fais des schémas légendés', 'Comprends les processus', 'Utilise des couleurs', 'Relie les chapitres', 'Entraîne-toi aux QCM'] },
+        { id: 8, name: 'Physique-Chimie', icon: '⚗️', coeff: 2, desc: 'Électricité, mécanique, chimie, atomes et molécules.', color: 'c8',
+          chapitres: ['Atome et molécule', 'Solutions acides/basiques (pH)', 'Mouvement et vitesse', 'Forces et poids', 'Loi d\'Ohm, loi des mailles', 'Puissance électrique'],
+          astuces: ['Maîtrise les formules', 'Entraîne-toi aux calculs', 'Comprends les schémas', 'Révise les définitions', 'Fais des fiches'] },
+        { id: 9, name: 'Informatique', icon: '💻', coeff: 1, desc: 'Algorithmique, programmation, bureautique et internet.', color: 'c9',
+          chapitres: ['Algorithmique', 'Structures de contrôle', 'Boucles', 'Tableaux', 'Fonctions', 'Bureautique (Word, Excel)', 'Internet et sécurité'],
+          astuces: ['Pratique sur PC', 'Comprends la logique', 'Fais des petits programmes', 'Révise les définitions', 'Dessine les organigrammes'] }
+      ],
+      resources: [
+        { title: '📋 Sujets d\'examens régionaux', desc: 'Sujets des années précédentes PDF', type: 'exam' },
+        { title: '📄 Cours de Français', desc: 'Résumés et exercices corrigés', type: 'pdf' },
+        { title: '📄 Cours de Maths', desc: 'Fiches de révision et exercices', type: 'pdf' },
+        { title: '🎬 Chaîne YouTube Révision 3AC', desc: 'Playlists par matière', type: 'video' },
+        { title: '🎬 SVT en vidéo', desc: 'Cours animés expliqués', type: 'video' },
+        { title: '🎬 Maths en vidéo', desc: 'Théorèmes pas à pas', type: 'video' },
+        { title: '🔗 Moutamadris', desc: 'Plateforme officielle du ministère', type: 'link' },
+        { title: '🔗 Taalim.ma', desc: 'Cours et exercices gratuits', type: 'link' },
+        { title: '🔗 Exercices interactifs', desc: 'QCM et quiz en ligne', type: 'link' },
+        { title: '🔗 Groupes d\'entraide', desc: 'WhatsApp / Télégram', type: 'link' }
+      ],
+      tips: [
+        { icon: '⏰', title: 'Organise ton temps', desc: 'Travaille 50min, repose-toi 10min. Technique Pomodoro.' },
+        { icon: '📝', title: 'Révise par fiches', desc: 'Résume chaque chapitre sur une fiche avec les idées clés.' },
+        { icon: '📋', title: 'Anciens sujets', desc: 'Les sujets des années précédentes sont la meilleure préparation.' },
+        { icon: '👥', title: 'Groupe d\'étude', desc: 'Expliquer à quelqu\'un est la meilleure façon d\'apprendre.' },
+        { icon: '😴', title: 'Dors bien', desc: 'Un bon sommeil est essentiel pour la concentration.' },
+        { icon: '👀', title: 'Lis les consignes', desc: 'Repère les mots-clés. Ne laisse aucune question sans réponse.' },
+        { icon: '🎒', title: 'Prépare ton matériel', desc: 'Stylo, crayon, règle, compas, calculatrice : prépare tout la veille.' },
+        { icon: '💪', title: 'Gère ton stress', desc: 'Respire profondément. Tu as travaillé, tu es prêt.' }
+      ],
+      plan: [
+        { day: 'Lundi', morning: 'Français', afternoon: 'Maths', evening: 'Révision libre' },
+        { day: 'Mardi', morning: 'Arabe', afternoon: 'SVT', evening: 'Exercices' },
+        { day: 'Mercredi', morning: 'Anglais', afternoon: 'Physique-Chimie', evening: 'Résumés' },
+        { day: 'Jeudi', morning: 'Histoire-Géo', afternoon: 'Éducation Islamique', evening: 'Informatique' },
+        { day: 'Vendredi', morning: 'Maths', afternoon: 'Français', evening: 'Annales' },
+        { day: 'Samedi', morning: 'Bilan de la semaine', afternoon: 'Sujets d\'examen', evening: 'Repos' },
+        { day: 'Dimanche', morning: '🕊️ Repos — Sport', afternoon: 'Loisirs', evening: 'Détente' }
+      ],
+      quotes: [
+        { text: 'Le succès n\'est pas la clé du bonheur. Le bonheur est la clé du succès.', author: 'Albert Schweitzer' },
+        { text: 'L\'éducation est l\'arme la plus puissante pour changer le monde.', author: 'Nelson Mandela' },
+        { text: 'Le travail acharné bat le talent quand le talent ne travaille pas dur.', author: 'Tim Notke' },
+        { text: 'Ne rêve pas de réussir, travaille pour réussir.', author: 'Proverbe marocain' },
+        { text: 'Savoir, ce n\'est pas connaître ; mais connaître, c\'est savoir.', author: 'Ibn Sina (Avicenne)' },
+        { text: 'Celui qui ouvre une porte d\'école, ferme une prison.', author: 'Victor Hugo' },
+        { text: 'La chute n\'est pas un échec, l\'échec c\'est de rester là où on est tombé.', author: 'Socrate' }
+      ]
+    },
+
+    ar: {
+      code: 'ar', label: '🇲🇦 العربية', indicator: 'AR',
+      loginSubtitle: 'أدخل الرمز للوصول إلى المنصة',
+      loginLabel: 'رمز الدخول',
+      loginPlaceholder: 'أدخل رمزك',
+      loginError: 'رمز غير صحيح. حاول مرة أخرى.',
+      loginHint: 'مخصص لتلاميذ السنة الثالثة إعدادي',
+      loginBtn: 'دخول',
+      headerDesc: 'منصة متكاملة لاجتياز الامتحان الجهوي في المغرب',
+      navHome: 'الرئيسية', navSubjects: 'المواد', navResources: 'الموارد',
+      navPlanning: 'التخطيط', navTips: 'نصائح', navCountdown: 'العد التنازلي',
+      heroTitle: 'مرحباً بك في 3AC الجهوي',
+      heroDesc: 'استعد بفعالية للامتحان الجهوي مع دروس، ملخصات، تمارين ونصائح وفق البرنامج المغربي.',
+      statSubjects: 'مواد', statResources: 'مورد', statFree: 'مجاني',
+      sectionSubjects: '📚 مواد الامتحان الجهوي',
+      sectionResources: '📺 موارد مفيدة',
+      sectionPlanning: '📅 جدول المراجعة',
+      sectionTips: '🎯 نصائح للنجاح',
+      modalChaptersTitle: '📖 الدروس الرئيسية',
+      modalTipsTitle: '💡 نصائح المراجعة',
+      planDay: 'اليوم', planMorning: 'الصباح (9-12)', planAfternoon: 'بعد الظهر (14-17)', planEvening: 'المساء (18-20)',
+      cdTitle: '⏳ العد التنازلي للامتحان الجهوي',
+      cdDesc: 'التاريخ التقريبي للامتحان الجهوي هو يونيو 2026. كل ثانية مهمة!',
+      cdDays: 'أيام', cdHours: 'ساعات', cdMins: 'دقائق', cdSecs: 'ثوان',
+      footerText: 'موقع تعليمي مجاني لتلاميذ السنة الثالثة إعدادي في المغرب',
+      subjects: [
+        { id: 1, name: 'الفرنسية', icon: '📚', coeff: 3, desc: 'اللغة الفرنسية: القواعد، الصرف، الإملاء، التعبير ودراسة النص.', color: 'c1',
+          chapitres: ['متممات الاسم', 'الأزمنة والأفعال', 'الجملة البسيطة والمركبة', 'المجاز والصور البيانية', 'النص الحجاجي', 'القراءة وتحليل النص', 'التعبير الكتابي'],
+          astuces: ['اقرأ النص جيداً', 'راجع تصريف الأفعال', 'خطط للتعبير', 'حسن الإملاء', 'تعلم الروابط المنطقية'] },
+        { id: 2, name: 'العربية', icon: '📖', coeff: 3, desc: 'النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.', color: 'c2',
+          chapitres: ['النصوص: الشعر والنثر', 'الجملة الاسمية والفعلية', 'الفعل الصحيح والمعتل', 'التشبيه والاستعارة والكناية', 'التعبير والإنشاء', 'المذكر والمؤنث'],
+          astuces: ['اقرأ النص جيداً', 'احفظ القواعد', 'تدرب على الإنشاء', 'راجع الأفعال', 'استخدم قاموسًا'] },
+        { id: 3, name: 'الإنجليزية', icon: '🇬🇧', coeff: 2, desc: 'الفهم والقراءة، القواعد، المفردات، التعبير الكتابي.', color: 'c3',
+          chapitres: ['الأزمنة: مضارع، ماض، مستقبل', 'المبني للمجهول', 'الجمل الشرطية', 'الجمل الموصولة', 'فهم النص', 'التعبير: فقرة، رسالة'],
+          astuces: ['تعلم 10 كلمات يومياً', 'تدرب على الكتابة', 'اقرأ الأسئلة أولاً', 'راجع الأفعال الشاذة', 'شاهد فيديوهات'] },
+        { id: 4, name: 'التاريخ والجغرافيا', icon: '🌍', coeff: 2, desc: 'تاريخ المغرب، الجغرافيا، التنمية والمجتمع.', color: 'c4',
+          chapitres: ['الاستعمار والاستقلال', 'الحربان العالميتان', 'المغرب تحت الحماية', 'العولمة', 'الموارد الطبيعية', 'السكان والتنمية'],
+          astuces: ['اصنع بطاقات زمنية', 'استخدم الخرائط الذهنية', 'احفظ التواريخ', 'اربط الأحداث', 'ارسم خرائط'] },
+        { id: 5, name: 'التربية الإسلامية', icon: '🕌', coeff: 2, desc: 'القرآن، الحديث، العقيدة، الفقه والسيرة.', color: 'c5',
+          chapitres: ['القرآن الكريم', 'الأحاديث النبوية', 'أركان الإسلام والإيمان', 'العبادات', 'السيرة النبوية', 'القيم الإسلامية'],
+          astuces: ['احفظ مع المعنى', 'افهم الأحكام', 'اربط بالحياة', 'ركز على القيم', 'استخدم التطبيقات'] },
+        { id: 6, name: 'الرياضيات', icon: '📐', coeff: 3, desc: 'الجبر، الهندسة، الحساب، الإحصاء والاحتمالات.', color: 'c6',
+          chapitres: ['المعادلات والمتراجحات', 'نظم المعادلات', 'الدوال الخطية', 'نظرية طاليس', 'نظرية فيثاغورس', 'حساب المثلثات', 'الإحصاء والاحتمالات'],
+          astuces: ['احفظ القوانين', 'أعد حل التمارين', 'تحدى نفسك بالوقت', 'تحقق من حساباتك', 'ارسم الأشكال'] },
+        { id: 7, name: 'علوم الحياة والأرض', icon: '🧬', coeff: 2, desc: 'البيولوجيا، علم الوراثة، البيئة والجيولوجيا.', color: 'c7',
+          chapitres: ['التغذية عند الإنسان', 'التنفس والدوران', 'التكاثر', 'علم الوراثة', 'البيئة', 'الموارد الطبيعية'],
+          astuces: ['ارسم رسومات تخطيطية', 'افهم العمليات', 'استخدم الألوان', 'اربط الدروس', 'تدرب على MCQ'] },
+        { id: 8, name: 'الفيزياء والكيمياء', icon: '⚗️', coeff: 2, desc: 'الكهرباء، الميكانيكا، الكيمياء، الذرات والجزيئات.', color: 'c8',
+          chapitres: ['الذرة والجزيء', 'المحاليل الحمضية', 'الحركة والسرعة', 'القوى والوزن', 'قانون أوم', 'القدرة الكهربائية'],
+          astuces: ['اتقن القوانين', 'تدرب على الحساب', 'افهم المخططات', 'راجع التعريفات', 'اصنع بطاقات'] },
+        { id: 9, name: 'الإعلاميات', icon: '💻', coeff: 1, desc: 'الخوارزميات، البرمجة، المكتبية والإنترنت.', color: 'c9',
+          chapitres: ['الخوارزميات', 'هياكل التحكم', 'الحلقات', 'المصفوفات', 'الدوال', 'المكتبية', 'الإنترنت والأمن'],
+          astuces: ['تدرب على الحاسوب', 'افهم المنطق', 'برمج برامج صغيرة', 'راجع المفاهيم', 'ارسم المخططات'] }
+      ],
+      resources: [
+        { title: '📋 مواضيع الامتحانات الجهوية', desc: 'مواضيع السنوات السابقة PDF', type: 'exam' },
+        { title: '📄 دروس الفرنسية', desc: 'ملخصات وتمارين مع التصحيح', type: 'pdf' },
+        { title: '📄 دروس الرياضيات', desc: 'بطاقات مراجعة وتمارين', type: 'pdf' },
+        { title: '🎬 قناة يوتيوب مراجعة 3AC', desc: 'قوائم تشغيل حسب المواد', type: 'video' },
+        { title: '🎬 علوم الحياة بالفيديو', desc: 'دروس مصورة ومفسرة', type: 'video' },
+        { title: '🎬 الرياضيات بالفيديو', desc: 'النظريات خطوة بخطوة', type: 'video' },
+        { title: '🔗 Moutamadris', desc: 'المنصة الرسمية للوزارة', type: 'link' },
+        { title: '🔗 Taalim.ma', desc: 'دروس وتمارين مجانية', type: 'link' },
+        { title: '🔗 تمارين تفاعلية', desc: 'اختبارات MCQ أونلاين', type: 'link' },
+        { title: '🔗 مجموعات الدعم', desc: 'واتساب / تيليغرام', type: 'link' }
+      ],
+      tips: [
+        { icon: '⏰', title: 'نظم وقتك', desc: 'اعمل 50 دقيقة، استرح 10. استخدم تقنية بومودورو.' },
+        { icon: '📝', title: 'راجع ببطاقات', desc: 'لخص كل درس في بطاقة بالأفكار الرئيسية.' },
+        { icon: '📋', title: 'الامتحانات السابقة', desc: 'حل مواضيع السنوات السابقة هو أفضل تحضير.' },
+        { icon: '👥', title: 'مجموعة دراسة', desc: 'الشرح لشخص آخر أفضل طريقة للتعلم.' },
+        { icon: '😴', title: 'نم جيداً', desc: 'النوم الجيد ضروري للتركيز.' },
+        { icon: '👀', title: 'اقرأ التعليمات', desc: 'لا تترك أي سؤال دون إجابة.' },
+        { icon: '🎒', title: 'جهز أدواتك', desc: 'جهز القلم، المسطرة، الآلة الحاسبة مسبقاً.' },
+        { icon: '💪', title: 'تحكم في التوتر', desc: 'تنفس بعمق. لقد عملت بجد، أنت مستعد.' }
+      ],
+      plan: [
+        { day: 'الإثنين', morning: 'الفرنسية', afternoon: 'الرياضيات', evening: 'مراجعة حرة' },
+        { day: 'الثلاثاء', morning: 'العربية', afternoon: 'علوم الحياة', evening: 'تمارين' },
+        { day: 'الأربعاء', morning: 'الإنجليزية', afternoon: 'الفيزياء', evening: 'ملخصات' },
+        { day: 'الخميس', morning: 'التاريخ-الجغرافيا', afternoon: 'التربية الإسلامية', evening: 'الإعلاميات' },
+        { day: 'الجمعة', morning: 'الرياضيات', afternoon: 'الفرنسية', evening: 'امتحانات سابقة' },
+        { day: 'السبت', morning: 'حصيلة الأسبوع', afternoon: 'مواضيع الامتحان', evening: 'راحة' },
+        { day: 'الأحد', morning: '🕊️ راحة - رياضة', afternoon: 'ترفيه', evening: 'استرخاء' }
+      ],
+      quotes: [
+        { text: 'العلم نور والجهل ظلام', author: 'مثل عربي' },
+        { text: 'التعليم هو أقوى سلاح يمكنك استخدامه لتغيير العالم.', author: 'نيلسون مانديلا' },
+        { text: 'من جد وجد ومن زرع حصد.', author: 'مثل عربي' },
+        { text: 'لا تحلم بالنجاح، اعمل من أجله.', author: 'مثل مغربي' },
+        { text: 'إنما العلم بالتعلم.', author: 'الحديث النبوي' },
+        { text: 'العلم في الصغر كالنقش على الحجر.', author: 'مثل عربي' },
+        { text: 'رحلة الألف ميل تبدأ بخطوة.', author: 'كونفوشيوس' }
+      ]
+    },
+
+    en: {
+      code: 'en', label: '🇬🇧 English', indicator: 'EN',
+      loginSubtitle: 'Enter the code to access the platform',
+      loginLabel: 'Access Code',
+      loginPlaceholder: 'Enter your code',
+      loginError: 'Incorrect code. Please try again.',
+      loginHint: 'For 3rd Year Middle School students in Morocco',
+      loginBtn: 'Access',
+      headerDesc: 'Complete platform to succeed in your regional exam in Morocco',
+      navHome: 'Home', navSubjects: 'Subjects', navResources: 'Resources',
+      navPlanning: 'Planning', navTips: 'Tips', navCountdown: 'Countdown',
+      heroTitle: 'Welcome to 3AC Regional',
+      heroDesc: 'Prepare effectively for the regional exam with courses, summaries, exercises and tips adapted to the Moroccan curriculum.',
+      statSubjects: 'Subjects', statResources: 'Resources', statFree: 'Free',
+      sectionSubjects: '📚 Regional Exam Subjects',
+      sectionResources: '📺 Useful Resources',
+      sectionPlanning: '📅 Revision Schedule',
+      sectionTips: '🎯 Success Tips',
+      modalChaptersTitle: '📖 Key Chapters',
+      modalTipsTitle: '💡 Revision Tips',
+      planDay: 'Day', planMorning: 'Morning (9am-12pm)', planAfternoon: 'Afternoon (2pm-5pm)', planEvening: 'Evening (6pm-8pm)',
+      cdTitle: '⏳ Countdown to the Regional Exam',
+      cdDesc: 'The approximate date of the regional exam is June 2026. Every second counts!',
+      cdDays: 'Days', cdHours: 'Hours', cdMins: 'Minutes', cdSecs: 'Seconds',
+      footerText: 'Free educational website for 3rd Year Middle School students in Morocco',
+      subjects: [
+        { id: 1, name: 'French', icon: '📚', coeff: 3, desc: 'French language: grammar, conjugation, spelling, writing and text analysis.', color: 'c1',
+          chapitres: ['Noun expansions', 'Verb tenses and moods', 'Simple and complex sentences', 'Figures of speech', 'Argumentative text', 'Reading analysis', 'Essay writing'],
+          astuces: ['Read the text before answering', 'Review verb conjugations', 'Plan your essay', 'Check your spelling', 'Learn transition words'] },
+        { id: 2, name: 'Arabic', icon: '📖', coeff: 3, desc: 'Arabic language: texts, grammar, morphology, rhetoric, expression.', color: 'c2',
+          chapitres: ['Poetry and prose texts', 'Nominal and verbal sentences', 'Regular and irregular verbs', 'Simile, metaphor, metonymy', 'Expression and writing', 'Masculine/feminine'],
+          astuces: ['Read the text carefully', 'Memorize grammar rules', 'Practice writing', 'Review verb patterns', 'Use a dictionary'] },
+        { id: 3, name: 'English', icon: '🇬🇧', coeff: 2, desc: 'Reading comprehension, grammar, vocabulary, and writing skills.', color: 'c3',
+          chapitres: ['Present, Past, Future tenses', 'Passive voice', 'Conditional sentences', 'Relative clauses', 'Reading comprehension', 'Writing: paragraph, email'],
+          astuces: ['Learn 10 words daily', 'Practice writing', 'Read questions first', 'Review irregular verbs', 'Watch videos with subtitles'] },
+        { id: 4, name: 'History & Geography', icon: '🌍', coeff: 2, desc: 'Moroccan history, world geography, development and society.', color: 'c4',
+          chapitres: ['Colonization and decolonization', 'World War I & II', 'Morocco under protectorate', 'Globalization', 'Natural resources', 'Population and sustainable development'],
+          astuces: ['Make timeline cards', 'Use mind maps', 'Learn key dates', 'Connect causes/effects', 'Draw sketch maps'] },
+        { id: 5, name: 'Islamic Education', icon: '🕌', coeff: 2, desc: 'Quran, Hadith, faith, jurisprudence and biography of the Prophet.', color: 'c5',
+          chapitres: ['Holy Quran (memorization)', 'Prophetic Hadith', 'Pillars of Islam and Faith', 'Worship: prayer, zakat, fasting', 'Prophetic biography', 'Islamic values'],
+          astuces: ['Memorize with meaning', 'Understand religious rulings', 'Connect to daily life', 'Focus on values', 'Use Quran apps'] },
+        { id: 6, name: 'Mathematics', icon: '📐', coeff: 3, desc: 'Algebra, geometry, arithmetic, statistics and probability.', color: 'c6',
+          chapitres: ['Equations and inequalities', 'Systems of equations', 'Linear and affine functions', 'Thales theorem', 'Pythagorean theorem', 'Trigonometry', 'Statistics and probability'],
+          astuces: ['Learn all formulas', 'Redo every exercise', 'Time yourself', 'Double-check calculations', 'Draw geometric figures'] },
+        { id: 7, name: 'Biology & Geology', icon: '🧬', coeff: 2, desc: 'Human biology, genetics, ecology, geology.', color: 'c7',
+          chapitres: ['Human nutrition', 'Respiration and circulation', 'Human reproduction', 'Genetics (DNA)', 'Ecology and ecosystems', 'Natural resources'],
+          astuces: ['Draw labeled diagrams', 'Understand processes', 'Use colors for notes', 'Connect chapters', 'Practice MCQs'] },
+        { id: 8, name: 'Physics & Chemistry', icon: '⚗️', coeff: 2, desc: 'Electricity, mechanics, chemistry, atoms and molecules.', color: 'c8',
+          chapitres: ['Atoms and molecules', 'Acidic and basic solutions', 'Motion and speed', 'Forces and weight', 'Ohm\'s law', 'Electric power'],
+          astuces: ['Master formulas and units', 'Practice calculations', 'Understand circuits', 'Review definitions', 'Make formula cards'] },
+        { id: 9, name: 'Computer Science', icon: '💻', coeff: 1, desc: 'Algorithms, programming, office tools and internet.', color: 'c9',
+          chapitres: ['Algorithms', 'Control structures', 'Loops', 'Arrays', 'Functions', 'Office tools (Word, Excel)', 'Internet and security'],
+          astuces: ['Practice on a computer', 'Understand the logic', 'Write small programs', 'Review concepts', 'Draw flowcharts'] }
+      ],
+      resources: [
+        { title: '📋 Regional Exam Papers', desc: 'Previous years exam PDFs', type: 'exam' },
+        { title: '📄 French Course', desc: 'Summaries and corrected exercises', type: 'pdf' },
+        { title: '📄 Math Course', desc: 'Revision cards and exercises', type: 'pdf' },
+        { title: '🎬 YouTube Revision 3AC', desc: 'Subject playlists', type: 'video' },
+        { title: '🎬 Biology videos', desc: 'Animated course explanations', type: 'video' },
+        { title: '🎬 Math videos', desc: 'Step-by-step theorem explanation', type: 'video' },
+        { title: '🔗 Moutamadris', desc: 'Official ministry platform', type: 'link' },
+        { title: '🔗 Taalim.ma', desc: 'Free courses and exercises', type: 'link' },
+        { title: '🔗 Interactive Exercises', desc: 'Online MCQ tests', type: 'link' },
+        { title: '🔗 Study Groups', desc: 'WhatsApp / Telegram groups', type: 'link' }
+      ],
+      tips: [
+        { icon: '⏰', title: 'Organize your time', desc: 'Work 50min, rest 10min. Use the Pomodoro technique.' },
+        { icon: '📝', title: 'Use revision cards', desc: 'Summarize each chapter on a card with key ideas.' },
+        { icon: '📋', title: 'Past exam papers', desc: 'Previous years exams are the best preparation.' },
+        { icon: '👥', title: 'Study group', desc: 'Explaining to someone is the best way to learn.' },
+        { icon: '😴', title: 'Sleep well', desc: 'Good sleep is essential for concentration.' },
+        { icon: '👀', title: 'Read instructions', desc: 'Leave no question unanswered.' },
+        { icon: '🎒', title: 'Prepare your materials', desc: 'Pen, pencil, ruler, compass, calculator: prepare everything.' },
+        { icon: '💪', title: 'Manage stress', desc: 'Breathe deeply. You have worked hard, you are ready.' }
+      ],
+      plan: [
+        { day: 'Monday', morning: 'French', afternoon: 'Math', evening: 'Free revision' },
+        { day: 'Tuesday', morning: 'Arabic', afternoon: 'Biology', evening: 'Exercises' },
+        { day: 'Wednesday', morning: 'English', afternoon: 'Physics-Chemistry', evening: 'Summaries' },
+        { day: 'Thursday', morning: 'History-Geo', afternoon: 'Islamic Education', evening: 'Computer Science' },
+        { day: 'Friday', morning: 'Math', afternoon: 'French', evening: 'Past papers' },
+        { day: 'Saturday', morning: 'Weekly review', afternoon: 'Exam subjects', evening: 'Rest' },
+        { day: 'Sunday', morning: '🕊️ Rest — Sports', afternoon: 'Leisure', evening: 'Relaxation' }
+      ],
+      quotes: [
+        { text: 'Success is not the key to happiness. Happiness is the key to success.', author: 'Albert Schweitzer' },
+        { text: 'Education is the most powerful weapon to change the world.', author: 'Nelson Mandela' },
+        { text: 'Hard work beats talent when talent doesn\'t work hard.', author: 'Tim Notke' },
+        { text: 'Don\'t dream of success, work for it.', author: 'Moroccan proverb' },
+        { text: 'Knowledge is power.', author: 'Francis Bacon' },
+        { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
+        { text: 'The journey of a thousand miles begins with one step.', author: 'Lao Tzu' }
+      ]
+    }
+  };
+
+  // ========== STATE ==========
   const CORRECT_CODE = 'hassan1993';
+  let currentLang = 'fr';
+
+  // ========== SCREENS ==========
+  const langScreen = document.getElementById('langScreen');
   const loginScreen = document.getElementById('loginScreen');
   const mainSite = document.getElementById('mainSite');
   const codeInput = document.getElementById('codeInput');
   const loginBtn = document.getElementById('loginBtn');
   const loginError = document.getElementById('loginError');
   const logoutBtn = document.getElementById('logoutBtn');
+  const langSwitch = document.getElementById('langSwitch');
 
+  // ========== CHOOSE LANGUAGE ==========
+  function chooseLang(lang) {
+    currentLang = lang;
+    langScreen.classList.add('hidden');
+    loginScreen.classList.add('active');
+    document.getElementById('langIndicator').textContent = LANG[lang].indicator;
+    updateLoginLang(lang);
+    codeInput.focus();
+  }
+
+  document.getElementById('backToLang').addEventListener('click', () => {
+    loginScreen.classList.remove('active');
+    langScreen.classList.remove('hidden');
+  });
+
+  function updateLoginLang(lang) {
+    const d = LANG[lang];
+    document.getElementById('loginSubtitle').textContent = d.loginSubtitle;
+    document.getElementById('loginLabel').textContent = d.loginLabel;
+    codeInput.placeholder = d.loginPlaceholder;
+    document.getElementById('loginBtn').textContent = d.loginBtn;
+    document.getElementById('errorMsg').textContent = d.loginError;
+    document.getElementById('loginHint').textContent = d.loginHint;
+  }
+
+  // ========== LOGIN ==========
   function checkLogin() {
     const saved = localStorage.getItem('3ac_logged_in');
-    if (saved === 'true') {
-      loginScreen.classList.add('hidden');
+    const savedLang = localStorage.getItem('3ac_lang');
+    if (saved === 'true' && savedLang) {
+      currentLang = savedLang;
+      langScreen.classList.add('hidden');
+      loginScreen.classList.remove('active');
       mainSite.classList.add('visible');
+      renderAll();
     }
   }
 
@@ -757,9 +1125,11 @@
     const code = codeInput.value.trim();
     if (code === CORRECT_CODE) {
       localStorage.setItem('3ac_logged_in', 'true');
+      localStorage.setItem('3ac_lang', currentLang);
       loginScreen.classList.add('hidden');
       mainSite.classList.add('visible');
       loginError.classList.remove('show');
+      renderAll();
     } else {
       loginError.classList.add('show');
       codeInput.value = '';
@@ -772,251 +1142,90 @@
 
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('3ac_logged_in');
-    loginScreen.classList.remove('hidden');
+    localStorage.removeItem('3ac_lang');
     mainSite.classList.remove('visible');
+    loginScreen.classList.remove('active');
+    langScreen.classList.remove('hidden');
     codeInput.value = '';
     loginError.classList.remove('show');
   });
 
-  checkLogin();
-
-  // ========== DATA ==========
-  const subjects = [
-    {
-      id: 1, name: 'Français', icon: '📚', coeff: 3,
-      desc: 'Langue française, grammaire, conjugaison, orthographe, rédaction et étude de texte.',
-      color: 'c1',
-      chapitres: [
-        'Les expansions du nom (adjectif, complément, relative)',
-        'Les modes et temps verbaux (indicatif, subjonctif, conditionnel)',
-        'La phrase simple et complexe',
-        'Les figures de style (comparaison, métaphore, personnification)',
-        'Le texte argumentatif, narratif et descriptif',
-        'Lecture et analyse de texte',
-        'La rédaction: plan, introduction, développement, conclusion'
-      ],
-      astuces: [
-        'Lis attentivement le texte avant de répondre',
-        'Révise les conjugaisons des verbes irréguliers',
-        'Entraîne-toi à rédiger avec un plan clair',
-        'Soigne ta présentation et ton orthographe',
-        'Apprends les connecteurs logiques'
-      ]
-    },
-    {
-      id: 2, name: 'Arabe', icon: '📖', coeff: 3,
-      desc: 'اللغة العربية: النصوص، القواعد، الصرف والبلاغة، التعبير والإنشاء.',
-      color: 'c2',
-      chapitres: [
-        'النصوص: الشعر والنثر',
-        'القواعد: الجملة الاسمية والفعلية',
-        'الصرف: الفعل الصحيح والمعتل',
-        'البلاغة: التشبيه والاستعارة والكناية',
-        'التعبير والإنشاء',
-        'المذكر والمؤنث، المفرد والمثنى والجمع'
-      ],
-      astuces: [
-        'اقرأ النص جيداً قبل الإجابة',
-        'احفظ القواعد الأساسية',
-        'تدرب على كتابة موضوع إنشائي كامل',
-        'راجع الأفعال وأوزانها',
-        'استخدم قاموسًا عربيًا'
-      ]
-    },
-    {
-      id: 3, name: 'Anglais', icon: '🇬🇧', coeff: 2,
-      desc: 'English language: reading comprehension, grammar, vocabulary, and writing.',
-      color: 'c3',
-      chapitres: [
-        'Tenses: Present Simple, Present Continuous, Past Simple',
-        'Future: will vs. going to',
-        'Passive voice',
-        'Conditional sentences (type 0, 1, 2)',
-        'Relative clauses',
-        'Reading comprehension strategies',
-        'Writing: paragraph, email, opinion essay'
-      ],
-      astuces: [
-        'Learn 10 new vocabulary words every day',
-        'Practice writing short paragraphs',
-        'Read the questions before the text',
-        'Review irregular verbs list',
-        'Watch English videos with subtitles'
-      ]
-    },
-    {
-      id: 4, name: 'Histoire-Géographie', icon: '🌍', coeff: 2,
-      desc: 'Histoire du Maroc, géographie du monde, développement et société.',
-      color: 'c4',
-      chapitres: [
-        'La colonisation et la décolonisation',
-        'Les deux guerres mondiales (causes, déroulement, conséquences)',
-        'Le Maroc sous le protectorat',
-        'La mondialisation et ses enjeux',
-        'Les ressources naturelles dans le monde',
-        'La population: croissance et répartition',
-        'Le développement durable'
-      ],
-      astuces: [
-        'Fais des fiches chronologiques',
-        'Utilise des cartes mentales pour chaque chapitre',
-        'Apprends les dates clés',
-        'Relie les événements à leurs causes et conséquences',
-        'Dessine des croquis de géographie'
-      ]
-    },
-    {
-      id: 5, name: 'Éducation Islamique', icon: '🕌', coeff: 2,
-      desc: 'التربية الإسلامية: القرآن الكريم، الحديث، العقيدة، الفقه والسيرة.',
-      color: 'c5',
-      chapitres: [
-        'سور القرآن الكريم المقررة (حفظ وتفسير)',
-        'الأحاديث النبوية (حفظ وشرح)',
-        'أركان الإسلام والإيمان',
-        'العبادات: الصلاة، الزكاة، الصوم',
-        'السيرة النبوية: الغزوات والهجرة',
-        'القيم الإسلامية: الصدق، الأمانة، التسامح'
-      ],
-      astuces: [
-        'احفظ الآيات والأحاديث مع المعنى',
-        'افهم أحكام العبادات',
-        'اربط الدروس بالحياة اليومية',
-        'ركز على القيم الإسلامية',
-        'استخدم تطبيقات القرآن للتحفيظ'
-      ]
-    },
-    {
-      id: 6, name: 'Mathématiques', icon: '📐', coeff: 3,
-      desc: 'Algèbre, géométrie, arithmétique, statistiques et probabilités.',
-      color: 'c6',
-      chapitres: [
-        'Les équations et inéquations du 1er degré',
-        'Les systèmes d\'équations à 2 inconnues',
-        'Les fonctions linéaires et affines',
-        'Théorème de Thalès et sa réciproque',
-        'Théorème de Pythagore et sa réciproque',
-        'Trigonométrie: sinus, cosinus, tangente',
-        'Statistiques: moyenne, médiane, mode',
-        'Probabilités: expériences aléatoires'
-      ],
-      astuces: [
-        'Apprends toutes les formules par cœur',
-        'Refais tous les exercices du livre',
-        'Fais des séries d\'exercices chronométrées',
-        'Vérifie toujours tes calculs',
-        'Dessine les figures géométriques'
-      ]
-    },
-    {
-      id: 7, name: 'SVT', icon: '🧬', coeff: 2,
-      desc: 'Biologie humaine, génétique, écologie, géologie et environnement.',
-      color: 'c7',
-      chapitres: [
-        'La nutrition chez l\'Homme (digestion, absorption)',
-        'La respiration et la circulation sanguine',
-        'La reproduction humaine',
-        'La génétique: ADN, gènes, chromosomes, hérédité',
-        'L\'écologie: écosystèmes, chaînes alimentaires',
-        'Les ressources naturelles et leur gestion',
-        'La géologie: roches, sols, fossiles'
-      ],
-      astuces: [
-        'Fais des schémas légendés (cœur, appareil digestif...)',
-        'Comprends les processus, ne les apprends pas bêtement',
-        'Utilise des couleurs pour tes fiches',
-        'Relie les chapitres entre eux',
-        'Entraîne-toi aux QCM'
-      ]
-    },
-    {
-      id: 8, name: 'Physique-Chimie', icon: '⚗️', coeff: 2,
-      desc: 'Électricité, mécanique, chimie des solutions, atomes et molécules.',
-      color: 'c8',
-      chapitres: [
-        'L\'atome et la molécule (modèle atomique)',
-        'Les solutions acides et basiques (pH)',
-        'Les transformations chimiques',
-        'Le mouvement et la vitesse',
-        'Les forces et le poids (loi de gravitation)',
-        'L\'électricité: loi d\'Ohm, loi des mailles',
-        'La puissance électrique et l\'énergie'
-      ],
-      astuces: [
-        'Maîtrise les formules et les unités',
-        'Entraîne-toi aux exercices de calcul',
-        'Comprends les schémas électriques',
-        'Révise les définitions importantes',
-        'Fais des fiches avec les formules clés'
-      ]
-    },
-    {
-      id: 9, name: 'Informatique', icon: '💻', coeff: 1,
-      desc: 'Algorithmique, programmation, bureautique et internet.',
-      color: 'c9',
-      chapitres: [
-        'Introduction à l\'algorithmique',
-        'Les structures de contrôle (si, sinon, selon)',
-        'Les boucles (tant que, répéter, pour)',
-        'Les tableaux et les listes',
-        'Les fonctions et procédures',
-        'Bureautique: Word, Excel, PowerPoint',
-        'Internet et sécurité informatique'
-      ],
-      astuces: [
-        'Pratique sur un ordinateur réel',
-        'Comprends la logique des algorithmes',
-        'Fais des petits programmes simples',
-        'Révise les définitions des concepts',
-        'Dessine les organigrammes'
-      ]
-    }
-  ];
-
-  const resources = [
-    { title: '📄 Sujets d\'examens régionaux', desc: 'Tous les sujets des années précédentes en PDF', type: 'exam' },
-    { title: '📄 Cours de Français', desc: 'Résumés, exercices et corrigés de français', type: 'pdf' },
-    { title: '📄 Cours de Maths', desc: 'Fiches de révision et exercices corrigés', type: 'pdf' },
-    { title: '🎬 Chaîne YouTube Révision 3AC', desc: 'Playlists de révision par matière', type: 'video' },
-    { title: '🎬 SVT Maroc', desc: 'Cours animés et schémas expliqués', type: 'video' },
-    { title: '🎬 Maths en vidéo', desc: 'Théorèmes et exercices expliqués pas à pas', type: 'video' },
-    { title: '🔗 Moutamadris', desc: 'Plateforme officielle du ministère de l\'Éducation', type: 'link' },
-    { title: '🔗 Taalim.ma', desc: 'Cours et exercices en ligne gratuits', type: 'link' },
-    { title: '🔗 Exercices interactifs', desc: 'QCM et quiz pour t\'évaluer', type: 'link' },
-    { title: '🔗 Groupes d\'entraide', desc: 'Rejoins des groupes WhatsApp/Télégram', type: 'link' }
-  ];
-
-  const tips = [
-    { icon: '⏰', title: 'Organise ton temps', desc: 'Fais un planning de révision avec des pauses régulières. Travaille 50 minutes, repose-toi 10 minutes. Utilise la technique Pomodoro.' },
-    { icon: '📝', title: 'Révise par fiches', desc: 'Résume chaque chapitre sur une fiche avec les idées clés, les formules et les définitions. Relis tes fiches le matin.' },
-    { icon: '📋', title: 'Entraîne-toi sur les anciens sujets', desc: 'Les sujets des années précédentes sont la meilleure préparation. Chronomètre-toi pour être prêt le jour J.' },
-    { icon: '👥', title: ' forme un groupe d\'étude', desc: 'Révise avec des camarades. Expliquer à quelqu\'un est la meilleure façon d\'apprendre et de retenir.' },
-    { icon: '😴', title: 'Dors bien la veille', desc: 'Ne révise pas tard la veille. Un bon sommeil est essentiel pour la concentration et la mémoire.' },
-    { icon: '👀', title: 'Lis bien les consignes', desc: 'Prends le temps de lire chaque question. Repère les mots-clés. Ne laisse aucune question sans réponse.' },
-    { icon: '🎒', title: 'Prépare ton matériel à l\'avance', desc: 'Stylo bleu, noir, rouge, crayon, gomme, règle, équerre, compas, calculatrice. Prépare tout la veille.' },
-    { icon: '💪', title: 'Gère ton stress', desc: 'Respire profondément, reste positif. Tu as travaillé dur, tu es prêt. Fais confiance à ta préparation.' }
-  ];
-
-  const quotes = [
-    { text: 'Le succès n\'est pas la clé du bonheur. Le bonheur est la clé du succès.', author: 'Albert Schweitzer' },
-    { text: 'L\'éducation est l\'arme la plus puissante pour changer le monde.', author: 'Nelson Mandela' },
-    { text: 'Le travail acharné bat le talent quand le talent ne travaille pas dur.', author: 'Tim Notke' },
-    { text: 'Ne rêve pas de réussir, travaille pour réussir.', author: 'Proverbe marocain' },
-    { text: 'Savoir, ce n\'est pas connaître ; mais connaître, c\'est savoir.', author: 'Ibn Sina (Avicenne)' },
-    { text: 'Celui qui ouvre une porte d\'école, ferme une prison.', author: 'Victor Hugo' },
-    { text: 'إنما العلم بالتعلم، وإنما الحلم بالتحلم', author: 'الحديث النبوي' },
-    { text: 'La chute n\'est pas un échec, l\'échec c\'est de rester là où on est tombé.', author: 'Socrate' }
-  ];
-  let quoteIdx = 0;
+  // ========== SWITCH LANG AFTER LOGIN ==========
+  langSwitch.addEventListener('click', () => {
+    const langs = ['fr', 'ar', 'en'];
+    const idx = langs.indexOf(currentLang);
+    currentLang = langs[(idx + 1) % 3];
+    localStorage.setItem('3ac_lang', currentLang);
+    renderAll();
+  });
 
   // ========== RENDER ==========
-  function renderSubjects() {
+  function renderAll() {
+    const d = LANG[currentLang];
+
+    // Header
+    langSwitch.textContent = d.label;
+    document.getElementById('headerDesc').textContent = d.headerDesc;
+
+    // Nav
+    document.getElementById('navHome').textContent = d.navHome;
+    document.getElementById('navSubjects').textContent = d.navSubjects;
+    document.getElementById('navResources').textContent = d.navResources;
+    document.getElementById('navPlanning').textContent = d.navPlanning;
+    document.getElementById('navTips').textContent = d.navTips;
+    document.getElementById('navCountdown').textContent = d.navCountdown;
+
+    // Hero
+    document.getElementById('heroTitle').textContent = d.heroTitle;
+    document.getElementById('heroDesc').textContent = d.heroDesc;
+    document.getElementById('statSubjects').textContent = d.statSubjects;
+    document.getElementById('statResources').textContent = d.statResources;
+    document.getElementById('statFree').textContent = d.statFree;
+
+    // Sections
+    document.getElementById('sectionSubjects').textContent = d.sectionSubjects;
+    document.getElementById('sectionResources').textContent = d.sectionResources;
+    document.getElementById('sectionPlanning').textContent = d.sectionPlanning;
+    document.getElementById('sectionTips').textContent = d.sectionTips;
+    document.getElementById('modalChaptersTitle').textContent = d.modalChaptersTitle;
+    document.getElementById('modalTipsTitle').textContent = d.modalTipsTitle;
+
+    // Planning table
+    document.getElementById('planDay').textContent = d.planDay;
+    document.getElementById('planMorning').textContent = d.planMorning;
+    document.getElementById('planAfternoon').textContent = d.planAfternoon;
+    document.getElementById('planEvening').textContent = d.planEvening;
+
+    const planBody = document.getElementById('planBody');
+    planBody.innerHTML = d.plan.map(p => `
+      <tr><td class="day">${p.day}</td><td>${p.morning}</td><td>${p.afternoon}</td><td>${p.evening}</td></tr>
+    `).join('');
+
+    // Countdown
+    document.getElementById('cdTitle').textContent = d.cdTitle;
+    document.getElementById('cdDesc').textContent = d.cdDesc;
+    document.getElementById('cdDays').textContent = d.cdDays;
+    document.getElementById('cdHours').textContent = d.cdHours;
+    document.getElementById('cdMins').textContent = d.cdMins;
+    document.getElementById('cdSecs').textContent = d.cdSecs;
+
+    // Footer
+    document.getElementById('footerText').textContent = d.footerText;
+
+    // Subjects
+    renderSubjects(d);
+    renderResources(d);
+    renderTips(d);
+    renderQuote(d);
+  }
+
+  function renderSubjects(d) {
     const grid = document.getElementById('subjectsGrid');
-    grid.innerHTML = subjects.map(s => `
+    grid.innerHTML = d.subjects.map(s => `
       <div class="subject-card ${s.color}" data-id="${s.id}">
         <span class="icon">${s.icon}</span>
         <h3>${s.name}</h3>
-        <span class="coeff">Coefficient ${s.coeff}</span>
-        <div class="chapters-preview">${s.chapitres.slice(0, 3).join(' • ')}${s.chapitres.length > 3 ? '...' : ''}</div>
+        <span class="coeff">${currentLang === 'ar' ? 'المعامل' : 'Coefficient'} ${s.coeff}</span>
       </div>
     `).join('');
     grid.querySelectorAll('.subject-card').forEach(card => {
@@ -1025,33 +1234,34 @@
   }
 
   function openSubject(id) {
-    const s = subjects.find(x => x.id === id);
+    const d = LANG[currentLang];
+    const s = d.subjects.find(x => x.id === id);
     if (!s) return;
     document.getElementById('modalIcon').textContent = s.icon;
     document.getElementById('modalTitle').textContent = s.name;
     document.getElementById('modalSubtitle').textContent = s.desc;
-    document.getElementById('modalInfo').innerHTML = `<span>📊 Coefficient: ${s.coeff}</span>`;
+    document.getElementById('modalInfo').innerHTML = `<span>${currentLang === 'ar' ? '📊 المعامل' : '📊 Coefficient'}: ${s.coeff}</span>`;
     document.getElementById('modalChapters').innerHTML = s.chapitres.map(c => `<li>${c}</li>`).join('');
     document.getElementById('modalTips').innerHTML = s.astuces.map(a => `<li>${a}</li>`).join('');
     document.getElementById('subjectModal').classList.add('active');
     document.body.style.overflow = 'hidden';
   }
 
-  function renderResources() {
+  function renderResources(d) {
     const grid = document.getElementById('resourcesGrid');
-    grid.innerHTML = resources.map(r => {
-      const iconMap = { pdf: '📄', video: '🎬', exam: '📋', link: '🔗' };
-      const clsMap = { pdf: 'pdf', video: 'video', exam: 'exam', link: 'link' };
-      return `<div class="resource-card">
+    const iconMap = { pdf: '📄', video: '🎬', exam: '📋', link: '🔗' };
+    const clsMap = { pdf: 'pdf', video: 'video', exam: 'exam', link: 'link' };
+    grid.innerHTML = d.resources.map(r => `
+      <div class="resource-card">
         <div class="r-icon ${clsMap[r.type]}">${iconMap[r.type]}</div>
         <div class="r-info"><h4>${r.title}</h4><p>${r.desc}</p></div>
-      </div>`;
-    }).join('');
+      </div>
+    `).join('');
   }
 
-  function renderTips() {
+  function renderTips(d) {
     const grid = document.getElementById('tipsGrid');
-    grid.innerHTML = tips.map(t => `
+    grid.innerHTML = d.tips.map(t => `
       <div class="tip-card">
         <span class="tip-icon">${t.icon}</span>
         <h3>${t.title}</h3>
@@ -1060,13 +1270,13 @@
     `).join('');
   }
 
-  function renderQuote() {
-    const q = quotes[quoteIdx];
+  function renderQuote(d) {
+    const q = d.quotes[quoteIdx % d.quotes.length];
     document.getElementById('quoteText').textContent = q.text;
     document.getElementById('quoteAuthor').textContent = '— ' + q.author;
   }
 
-  // ========== MODAL EVENTS ==========
+  // ========== MODAL ==========
   document.getElementById('modalClose').addEventListener('click', () => {
     document.getElementById('subjectModal').classList.remove('active');
     document.body.style.overflow = '';
@@ -1078,7 +1288,7 @@
     }
   });
 
-  // ========== NAV SCROLL ==========
+  // ========== NAV ==========
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav a');
   function updateActiveLink() {
@@ -1093,13 +1303,16 @@
   window.addEventListener('scroll', updateActiveLink);
 
   // ========== QUOTES ==========
+  let quoteIdx = 0;
   document.getElementById('prevQuote').addEventListener('click', () => {
-    quoteIdx = (quoteIdx - 1 + quotes.length) % quotes.length;
-    renderQuote();
+    const d = LANG[currentLang];
+    quoteIdx = (quoteIdx - 1 + d.quotes.length) % d.quotes.length;
+    renderQuote(d);
   });
   document.getElementById('nextQuote').addEventListener('click', () => {
-    quoteIdx = (quoteIdx + 1) % quotes.length;
-    renderQuote();
+    const d = LANG[currentLang];
+    quoteIdx = (quoteIdx + 1) % d.quotes.length;
+    renderQuote(d);
   });
 
   // ========== COUNTDOWN ==========
@@ -1118,10 +1331,7 @@
   }
 
   // ========== INIT ==========
-  renderSubjects();
-  renderResources();
-  renderTips();
-  renderQuote();
+  checkLogin();
   updateCountdown();
   setInterval(updateCountdown, 1000);
 </script>
